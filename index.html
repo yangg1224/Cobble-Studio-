@@ -139,6 +139,65 @@
       border-radius: 2px;
     }
 
+    /* ─── SHOP DROPDOWN ─── */
+    .nav-shop-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .shop-dropdown {
+      position: absolute;
+      top: 100%;
+      left: -28px;
+      width: 212px;
+      background: rgba(255, 255, 255, 0.3);
+      padding: 16px 28px 20px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      z-index: 200;
+    }
+
+    .nav-shop-wrapper:hover .shop-dropdown,
+    .nav-shop-wrapper:focus-within .shop-dropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .shop-drop-heading {
+      font-family: var(--font-ui);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      color: var(--color-mid-gray);
+      margin-bottom: 14px;
+    }
+
+    .shop-drop-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .shop-drop-list a {
+      display: block;
+      padding: 8px 0;
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    .shop-drop-list li:last-child a {
+      padding-bottom: 0;
+    }
+
+    .shop-drop-list a::after {
+      display: none;
+    }
+
     /* Icons — pushed to far right */
     .header-icons {
       display: flex;
@@ -808,7 +867,20 @@
 
     <!-- Navigation — left-aligned after logo -->
     <nav class="header-nav" aria-label="Main navigation">
-      <a href="/shop">Shop</a>
+      <div class="nav-shop-wrapper">
+        <a href="/shop">Shop</a>
+        <div class="shop-dropdown" role="region" aria-label="Shop collections">
+          <p class="shop-drop-heading">• Shop by Collection</p>
+          <ul class="shop-drop-list">
+            <li><a href="/collections/mug">Mug</a></li>
+            <li><a href="/collections/scoop">Scoop</a></li>
+            <li><a href="/collections/spoon">Spoon</a></li>
+            <li><a href="/collections/clip">Clip</a></li>
+            <li><a href="/collections/plate">Plate</a></li>
+            <li><a href="/collections/vessl">Vessl</a></li>
+          </ul>
+        </div>
+      </div>
       <a href="/journal">Journal</a>
       <a href="/about">About</a>
     </nav>

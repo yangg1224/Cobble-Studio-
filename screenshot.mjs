@@ -16,7 +16,7 @@ while (fs.existsSync(path.join(outDir, `screenshot-${n}${label ? '-' + label : '
 const outFile = path.join(outDir, `screenshot-${n}${label ? '-' + label : ''}.png`);
 
 const browser = await puppeteer.launch({
-  executablePath: 'C:/Users/WuYa1/.cache/puppeteer/chrome/win64-131.0.6778.204/chrome-win64/chrome.exe',
+  executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
   headless: true,
   args: ['--no-sandbox', '--disable-setuid-sandbox'],
 });
