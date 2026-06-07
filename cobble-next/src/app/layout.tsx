@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Instrument_Sans, Crimson_Text } from "next/font/google";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
+import { SiteHeader } from "@/components/site-header"
+import { SiteFooter } from "@/components/site-footer";
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-white">
         <SiteHeader />
         <main className="flex-1">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );
