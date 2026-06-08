@@ -103,15 +103,15 @@ export function ProductsScroll() {
                 key={p.name}
                 className="w-[300px] flex-shrink-0 cursor-pointer border-none bg-none p-0 text-left"
               >
-                {/* Image */}
+                {/* Image — DS: 3/4 aspect, mist bg, object-contain, scale 1.05 on hover */}
                 <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "3/4" }}>
                   <Image
                     src={p.img}
                     alt={p.name}
                     fill
-                    className="object-contain transition-transform duration-500"
+                    className="object-contain transition-transform duration-[550ms] hover:scale-[1.05]"
                     sizes="300px"
-                    style={{ transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}
+                    style={{ transitionTimingFunction: "cubic-bezier(0.25,0.46,0.45,0.94)" }}
                   />
                 </div>
                 {/* Meta */}
