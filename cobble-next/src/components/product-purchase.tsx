@@ -1,37 +1,57 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import type { ProductColor } from "@/lib/products"
 import { useSaved } from "@/context/SavedContext"
+import { useCart } from "@/context/CartContext"
 
 type Props = {
   slug: string
+  name: string
   price: string
+  img: string
   sku: string
   colors: ProductColor[]
   sizes: string[]
 }
 
-export function ProductPurchase({ slug, sku, colors, sizes }: Props) {
+export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: Props) {
   const [qty, setQty] = useState(1)
   const { isSaved, toggle } = useSaved()
+  const { addItem } = useCart()
+  const router = useRouter()
   const saved = isSaved(slug)
   const [selectedColor, setSelectedColor] = useState(0)
   const [selectedSize, setSelectedSize] = useState(0)
+  const [added, setAdded] = useState(false)
 
   const clampQty = (n: number) => setQty(Math.max(1, Math.min(99, n)))
+
+  function handleAddToCart() {
+    addItem({
+      slug,
+      name,
+      price,
+      img,
+      qty,
+      color: colors[selectedColor]?.name,
+      size: sizes[selectedSize],
+    })
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2000)
+  }
 
   return (
     <div>
       {/* SKU */}
       <p className="mb-6 text-[11px] tracking-[1px] text-[#A2A2A2]">SKU: {sku}</p>
 
-      {/* Quantity — DS: eyebrow label + border-box stepper */}
+      {/* Quantity */}
       <div className="mb-5 flex items-center gap-4">
         <span className="w-16 text-[10px] font-semibold uppercase tracking-[2.2px] text-[#A2A2A2]">
           Quantity
         </span>
-        {/* DS QuantityStepper: border box, teal on hover, shrink on press */}
         <div className="inline-flex items-center border border-[#1E1E1E]">
           <button
             aria-label="Decrease quantity"
@@ -101,10 +121,14 @@ export function ProductPurchase({ slug, sku, colors, sizes }: Props) {
         </div>
       )}
 
-      {/* Buttons — DS: solid "Add to Cart" flex-1 + outline "Save" */}
+      {/* Buttons */}
       <div className="flex gap-3">
-        <button className="flex-1 bg-[#1E1E1E] py-4 text-[12px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:translate-y-px active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2">
-          Add to Cart
+        <button
+          onClick={handleAddToCart}
+          className="flex-1 py-4 text-[12px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:translate-y-px active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2"
+          style={{ background: added ? "#3CACB0" : "#1E1E1E" }}
+        >
+          {added ? "Added ✓" : "Add to Cart"}
         </button>
         <button
           onClick={() => toggle(slug)}
@@ -118,6 +142,16 @@ export function ProductPurchase({ slug, sku, colors, sizes }: Props) {
           {saved ? "Saved ♥" : "Save"}
         </button>
       </div>
+
+      {/* View cart nudge */}
+      {added && (
+        <button
+          onClick={() => router.push("/cart")}
+          className="mt-3 w-full text-center text-[10px] uppercase tracking-[2px] text-[#3CACB0] transition-opacity duration-300 hover:opacity-70"
+        >
+          View cart →
+        </button>
+      )}
     </div>
   )
 }

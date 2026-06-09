@@ -6,6 +6,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import type { User } from "@supabase/supabase-js"
 import { createClient } from "@/lib/supabase/client"
+import { useCart } from "@/context/CartContext"
 
 const collections = [
   { title: "Mug",   href: "/collections/mug" },
@@ -25,9 +26,11 @@ const navLinkCls =
 
 export function SiteHeader() {
   const router = useRouter()
+  const { totalCount } = useCart()
   const [user, setUser] = useState<User | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [bannerVisible, setBannerVisible] = useState(true)
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -60,6 +63,12 @@ export function SiteHeader() {
     setMobileNavOpen(false)
   }, [])
 
+  // Auto-hide announcement banner after 10 seconds
+  useEffect(() => {
+    const t = setTimeout(() => setBannerVisible(false), 10000)
+    return () => clearTimeout(t)
+  }, [])
+
   async function handleSignOut() {
     const supabase = createClient()
     await supabase.auth.signOut()
@@ -79,9 +88,12 @@ export function SiteHeader() {
       className="sticky top-0 z-50 w-full"
       style={{ boxShadow: "0 4px 24px rgba(30,30,30,0.04)" }}
     >
-      {/* Announcement bar */}
-      <div className="flex h-[31px] items-center justify-center border-b border-[#E8E8E8] bg-[#F9F9F9]">
-        <p className="text-[10px] font-medium uppercase tracking-[2px] text-[#1E1E1E] whitespace-nowrap">
+      {/* Announcement bar — fades out after 10 s */}
+      <div
+        className="flex items-center justify-center border-b border-[#9C6A3A] bg-[#C4895A] overflow-hidden transition-[max-height,opacity] duration-500 ease-in-out"
+        style={{ maxHeight: bannerVisible ? 31 : 0, opacity: bannerVisible ? 1 : 0 }}
+      >
+        <p className="h-[31px] flex items-center text-[10px] font-medium uppercase tracking-[2px] text-[#FAF5EF] whitespace-nowrap">
           Enjoy free shipping on orders of $100 or more.
         </p>
       </div>
@@ -126,8 +138,9 @@ export function SiteHeader() {
             </div>
           </div>
 
-          <Link href="/journal" className={navLinkCls}>Journal</Link>
-          <Link href="/about"   className={navLinkCls}>About</Link>
+          <Link href="/journal"  className={navLinkCls}>Journal</Link>
+          <Link href="/about"    className={navLinkCls}>About</Link>
+          <Link href="/contact"  className={navLinkCls}>Contact</Link>
         </nav>
 
         {/* Icons — far right */}
@@ -205,14 +218,22 @@ export function SiteHeader() {
 
           <Link
             href="/cart"
-            aria-label="Cart"
-            className="flex items-center justify-center p-1 text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] hover:scale-[1.08] active:scale-[0.94]"
+            aria-label={`Cart${totalCount > 0 ? ` (${totalCount} items)` : ""}`}
+            className="relative flex items-center justify-center p-1 text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] hover:scale-[1.08] active:scale-[0.94]"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
               <line x1="3" y1="6" x2="21" y2="6"/>
               <path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
+            {totalCount > 0 && (
+              <span
+                className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#3CACB0] text-[9px] font-semibold text-white"
+                aria-hidden="true"
+              >
+                {totalCount > 99 ? "99+" : totalCount}
+              </span>
+            )}
           </Link>
 
           {/* Hamburger — mobile only */}
@@ -278,6 +299,16 @@ export function SiteHeader() {
               className="flex items-center justify-between px-6 py-4 text-[11px] font-medium uppercase tracking-[2.5px] text-[#1E1E1E] border-t border-[#F0F0F0] hover:text-[#3CACB0] transition-colors duration-200"
             >
               About
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </Link>
+            <Link
+              href="/contact"
+              onClick={() => setMobileNavOpen(false)}
+              className="flex items-center justify-between px-6 py-4 text-[11px] font-medium uppercase tracking-[2.5px] text-[#1E1E1E] border-t border-[#F0F0F0] hover:text-[#3CACB0] transition-colors duration-200"
+            >
+              Contact
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <polyline points="9 18 15 12 9 6"/>
               </svg>

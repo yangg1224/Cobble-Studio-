@@ -99,7 +99,9 @@ export default async function ProductPage({
             {/* Purchase controls (client) */}
             <ProductPurchase
               slug={product.slug}
+              name={product.name}
               price={product.price}
+              img={product.img}
               sku={product.sku}
               colors={product.colors}
               sizes={product.sizes}
