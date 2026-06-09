@@ -15,6 +15,17 @@ const CATEGORIES = [
 
 const POSTS = [
   {
+    id: "brand-story",
+    slug: "brand-story",
+    category: "Story",
+    cats: ["story"],
+    title: "Brand Story — Born of Wood",
+    date: "October 2025",
+    readTime: "8 min read",
+    excerpt: "Time that has passed ultimately takes form as a wooden object. The story behind Cobble, from first cut to finished vessel.",
+    img: "/journal/brand-story/hero2.jpg",
+  },
+  {
     id: "the-craft-behind-the-cup",
     slug: "the-craft-behind-the-cup",
     category: "Craft",
