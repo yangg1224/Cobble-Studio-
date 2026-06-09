@@ -2,16 +2,20 @@
 
 import { useState } from "react"
 import type { ProductColor } from "@/lib/products"
+import { useSaved } from "@/context/SavedContext"
 
 type Props = {
+  slug: string
   price: string
   sku: string
   colors: ProductColor[]
   sizes: string[]
 }
 
-export function ProductPurchase({ sku, colors, sizes }: Props) {
+export function ProductPurchase({ slug, sku, colors, sizes }: Props) {
   const [qty, setQty] = useState(1)
+  const { isSaved, toggle } = useSaved()
+  const saved = isSaved(slug)
   const [selectedColor, setSelectedColor] = useState(0)
   const [selectedSize, setSelectedSize] = useState(0)
 
@@ -102,8 +106,16 @@ export function ProductPurchase({ sku, colors, sizes }: Props) {
         <button className="flex-1 bg-[#1E1E1E] py-4 text-[12px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:translate-y-px active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2">
           Add to Cart
         </button>
-        <button className="border border-[#1E1E1E] px-7 py-4 text-[12px] font-medium uppercase tracking-[3px] text-[#1E1E1E] transition-[background-color,color] duration-200 hover:bg-[#1E1E1E] hover:text-white active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2">
-          Save
+        <button
+          onClick={() => toggle(slug)}
+          className="border px-7 py-4 text-[12px] font-medium uppercase tracking-[3px] transition-[background-color,color] duration-200 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2"
+          style={{
+            borderColor: "var(--ink)",
+            background: saved ? "var(--ink)" : "transparent",
+            color: saved ? "var(--paper)" : "var(--ink)",
+          }}
+        >
+          {saved ? "Saved ♥" : "Save"}
         </button>
       </div>
     </div>

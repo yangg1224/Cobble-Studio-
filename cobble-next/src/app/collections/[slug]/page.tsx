@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { products } from "@/lib/products"
+import { ProductCard } from "@/components/product-card"
 
 const collectionMeta: Record<string, { label: string; img: string }> = {
   mug:    { label: "Mug",    img: "/collections/mug.png"    },
@@ -55,7 +56,7 @@ export default async function CollectionPage({
       {collectionProducts.length > 0 ? (
         <div className="grid grid-cols-4 gap-x-5 gap-y-6">
           {collectionProducts.map((p) => (
-            <ProductCard key={p.slug} slug={p.slug} name={p.name} price={p.price} img={p.img} />
+            <ProductCard key={p.slug} slug={p.slug} name={p.name} price={p.price} img={p.img} collection={p.collection} />
           ))}
         </div>
       ) : (
@@ -67,31 +68,3 @@ export default async function CollectionPage({
   )
 }
 
-/* DS-spec ProductCard: 3/4 ratio, object-contain on mist, name → teal on hover */
-function ProductCard({ slug, name, price, img }: { slug: string; name: string; price: string; img: string }) {
-  return (
-    <Link href={`/products/${slug}`} className="group block">
-      <div
-        className="relative w-full overflow-hidden bg-[#F9F9F9]"
-        style={{ aspectRatio: "3/4" }}
-      >
-        <Image
-          src={img}
-          alt={name}
-          fill
-          className="object-contain transition-transform duration-[550ms] group-hover:scale-[1.05]"
-          style={{ transitionTimingFunction: "cubic-bezier(0.25,0.46,0.45,0.94)" }}
-          sizes="25vw"
-        />
-      </div>
-      <div className="px-2 pb-2 pt-3.5">
-        <span className="block text-[11px] font-medium uppercase leading-[1.4] tracking-[1.4px] text-[#1E1E1E] transition-colors duration-200 group-hover:text-[#3CACB0]">
-          {name}
-        </span>
-        <span className="mt-1 block text-[11px] tracking-[1px] text-[#A2A2A2]">
-          {price}
-        </span>
-      </div>
-    </Link>
-  )
-}

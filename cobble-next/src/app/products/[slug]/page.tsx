@@ -98,6 +98,7 @@ export default async function ProductPage({
 
             {/* Purchase controls (client) */}
             <ProductPurchase
+              slug={product.slug}
               price={product.price}
               sku={product.sku}
               colors={product.colors}

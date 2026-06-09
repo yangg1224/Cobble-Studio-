@@ -38,7 +38,7 @@ export default function AccountPage() {
       return
     }
 
-    router.push("/")
+    router.push("/dashboard")
     router.refresh()
   }
 
@@ -81,7 +81,7 @@ export default function AccountPage() {
 
     // Email confirmation disabled — user is immediately signed in
     if (data.session) {
-      router.push("/")
+      router.push("/dashboard")
       router.refresh()
       return
     }

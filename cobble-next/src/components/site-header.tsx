@@ -167,7 +167,7 @@ export function SiteHeader() {
                   {/* Menu items */}
                   <div className="py-2">
                     <Link
-                      href="/account"
+                      href="/dashboard"
                       onClick={() => setMenuOpen(false)}
                       className="font-ui block px-5 py-2.5 text-[10px] font-medium uppercase tracking-[2px] transition-colors duration-200 hover:text-[#3CACB0]"
                       style={{ color: "var(--ink)" }}
