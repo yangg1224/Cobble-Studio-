@@ -4,6 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useCart } from "@/context/CartContext"
+import { useOrders } from "@/context/OrdersContext"
 
 function parsePrice(p: string) { return parseFloat(p.replace(/[^0-9.]/g, "")) || 0 }
 function formatCAD(n: number) { return `CA$${n.toFixed(2).replace(/\.00$/, "")}` }
@@ -82,6 +83,7 @@ function FormField({ field, value, error, onChange }: {
 
 export function CheckoutClient() {
   const { items, clearCart } = useCart()
+  const { addOrder } = useOrders()
   const [data, setData] = useState<FormData>({})
   const [errors, setErrors] = useState<Partial<Record<string, string>>>({})
   const [engravingOn, setEngravingOn] = useState(false)
@@ -102,6 +104,26 @@ export function CheckoutClient() {
     e.preventDefault()
     const errs = validate(data, engravingOn)
     if (Object.keys(errs).length) { setErrors(errs); return }
+
+    const addressLine = [
+      data.address1,
+      data.address2,
+      `${data.city}, ${data.province}  ${data.postalCode}`,
+      data.country,
+    ].filter(Boolean).join(", ")
+
+    addOrder({
+      id: orderNumber,
+      date: new Date().toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric" }),
+      status: "ordered",
+      total: formatCAD(total),
+      note: "Your Brand Director will reach out by email with e-transfer payment instructions.",
+      eta: "Ships within 1 week of payment confirmation",
+      items: items.map((i) => ({ name: i.name, price: i.price, img: i.img, qty: i.qty })),
+      engraving: engravingOn ? data.engravingText : undefined,
+      address: addressLine,
+    })
+
     clearCart()
     setConfirmed(true)
     window.scrollTo({ top: 0, behavior: "smooth" })

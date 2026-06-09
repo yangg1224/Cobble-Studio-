@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/client"
 import { useSaved } from "@/context/SavedContext"
+import { useOrders } from "@/context/OrdersContext"
+import type { Order, OrderItem } from "@/context/OrdersContext"
 import { products } from "@/lib/products"
 
 /* ── Types ── */
@@ -15,24 +17,6 @@ interface UserInfo {
   since: string
   initials: string
 }
-
-interface OrderItem {
-  name: string
-  price: string
-  img: string
-  qty: number
-}
-
-interface Order {
-  id: string
-  date: string
-  status: "ordered" | "workshop" | "shipped" | "delivered"
-  total: string
-  note?: string
-  eta?: string
-  items: OrderItem[]
-}
-
 
 interface Address {
   id: string
@@ -50,42 +34,6 @@ const ORDER_STAGES = [
   { key: "shipped",   label: "Shipped" },
   { key: "delivered", label: "Delivered" },
 ] as const
-
-const ORDERS: Order[] = [
-  {
-    id: "C-2041",
-    date: "May 28, 2026",
-    status: "workshop",
-    total: "CA$336",
-    note: "Each piece is carved to order — yours is resting on the bench. We'll write when it ships.",
-    eta: "Ships early June",
-    items: [
-      { name: "Birch Kuksa No.01",   price: "CA$158", img: "/products/mug-1.jpg",   qty: 1 },
-      { name: "Olivewood Heart Cup", price: "CA$178", img: "/products/product2.jpg", qty: 1 },
-    ],
-  },
-  {
-    id: "C-1987",
-    date: "Apr 12, 2026",
-    status: "delivered",
-    total: "CA$168",
-    eta: "Delivered Apr 19",
-    items: [
-      { name: "Spalt Maple Kuksa", price: "CA$168", img: "/products/product3.jpg", qty: 1 },
-    ],
-  },
-  {
-    id: "C-1820",
-    date: "Feb 03, 2026",
-    status: "delivered",
-    total: "CA$148",
-    eta: "Delivered Feb 11",
-    items: [
-      { name: "Curly Maple Cup", price: "CA$148", img: "/products/product4.jpg", qty: 1 },
-    ],
-  },
-]
-
 
 const ADDRESSES: Address[] = [
   {
@@ -119,6 +67,7 @@ const SECTIONS: { key: Section; label: string; Icon: () => JSX.Element }[] = [
 /* ── Root client component ── */
 export function DashboardClient({ user }: { user: UserInfo }) {
   const router = useRouter()
+  const { orders } = useOrders()
   const [section, setSection] = useState<Section>("overview")
   const [openOrder, setOpenOrder] = useState<string | null>(null)
 
@@ -211,8 +160,8 @@ export function DashboardClient({ user }: { user: UserInfo }) {
 
         {/* ── Content area ── */}
         <div style={{ padding: "64px 64px 110px", maxWidth: 980 }}>
-          {section === "overview"  && <Overview  user={user} goOrders={() => go("orders")} goSaved={() => go("saved")} onOpenOrder={(id) => { setOpenOrder(id); go("orders") }} />}
-          {section === "orders"    && <Orders    openOrder={openOrder} setOpenOrder={setOpenOrder} />}
+          {section === "overview"  && <Overview  user={user} orders={orders} goOrders={() => go("orders")} goSaved={() => go("saved")} onOpenOrder={(id) => { setOpenOrder(id); go("orders") }} />}
+          {section === "orders"    && <Orders    orders={orders} openOrder={openOrder} setOpenOrder={setOpenOrder} />}
           {section === "saved"     && <SavedView />}
           {section === "profile"   && <Profile   user={user} />}
           {section === "addresses" && <Addresses />}
@@ -245,20 +194,23 @@ function RailButton({ active, onClick, children }: { active: boolean; onClick: (
 }
 
 /* ── Overview section ── */
-function Overview({ user, goOrders, goSaved, onOpenOrder }: {
+function Overview({ user, orders, goOrders, goSaved, onOpenOrder }: {
   user: UserInfo
+  orders: Order[]
   goOrders: () => void
   goSaved: () => void
   onOpenOrder: (id: string) => void
 }) {
-  const recent = ORDERS[0]
+  const recent = orders[0] ?? null
   return (
     <div>
       <header style={{ marginBottom: 56 }}>
         <Eyebrow style={{ display: "block", marginBottom: 16 }}>Account</Eyebrow>
         <h1 style={headingStyle}>Welcome back, {user.first}.</h1>
         <p style={{ margin: "18px 0 0", maxWidth: 480, fontSize: 13, lineHeight: 1.8, letterSpacing: "0.3px", color: "var(--slate)" }}>
-          One piece is resting on the bench, and four await in your saved. Take your time — good things are slow.
+          {recent
+            ? "Your most recent piece is below. Take your time — good things are slow."
+            : "Your workshop is quiet for now. Browse the shop when you're ready."}
         </p>
       </header>
 
@@ -269,36 +221,53 @@ function Overview({ user, goOrders, goSaved, onOpenOrder }: {
           <ArrowLink onClick={goOrders}>All orders</ArrowLink>
         </div>
 
-        <article style={{ border: "1px solid var(--line)", background: "var(--paper)" }}>
-          <div style={{
-            display: "grid", gridTemplateColumns: "1fr auto", gap: 24,
-            padding: "28px 32px", borderBottom: "1px solid var(--line)", alignItems: "center",
-          }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 26, flexWrap: "wrap" }}>
-              <MetaCell label="Order" value={`#${recent.id}`} />
-              <Hair />
-              <MetaCell label="Placed" value={recent.date} />
-              <Hair />
-              <MetaCell label="Total" value={recent.total} />
-            </div>
-            <StatusTag status={recent.status} />
-          </div>
-
-          <div style={{ padding: "30px 32px 34px" }}>
-            <StatusTrack status={recent.status} />
-            {recent.note && (
-              <p style={{ margin: "30px 0 26px", maxWidth: 520, fontFamily: "var(--font-serif)", fontStyle: "italic", fontSize: 17, lineHeight: 1.6, color: "var(--ink)" }}>
-                {recent.note}
-              </p>
-            )}
-            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
-              <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
-                {recent.items.map((it) => <ItemThumb key={it.name} item={it} />)}
+        {recent ? (
+          <article style={{ border: "1px solid var(--line)", background: "var(--paper)" }}>
+            <div style={{
+              display: "grid", gridTemplateColumns: "1fr auto", gap: 24,
+              padding: "28px 32px", borderBottom: "1px solid var(--line)", alignItems: "center",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 26, flexWrap: "wrap" }}>
+                <MetaCell label="Order" value={`#${recent.id}`} />
+                <Hair />
+                <MetaCell label="Placed" value={recent.date} />
+                <Hair />
+                <MetaCell label="Total" value={recent.total} />
               </div>
-              <OutlineButton onClick={() => onOpenOrder(recent.id)}>View order</OutlineButton>
+              <StatusTag status={recent.status} />
             </div>
+
+            <div style={{ padding: "30px 32px 34px" }}>
+              <StatusTrack status={recent.status} />
+              {recent.note && (
+                <p style={{ margin: "30px 0 26px", maxWidth: 520, fontFamily: "var(--font-serif)", fontStyle: "italic", fontSize: 17, lineHeight: 1.6, color: "var(--ink)" }}>
+                  {recent.note}
+                </p>
+              )}
+              <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
+                <div style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
+                  {recent.items.map((it) => <ItemThumb key={it.name} item={it} />)}
+                </div>
+                <OutlineButton onClick={() => onOpenOrder(recent.id)}>View order</OutlineButton>
+              </div>
+            </div>
+          </article>
+        ) : (
+          <div style={{
+            border: "1px solid var(--line)", padding: "40px 32px",
+            display: "flex", flexDirection: "column", alignItems: "center", gap: 14, textAlign: "center",
+          }}>
+            <div style={{ width: 44, height: 44, border: "1px solid var(--line)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--ash)" }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              </svg>
+            </div>
+            <p style={{ margin: 0, fontSize: 12, color: "var(--ash)", fontFamily: "var(--font-sans)", letterSpacing: "0.3px" }}>
+              No orders yet. Your commissions will appear here.
+            </p>
+            <ArrowLink href="/collections">Browse the shop</ArrowLink>
           </div>
-        </article>
+        )}
       </section>
 
       {/* Saved preview */}
@@ -314,21 +283,42 @@ function Overview({ user, goOrders, goSaved, onOpenOrder }: {
 }
 
 /* ── Orders section ── */
-function Orders({ openOrder, setOpenOrder }: { openOrder: string | null; setOpenOrder: (id: string | null) => void }) {
+function Orders({ orders, openOrder, setOpenOrder }: {
+  orders: Order[]
+  openOrder: string | null
+  setOpenOrder: (id: string | null) => void
+}) {
   return (
     <div>
       <PageHead eyebrow="Account" title="Orders" sub="A record of every piece you've commissioned, from the bench to your hands." />
-      <div>
-        {ORDERS.map((o, i) => (
-          <OrderRow
-            key={o.id}
-            order={o}
-            open={openOrder === o.id}
-            onToggle={() => setOpenOrder(openOrder === o.id ? null : o.id)}
-            first={i === 0}
-          />
-        ))}
-      </div>
+      {orders.length === 0 ? (
+        <div style={{
+          border: "1px solid var(--line)", padding: "56px 32px",
+          display: "flex", flexDirection: "column", alignItems: "center", gap: 14, textAlign: "center",
+        }}>
+          <div style={{ width: 44, height: 44, border: "1px solid var(--line)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--ash)" }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            </svg>
+          </div>
+          <p style={{ margin: 0, fontSize: 12, color: "var(--ash)", fontFamily: "var(--font-sans)", letterSpacing: "0.3px" }}>
+            You haven&apos;t placed any orders yet.
+          </p>
+          <ArrowLink href="/collections">Browse the shop</ArrowLink>
+        </div>
+      ) : (
+        <div>
+          {orders.map((o, i) => (
+            <OrderRow
+              key={o.id}
+              order={o}
+              open={openOrder === o.id}
+              onToggle={() => setOpenOrder(openOrder === o.id ? null : o.id)}
+              first={i === 0}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -404,6 +394,18 @@ function OrderRow({ order, open, onToggle, first }: { order: Order; open: boolea
             </span>
             <span style={{ fontFamily: "var(--font-serif)", fontSize: 20, color: "var(--ink)" }}>{order.total}</span>
           </div>
+          {order.engraving && (
+            <div style={{ marginTop: 18, paddingTop: 18, borderTop: "1px solid var(--line)" }}>
+              <p style={{ margin: 0, fontSize: 9, letterSpacing: "1.8px", textTransform: "uppercase", color: "var(--ash)", fontFamily: "var(--font-sans)" }}>Engraving</p>
+              <p style={{ margin: "5px 0 0", fontSize: 13, color: "var(--ink)", fontFamily: "var(--font-serif)", fontStyle: "italic" }}>&ldquo;{order.engraving}&rdquo;</p>
+            </div>
+          )}
+          {order.address && (
+            <div style={{ marginTop: 14 }}>
+              <p style={{ margin: 0, fontSize: 9, letterSpacing: "1.8px", textTransform: "uppercase", color: "var(--ash)", fontFamily: "var(--font-sans)" }}>Ship to</p>
+              <p style={{ margin: "5px 0 0", fontSize: 12, lineHeight: 1.6, color: "var(--slate)", fontFamily: "var(--font-sans)" }}>{order.address}</p>
+            </div>
+          )}
           <div style={{ display: "flex", gap: 12, marginTop: 26 }}>
             <OutlineButton>View invoice</OutlineButton>
             {order.status === "delivered" && <TextButton>Buy again</TextButton>}
