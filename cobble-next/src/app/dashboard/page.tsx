@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation"
 import { createClient } from "@/lib/supabase/server"
+import { getOrders } from "@/lib/order-actions"
 import { DashboardClient } from "./DashboardClient"
 
 export const metadata = { title: "Account — Cobble Studio" }
@@ -19,9 +20,12 @@ export default async function DashboardPage() {
     ? (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase()
     : (displayName[0] ?? email[0] ?? "?").toUpperCase()
 
+  const orders = await getOrders()
+
   return (
     <DashboardClient
       user={{ name: displayName || email, first, email, since, initials }}
+      orders={orders}
     />
   )
 }

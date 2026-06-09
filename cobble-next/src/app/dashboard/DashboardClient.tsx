@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/client"
 import { useSaved } from "@/context/SavedContext"
-import { useOrders } from "@/context/OrdersContext"
-import type { Order, OrderItem } from "@/context/OrdersContext"
+import type { Order, OrderItem } from "@/lib/order-actions"
 import { products } from "@/lib/products"
 
 /* ── Types ── */
@@ -65,9 +64,8 @@ const SECTIONS: { key: Section; label: string; Icon: () => JSX.Element }[] = [
 ]
 
 /* ── Root client component ── */
-export function DashboardClient({ user }: { user: UserInfo }) {
+export function DashboardClient({ user, orders }: { user: UserInfo; orders: Order[] }) {
   const router = useRouter()
-  const { orders } = useOrders()
   const [section, setSection] = useState<Section>("overview")
   const [openOrder, setOpenOrder] = useState<string | null>(null)
 

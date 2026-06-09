@@ -1,10 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useCart } from "@/context/CartContext"
-import { useOrders } from "@/context/OrdersContext"
+import { createClient } from "@/lib/supabase/client"
+import { createOrder } from "@/lib/order-actions"
 
 function parsePrice(p: string) { return parseFloat(p.replace(/[^0-9.]/g, "")) || 0 }
 function formatCAD(n: number) { return `CA$${n.toFixed(2).replace(/\.00$/, "")}` }
@@ -83,12 +85,22 @@ function FormField({ field, value, error, onChange }: {
 
 export function CheckoutClient() {
   const { items, clearCart } = useCart()
-  const { addOrder } = useOrders()
+  const router = useRouter()
   const [data, setData] = useState<FormData>({})
   const [errors, setErrors] = useState<Partial<Record<string, string>>>({})
   const [engravingOn, setEngravingOn] = useState(false)
   const [confirmed, setConfirmed] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [orderNumber] = useState(genOrderNumber)
+
+  // Auth guard — redirect to sign in if not logged in
+  useEffect(() => {
+    const supabase = createClient()
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) router.replace("/account?next=/checkout")
+    })
+  }, [router])
 
   const subtotal  = items.reduce((s, i) => s + parsePrice(i.price) * i.qty, 0)
   const shipping  = subtotal >= 100 ? 0 : 12
@@ -100,10 +112,13 @@ export function CheckoutClient() {
     if (errors[id]) setErrors((e) => { const n = { ...e }; delete n[id]; return n })
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     const errs = validate(data, engravingOn)
     if (Object.keys(errs).length) { setErrors(errs); return }
+
+    setSubmitting(true)
+    setSubmitError(null)
 
     const addressLine = [
       data.address1,
@@ -112,10 +127,9 @@ export function CheckoutClient() {
       data.country,
     ].filter(Boolean).join(", ")
 
-    addOrder({
+    const result = await createOrder({
       id: orderNumber,
-      date: new Date().toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric" }),
-      status: "ordered",
+      customerName: `${data.firstName} ${data.lastName}`.trim(),
       total: formatCAD(total),
       note: "Your Brand Director will reach out by email with e-transfer payment instructions.",
       eta: "Ships within 1 week of payment confirmation",
@@ -123,6 +137,13 @@ export function CheckoutClient() {
       engraving: engravingOn ? data.engravingText : undefined,
       address: addressLine,
     })
+
+    setSubmitting(false)
+
+    if (result.error) {
+      setSubmitError(result.error)
+      return
+    }
 
     clearCart()
     setConfirmed(true)
@@ -393,11 +414,18 @@ export function CheckoutClient() {
             </div>
           </div>
 
+          {submitError && (
+            <p className="mb-4 border border-red-200 bg-red-50 px-4 py-3 text-[11px] leading-[1.6] tracking-[0.3px] text-red-600">
+              {submitError}
+            </p>
+          )}
+
           <button
             type="submit"
-            className="w-full bg-[#1E1E1E] py-4 text-[12px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:translate-y-px active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2"
+            disabled={submitting}
+            className="w-full bg-[#1E1E1E] py-4 text-[12px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:translate-y-px active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Place Order
+            {submitting ? "Placing Order…" : "Place Order"}
           </button>
 
           <p className="mt-4 text-center text-[10px] leading-[1.7] tracking-[0.3px] text-[#A2A2A2]">
