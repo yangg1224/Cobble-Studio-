@@ -205,9 +205,12 @@ export function CartClient() {
               </div>
             </dl>
 
-            <button className="mt-8 w-full bg-[#1E1E1E] py-4 text-[12px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:translate-y-px active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2">
+            <Link
+              href="/checkout"
+              className="mt-8 block w-full bg-[#1E1E1E] py-4 text-center text-[12px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:translate-y-px active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2"
+            >
               Proceed to Checkout
-            </button>
+            </Link>
 
             <Link
               href="/collections"
