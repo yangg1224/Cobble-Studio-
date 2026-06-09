@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
+import { useLanguage } from "@/context/LanguageContext"
 
 const slides = [
   { src: "/hero/head1.jpg", alt: "Hero image 1" },
@@ -11,6 +12,7 @@ const slides = [
 ]
 
 export function HeroCarousel() {
+  const { t } = useLanguage()
   const [current, setCurrent] = useState(0)
 
   const goTo = useCallback((n: number) => {
@@ -28,7 +30,6 @@ export function HeroCarousel() {
       className="relative w-full overflow-hidden"
       style={{ height: "calc(100vh - 122px)", minHeight: 520 }}
     >
-      {/* Slides */}
       {slides.map((slide, i) => (
         <div
           key={slide.src}
@@ -48,19 +49,17 @@ export function HeroCarousel() {
         </div>
       ))}
 
-      {/* Bottom gradient */}
       <div
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{ background: "linear-gradient(to bottom, transparent 60%, rgba(30,30,30,0.1) 100%)" }}
       />
 
-      {/* Right panel */}
       <div className="absolute bottom-0 right-0 top-0 z-10 flex w-[68px] flex-col items-center justify-center gap-8 bg-white">
         <span
           className="select-none text-[13px] font-medium uppercase tracking-[3px] text-[#1E1E1E]"
           style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
         >
-          New Arrivals
+          {t.hero.newArrivals}
         </span>
 
         <div className="flex flex-col items-center gap-2.5" role="tablist" aria-label="Slide indicators">

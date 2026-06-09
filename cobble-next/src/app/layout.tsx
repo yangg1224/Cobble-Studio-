@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer";
 import { SavedProvider } from "@/context/SavedContext";
 import { CartProvider } from "@/context/CartContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -35,13 +36,15 @@ export default function RootLayout({
       className={`${instrumentSans.variable} ${crimsonText.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white">
-        <CartProvider>
-          <SavedProvider>
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
-          </SavedProvider>
-        </CartProvider>
+        <LanguageProvider>
+          <CartProvider>
+            <SavedProvider>
+              <SiteHeader />
+              <main className="flex-1">{children}</main>
+              <SiteFooter />
+            </SavedProvider>
+          </CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

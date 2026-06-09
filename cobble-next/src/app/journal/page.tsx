@@ -3,22 +3,13 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Fragment, useState } from "react"
-
-const CATEGORIES = [
-  { key: "all",         label: "All" },
-  { key: "craft",       label: "Craft" },
-  { key: "process",     label: "Process" },
-  { key: "material",    label: "Material" },
-  { key: "story",       label: "Story" },
-  { key: "studio-note", label: "Studio Note" },
-]
+import { useLanguage } from "@/context/LanguageContext"
 
 const POSTS = [
   {
     id: "brand-story",
     slug: "brand-story",
-    category: "Story",
-    cats: ["story"],
+    catKey: "catStory",
     title: "Brand Story — Born of Wood",
     date: "October 2025",
     readTime: "8 min read",
@@ -28,7 +19,7 @@ const POSTS = [
   {
     id: "the-craft-behind-the-cup",
     slug: "the-craft-behind-the-cup",
-    category: "Craft",
+    catKey: "catCraft",
     cats: ["craft"],
     title: "The Craft Behind the Cup",
     date: "May 2026",
@@ -39,7 +30,7 @@ const POSTS = [
   {
     id: "from-wood-to-hand",
     slug: "from-wood-to-hand",
-    category: "Process",
+    catKey: "catProcess",
     cats: ["process", "craft"],
     title: "From Wood to Hand — Inside the Workshop",
     date: "May 2026",
@@ -50,7 +41,7 @@ const POSTS = [
   {
     id: "light-and-shadow",
     slug: "light-and-shadow",
-    category: "Story",
+    catKey: "catStory",
     cats: ["story"],
     title: "Light & Shadow — Objects at Rest",
     date: "April 2026",
@@ -60,44 +51,56 @@ const POSTS = [
   },
 ]
 
+const CAT_KEYS = [
+  { key: "all",         tKey: "catAll"       },
+  { key: "craft",       tKey: "catCraft"     },
+  { key: "process",     tKey: "catProcess"   },
+  { key: "material",    tKey: "catMaterial"  },
+  { key: "story",       tKey: "catStory"     },
+  { key: "studio-note", tKey: "catStudioNote"},
+] as const
+
 type Post = (typeof POSTS)[number]
+type JournalTKey = "catAll" | "catCraft" | "catProcess" | "catMaterial" | "catStory" | "catStudioNote"
 
 export default function JournalPage() {
+  const { t } = useLanguage()
+  const j = t.journal
   const [active, setActive] = useState("all")
 
-  const shown = active === "all" ? POSTS : POSTS.filter((p) => p.cats.includes(active))
+  const shown = active === "all"
+    ? POSTS
+    : POSTS.filter((p) => (p as { cats?: string[] }).cats?.includes(active))
 
   return (
     <section className="bg-white px-10 pb-24 pt-[72px]">
-      {/* ── Title block ── */}
+      {/* Title block */}
       <div className="mx-auto max-w-[720px] pb-2 text-center">
         <h1
           className="m-0 font-normal leading-[1.05] tracking-[-0.01em] text-[#1E1E1E]"
-          style={{
-            fontFamily: "var(--font-crimson-text)",
-            fontSize: "clamp(40px, 5vw, 56px)",
-          }}
+          style={{ fontFamily: "var(--font-crimson-text)", fontSize: "clamp(40px, 5vw, 56px)" }}
         >
-          Journal
+          {j.title}
         </h1>
         <p
           className="mx-auto mt-5 max-w-[520px] text-[19px] leading-[1.7] tracking-[0.2px] text-[#1E1E1E]"
           style={{ fontFamily: "var(--font-crimson-text)", fontStyle: "italic" }}
         >
-          Stories that enrich the senses,<br />
-          inspiring daily life with comfort and intention.
+          {j.subtitle.split("\n").map((line, i) => (
+            <Fragment key={i}>{line}{i === 0 && <br />}</Fragment>
+          ))}
         </p>
       </div>
 
-      {/* ── Category filter — text row with pipe separators ── */}
+      {/* Category filter */}
       <div className="mt-11 flex flex-wrap items-center justify-center">
-        {CATEGORIES.map((cat, i) => (
+        {CAT_KEYS.map((cat, i) => (
           <Fragment key={cat.key}>
             {i > 0 && (
               <span aria-hidden="true" className="select-none text-[12px] text-[#E8E8E8]" style={{ margin: "0 22px" }}>|</span>
             )}
             <FilterTab
-              label={cat.label}
+              label={j[cat.tKey as JournalTKey]}
               active={active === cat.key}
               onClick={() => setActive(cat.key)}
             />
@@ -105,31 +108,23 @@ export default function JournalPage() {
         ))}
       </div>
 
-      {/* ── Article grid ── */}
+      {/* Article grid */}
       {shown.length > 0 ? (
         <div className="mt-14 grid grid-cols-2 gap-x-10 gap-y-16">
           {shown.map((post) => (
-            <ArticleCard key={post.id} post={post} />
+            <ArticleCard key={post.id} post={post} catLabel={j[post.catKey as JournalTKey]} />
           ))}
         </div>
       ) : (
         <p className="mt-16 text-center text-[12px] uppercase tracking-[1.5px] text-[#A2A2A2]">
-          No stories in this category yet.
+          {j.noStories}
         </p>
       )}
     </section>
   )
 }
 
-function FilterTab({
-  label,
-  active,
-  onClick,
-}: {
-  label: string
-  active: boolean
-  onClick: () => void
-}) {
+function FilterTab({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
@@ -147,14 +142,10 @@ function FilterTab({
   )
 }
 
-function ArticleCard({ post }: { post: Post }) {
+function ArticleCard({ post, catLabel }: { post: Post; catLabel: string }) {
   return (
     <Link href={`/journal/${post.slug}`} className="group block">
-      {/* Image */}
-      <div
-        className="relative w-full overflow-hidden bg-[#F9F9F9]"
-        style={{ aspectRatio: "3 / 2" }}
-      >
+      <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "3 / 2" }}>
         <Image
           src={post.img}
           alt={post.title}
@@ -164,12 +155,10 @@ function ArticleCard({ post }: { post: Post }) {
           sizes="(max-width: 1024px) 50vw, 45vw"
         />
       </div>
-
-      {/* Text */}
       <div className="pt-[18px]">
         <div className="mb-2.5">
           <span className="text-[10px] font-medium uppercase tracking-[2px] text-[#A2A2A2]">
-            {post.category}
+            {catLabel}
           </span>
         </div>
         <p className="m-0 text-[16px] font-medium leading-[1.45] tracking-[0.2px] text-[#1E1E1E] transition-colors duration-200 group-hover:text-[#3CACB0]">

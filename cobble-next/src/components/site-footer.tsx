@@ -1,12 +1,10 @@
 "use client"
 
 import Link from "next/link"
+import { useLanguage } from "@/context/LanguageContext"
 
-const shopLinks  = ["Cups & Mugs", "Trays & Boards", "Spoons", "New Arrivals", "Gift Ideas"]
 const shopHrefs  = ["/shop/cups", "/shop/trays", "/shop/spoons", "/shop/new", "/shop/gift"]
-const aboutLinks = ["Our Story", "The Craft", "Journal", "Sustainability"]
 const aboutHrefs = ["/about", "/about/craft", "/journal", "/about/sustainability"]
-const suppLinks  = ["FAQ", "Shipping & Returns", "Product Care", "Contact Us"]
 const suppHrefs  = ["/faq", "/shipping", "/care", "/contact"]
 
 function FooterCol({ title, links, hrefs }: { title: string; links: string[]; hrefs: string[] }) {
@@ -17,7 +15,7 @@ function FooterCol({ title, links, hrefs }: { title: string; links: string[]; hr
       </span>
       <ul className="flex flex-col gap-3">
         {links.map((label, i) => (
-          <li key={label}>
+          <li key={i}>
             <Link
               href={hrefs[i]}
               className="text-[11px] tracking-[1px] text-[#989898] transition-colors duration-200 hover:text-[#1E1E1E]"
@@ -32,6 +30,9 @@ function FooterCol({ title, links, hrefs }: { title: string; links: string[]; hr
 }
 
 export function SiteFooter() {
+  const { t } = useLanguage()
+  const f = t.footer
+
   return (
     <footer className="border-t border-[#E8E8E8] bg-[#F9F9F9]">
       {/* Main grid */}
@@ -43,7 +44,7 @@ export function SiteFooter() {
             <img src="/brand_assets/logo.png" alt="COBBLE" className="h-12 w-auto" />
           </Link>
           <p className="max-w-[180px] text-[11px] leading-[1.8] tracking-[1px] text-[#989898]">
-            Handcrafted wooden objects made with intention. Every piece is one of a kind.
+            {f.tagline}
           </p>
           <div className="mt-6 flex gap-4">
             {/* Instagram */}
@@ -71,17 +72,17 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <FooterCol title="Shop"    links={shopLinks}  hrefs={shopHrefs} />
-        <FooterCol title="About"   links={aboutLinks} hrefs={aboutHrefs} />
-        <FooterCol title="Support" links={suppLinks}   hrefs={suppHrefs} />
+        <FooterCol title={f.shopTitle}    links={f.shopLinks}    hrefs={shopHrefs} />
+        <FooterCol title={f.aboutTitle}   links={f.aboutLinks}   hrefs={aboutHrefs} />
+        <FooterCol title={f.supportTitle} links={f.supportLinks} hrefs={suppHrefs} />
 
         {/* Newsletter column */}
         <div>
           <span className="mb-5 block text-[11px] font-semibold uppercase tracking-[2.5px] text-[#1E1E1E]">
-            Newsletter
+            {f.newsletterTitle}
           </span>
           <p className="mb-4 text-[11px] leading-relaxed tracking-[1px] text-[#989898]">
-            Stay in the loop — new pieces, stories, and studio notes delivered to your inbox.
+            {f.newsletterDesc}
           </p>
           <form
             className="flex border-b border-[#1E1E1E]"
@@ -89,15 +90,15 @@ export function SiteFooter() {
           >
             <input
               type="email"
-              placeholder="Your email"
-              aria-label="Email address"
+              placeholder={f.emailPlaceholder}
+              aria-label={f.emailPlaceholder}
               className="flex-1 bg-transparent py-2 text-[11px] tracking-[1px] text-[#1E1E1E] placeholder:text-[#A2A2A2] outline-none"
             />
             <button
               type="submit"
               className="py-2 pl-3 text-[10px] font-medium uppercase tracking-[2px] text-[#1E1E1E] transition-colors duration-200 hover:text-[#3CACB0]"
             >
-              Join
+              {f.joinBtn}
             </button>
           </form>
         </div>
@@ -106,14 +107,14 @@ export function SiteFooter() {
       {/* Bottom bar */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#E8E8E8] px-6 py-4 md:px-10 md:py-[18px]">
         <span className="text-[10px] tracking-[1.2px] text-[#A2A2A2]">
-          © 2026 Cobble Canada Inc.
+          {f.copyright}
         </span>
         <nav className="flex gap-6" aria-label="Legal links">
           <Link href="/privacy" className="text-[10px] tracking-[1.2px] text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]">
-            Privacy Policy
+            {f.privacyPolicy}
           </Link>
           <Link href="/terms" className="text-[10px] tracking-[1.2px] text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]">
-            Terms of Use
+            {f.termsOfUse}
           </Link>
         </nav>
       </div>

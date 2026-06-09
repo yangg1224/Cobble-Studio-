@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import type { User } from "@supabase/supabase-js"
 import { createClient } from "@/lib/supabase/client"
 import { useCart } from "@/context/CartContext"
+import { useLanguage, LANGUAGES, type Language } from "@/context/LanguageContext"
 
 const collections = [
   { title: "Mug",   href: "/collections/mug" },
@@ -24,9 +25,164 @@ const navLinkCls =
   "after:transition-[width] after:duration-[250ms] hover:after:w-full " +
   "focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-4 focus-visible:rounded-sm"
 
+function LanguageSwitcher() {
+  const { language, setLanguage } = useLanguage()
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener("mousedown", handleOutside)
+    return () => document.removeEventListener("mousedown", handleOutside)
+  }, [])
+
+  const current = LANGUAGES.find((l) => l.code === language)!
+
+  function handleSelect(code: Language) {
+    setLanguage(code)
+    setOpen(false)
+  }
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-label="Change language"
+        aria-expanded={open}
+        className="flex items-center gap-1.5 px-2 py-1 text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] hover:scale-[1.04] active:scale-[0.94] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2 focus-visible:rounded-sm"
+      >
+        {/* Globe icon */}
+        <svg
+          width="17"
+          height="17"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z" />
+        </svg>
+        <span className="text-[10px] font-semibold uppercase tracking-[1.5px]">
+          {current.label}
+        </span>
+        {/* Chevron */}
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+          style={{
+            transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 220ms ease",
+          }}
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+
+      {/* Dropdown */}
+      <div
+        aria-hidden={!open}
+        style={{
+          position: "absolute",
+          right: 0,
+          top: "calc(100% + 10px)",
+          width: 160,
+          background: "white",
+          border: "1px solid #E8E8E8",
+          boxShadow: "0 8px 32px rgba(30,30,30,0.10)",
+          zIndex: 50,
+          opacity: open ? 1 : 0,
+          transform: open ? "translateY(0)" : "translateY(-6px)",
+          pointerEvents: open ? "auto" : "none",
+          transition: "opacity 180ms ease, transform 180ms ease",
+        }}
+      >
+        <p
+          style={{
+            padding: "10px 16px 8px",
+            fontSize: 9,
+            fontWeight: 600,
+            textTransform: "uppercase",
+            letterSpacing: "2px",
+            color: "#A2A2A2",
+            borderBottom: "1px solid #F0F0F0",
+          }}
+        >
+          Language
+        </p>
+        {LANGUAGES.map(({ code, label, native }) => {
+          const isActive = code === language
+          return (
+            <button
+              key={code}
+              onClick={() => handleSelect(code)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+                padding: "10px 16px",
+                background: "transparent",
+                border: "none",
+                borderBottom: "1px solid #F4F4F4",
+                cursor: "pointer",
+                textAlign: "left",
+                color: isActive ? "#3CACB0" : "#1E1E1E",
+                transition: "color 150ms ease, background 150ms ease",
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) (e.currentTarget as HTMLButtonElement).style.color = "#3CACB0"
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) (e.currentTarget as HTMLButtonElement).style.color = "#1E1E1E"
+              }}
+            >
+              <span style={{ fontSize: 11, fontWeight: isActive ? 600 : 400, letterSpacing: "0.3px" }}>
+                {native}
+              </span>
+              <span style={{ fontSize: 9, fontWeight: 600, textTransform: "uppercase", letterSpacing: "1.5px", opacity: 0.5 }}>
+                {label}
+              </span>
+              {isActive && (
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#3CACB0"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ position: "absolute", right: 12 }}
+                  aria-hidden="true"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              )}
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 export function SiteHeader() {
   const router = useRouter()
   const { totalCount } = useCart()
+  const { t } = useLanguage()
   const [user, setUser] = useState<User | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
@@ -47,7 +203,6 @@ export function SiteHeader() {
     return () => subscription.unsubscribe()
   }, [])
 
-  // Close account dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -58,12 +213,10 @@ export function SiteHeader() {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
-  // Close mobile nav on route change
   useEffect(() => {
     setMobileNavOpen(false)
   }, [])
 
-  // Auto-hide announcement banner after 10 seconds
   useEffect(() => {
     const t = setTimeout(() => setBannerVisible(false), 10000)
     return () => clearTimeout(t)
@@ -88,13 +241,13 @@ export function SiteHeader() {
       className="sticky top-0 z-50 w-full"
       style={{ boxShadow: "0 4px 24px rgba(30,30,30,0.04)" }}
     >
-      {/* Announcement bar — fades out after 10 s */}
+      {/* Announcement bar */}
       <div
         className="flex items-center justify-center border-b border-[#9C6A3A] bg-[#C4895A] overflow-hidden transition-[max-height,opacity] duration-500 ease-in-out"
         style={{ maxHeight: bannerVisible ? 31 : 0, opacity: bannerVisible ? 1 : 0 }}
       >
         <p className="h-[31px] flex items-center text-[10px] font-medium uppercase tracking-[2px] text-[#FAF5EF] whitespace-nowrap">
-          Enjoy free shipping on orders of $100 or more.
+          {t.banner}
         </p>
       </div>
 
@@ -106,13 +259,13 @@ export function SiteHeader() {
           <img src="/brand_assets/logo.png" alt="COBBLE" className="h-[48px] md:h-[58px] w-auto block" />
         </Link>
 
-        {/* Desktop nav links — hidden on mobile */}
+        {/* Desktop nav links */}
         <nav className="hidden md:flex items-center gap-9" aria-label="Main navigation">
 
           {/* Shop — with hover dropdown */}
           <div className="group relative flex items-center">
             <Link href="/collections" className={navLinkCls}>
-              Shop
+              {t.nav.shop}
             </Link>
 
             {/* Dropdown */}
@@ -121,7 +274,7 @@ export function SiteHeader() {
               style={{ paddingTop: 16, paddingBottom: 20, paddingLeft: 28, paddingRight: 28 }}
             >
               <p className="mb-3.5 text-[9px] font-semibold uppercase tracking-[2.2px] text-[#A2A2A2]">
-                • Shop by Collection
+                {t.nav.shopByCollection}
               </p>
               <ul className="flex flex-col">
                 {collections.map((item) => (
@@ -138,22 +291,27 @@ export function SiteHeader() {
             </div>
           </div>
 
-          <Link href="/journal"  className={navLinkCls}>Journal</Link>
-          <Link href="/about"    className={navLinkCls}>About</Link>
-          <Link href="/contact"  className={navLinkCls}>Contact</Link>
+          <Link href="/journal"  className={navLinkCls}>{t.nav.journal}</Link>
+          <Link href="/about"    className={navLinkCls}>{t.nav.about}</Link>
+          <Link href="/contact"  className={navLinkCls}>{t.nav.contact}</Link>
         </nav>
 
         {/* Icons — far right */}
-        <div className="ml-auto flex items-center gap-4 md:gap-5">
-          {/* Search — hidden on mobile to save space */}
+        <div className="ml-auto flex items-center gap-3 md:gap-4">
+          {/* Search — hidden on mobile */}
           <button
-            aria-label="Search"
+            aria-label={t.search}
             className="hidden md:flex items-center justify-center p-1 text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] hover:scale-[1.08] active:scale-[0.94]"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
             </svg>
           </button>
+
+          {/* Language switcher — hidden on mobile */}
+          <div className="hidden md:block">
+            <LanguageSwitcher />
+          </div>
 
           {/* Account */}
           {user ? (
@@ -191,14 +349,14 @@ export function SiteHeader() {
                       className="font-ui block px-5 py-2.5 text-[10px] font-medium uppercase tracking-[2px] transition-colors duration-200 hover:text-[#3CACB0]"
                       style={{ color: "var(--ink)" }}
                     >
-                      My Account
+                      {t.myAccount}
                     </Link>
                     <button
                       onClick={handleSignOut}
                       className="font-ui w-full cursor-pointer bg-transparent px-5 py-2.5 text-left text-[10px] font-medium uppercase tracking-[2px] transition-colors duration-200 hover:text-[#3CACB0]"
                       style={{ border: "none", color: "var(--ash)" }}
                     >
-                      Sign Out
+                      {t.signOut}
                     </button>
                   </div>
                 </div>
@@ -218,7 +376,7 @@ export function SiteHeader() {
 
           <Link
             href="/cart"
-            aria-label={`Cart${totalCount > 0 ? ` (${totalCount} items)` : ""}`}
+            aria-label={`${t.nav.shop}${totalCount > 0 ? ` (${totalCount})` : ""}`}
             className="relative flex items-center justify-center p-1 text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] hover:scale-[1.08] active:scale-[0.94]"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -265,7 +423,7 @@ export function SiteHeader() {
               onClick={() => setMobileNavOpen(false)}
               className="flex items-center justify-between px-6 py-4 text-[11px] font-medium uppercase tracking-[2.5px] text-[#1E1E1E] border-b border-[#F0F0F0] hover:text-[#3CACB0] transition-colors duration-200"
             >
-              Shop
+              {t.nav.shop}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <polyline points="9 18 15 12 9 6"/>
               </svg>
@@ -288,7 +446,7 @@ export function SiteHeader() {
               onClick={() => setMobileNavOpen(false)}
               className="flex items-center justify-between px-6 py-4 text-[11px] font-medium uppercase tracking-[2.5px] text-[#1E1E1E] border-t border-[#F0F0F0] hover:text-[#3CACB0] transition-colors duration-200"
             >
-              Journal
+              {t.nav.journal}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <polyline points="9 18 15 12 9 6"/>
               </svg>
@@ -298,7 +456,7 @@ export function SiteHeader() {
               onClick={() => setMobileNavOpen(false)}
               className="flex items-center justify-between px-6 py-4 text-[11px] font-medium uppercase tracking-[2.5px] text-[#1E1E1E] border-t border-[#F0F0F0] hover:text-[#3CACB0] transition-colors duration-200"
             >
-              About
+              {t.nav.about}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <polyline points="9 18 15 12 9 6"/>
               </svg>
@@ -308,11 +466,22 @@ export function SiteHeader() {
               onClick={() => setMobileNavOpen(false)}
               className="flex items-center justify-between px-6 py-4 text-[11px] font-medium uppercase tracking-[2.5px] text-[#1E1E1E] border-t border-[#F0F0F0] hover:text-[#3CACB0] transition-colors duration-200"
             >
-              Contact
+              {t.nav.contact}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <polyline points="9 18 15 12 9 6"/>
               </svg>
             </Link>
+
+            {/* Language switcher in mobile drawer */}
+            <div className="border-t border-[#F0F0F0] px-6 py-4">
+              <p className="mb-3 text-[9px] font-semibold uppercase tracking-[2px] text-[#A2A2A2]">Language</p>
+              <div className="flex gap-3 flex-wrap">
+                {LANGUAGES.map(({ code, label, native }) => (
+                  <MobileLangButton key={code} code={code} label={label} native={native} />
+                ))}
+              </div>
+            </div>
+
             {/* Search in mobile drawer */}
             <div className="border-t border-[#F0F0F0] px-6 py-4">
               <div className="flex items-center gap-3 border-b border-[#E8E8E8] pb-2">
@@ -321,8 +490,8 @@ export function SiteHeader() {
                 </svg>
                 <input
                   type="search"
-                  placeholder="Search"
-                  aria-label="Search"
+                  placeholder={t.search}
+                  aria-label={t.search}
                   className="flex-1 bg-transparent text-[12px] tracking-[0.5px] text-[#1E1E1E] placeholder:text-[#A2A2A2] outline-none"
                 />
               </div>
@@ -331,5 +500,29 @@ export function SiteHeader() {
         </div>
       )}
     </header>
+  )
+}
+
+function MobileLangButton({ code, native }: { code: Language; label: string; native: string }) {
+  const { language, setLanguage } = useLanguage()
+  const isActive = code === language
+  return (
+    <button
+      onClick={() => setLanguage(code)}
+      style={{
+        padding: "5px 12px",
+        border: isActive ? "1px solid #3CACB0" : "1px solid #E8E8E8",
+        background: isActive ? "#3CACB0" : "transparent",
+        color: isActive ? "white" : "#1E1E1E",
+        fontSize: 10,
+        fontWeight: isActive ? 600 : 400,
+        letterSpacing: "1px",
+        textTransform: "uppercase" as const,
+        cursor: "pointer",
+        transition: "all 150ms ease",
+      }}
+    >
+      {native}
+    </button>
   )
 }

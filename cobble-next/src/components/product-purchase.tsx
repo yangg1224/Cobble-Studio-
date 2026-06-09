@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import type { ProductColor } from "@/lib/products"
 import { useSaved } from "@/context/SavedContext"
 import { useCart } from "@/context/CartContext"
+import { useLanguage } from "@/context/LanguageContext"
 
 type Props = {
   slug: string
@@ -17,6 +18,8 @@ type Props = {
 }
 
 export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: Props) {
+  const { t } = useLanguage()
+  const pp = t.productPurchase
   const [qty, setQty] = useState(1)
   const { isSaved, toggle } = useSaved()
   const { addItem } = useCart()
@@ -50,26 +53,20 @@ export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: 
       {/* Quantity */}
       <div className="mb-5 flex items-center gap-4">
         <span className="w-16 text-[10px] font-semibold uppercase tracking-[2.2px] text-[#A2A2A2]">
-          Quantity
+          {pp.quantity}
         </span>
         <div className="inline-flex items-center border border-[#1E1E1E]">
           <button
             aria-label="Decrease quantity"
             onClick={() => clampQty(qty - 1)}
             className="flex h-10 w-10 items-center justify-center text-[16px] text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] active:scale-[0.92]"
-          >
-            −
-          </button>
-          <span className="min-w-[40px] text-center text-[12px] tracking-[1px] text-[#1E1E1E]">
-            {qty}
-          </span>
+          >−</button>
+          <span className="min-w-[40px] text-center text-[12px] tracking-[1px] text-[#1E1E1E]">{qty}</span>
           <button
             aria-label="Increase quantity"
             onClick={() => clampQty(qty + 1)}
             className="flex h-10 w-10 items-center justify-center text-[16px] text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] active:scale-[0.92]"
-          >
-            +
-          </button>
+          >+</button>
         </div>
       </div>
 
@@ -77,7 +74,7 @@ export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: 
       {colors.length > 0 && (
         <div className="mb-5 flex items-center gap-4">
           <span className="w-16 text-[10px] font-semibold uppercase tracking-[2.2px] text-[#A2A2A2]">
-            Color
+            {pp.color}
           </span>
           <div className="flex gap-2.5">
             {colors.map((c, i) => (
@@ -101,7 +98,7 @@ export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: 
       {sizes.length > 0 && (
         <div className="mb-8 flex items-center gap-4">
           <span className="w-16 text-[10px] font-semibold uppercase tracking-[2.2px] text-[#A2A2A2]">
-            Size
+            {pp.size}
           </span>
           <div className="flex gap-2">
             {sizes.map((s, i) => (
@@ -128,7 +125,7 @@ export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: 
           className="flex-1 py-4 text-[12px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:translate-y-px active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2"
           style={{ background: added ? "#3CACB0" : "#1E1E1E" }}
         >
-          {added ? "Added ✓" : "Add to Cart"}
+          {added ? pp.added : pp.addToCart}
         </button>
         <button
           onClick={() => toggle(slug)}
@@ -139,7 +136,7 @@ export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: 
             color: saved ? "var(--paper)" : "var(--ink)",
           }}
         >
-          {saved ? "Saved ♥" : "Save"}
+          {saved ? pp.saved : pp.save}
         </button>
       </div>
 
@@ -149,7 +146,7 @@ export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: 
           onClick={() => router.push("/cart")}
           className="mt-3 w-full text-center text-[10px] uppercase tracking-[2px] text-[#3CACB0] transition-opacity duration-300 hover:opacity-70"
         >
-          View cart →
+          {pp.viewCart}
         </button>
       )}
     </div>

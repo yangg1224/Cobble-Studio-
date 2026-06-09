@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useCart } from "@/context/CartContext"
+import { useLanguage, fmt } from "@/context/LanguageContext"
 
 function parsePrice(price: string): number {
   return parseFloat(price.replace(/[^0-9.]/g, "")) || 0
@@ -14,10 +15,13 @@ function formatCAD(amount: number): string {
 
 export function CartClient() {
   const { items, removeItem, updateQty, clearCart } = useCart()
+  const { t } = useLanguage()
+  const c = t.cart
 
   const subtotal = items.reduce((sum, item) => sum + parsePrice(item.price) * item.qty, 0)
-  const shipping = subtotal >= 100 ? 0 : 12
-  const total = subtotal + shipping
+  const shipping  = subtotal >= 100 ? 0 : 12
+  const total     = subtotal + shipping
+  const itemCount = items.reduce((s, i) => s + i.qty, 0)
 
   if (items.length === 0) {
     return (
@@ -29,20 +33,14 @@ export function CartClient() {
             <path d="M16 10a4 4 0 0 1-8 0"/>
           </svg>
         </div>
-        <p
-          className="text-[#1E1E1E]"
-          style={{ fontFamily: "var(--font-serif)", fontSize: 28, fontWeight: 400, letterSpacing: "-0.02em" }}
-        >
-          Your cart is empty
+        <p className="text-[#1E1E1E]" style={{ fontFamily: "var(--font-serif)", fontSize: 28, fontWeight: 400, letterSpacing: "-0.02em" }}>
+          {c.emptyTitle}
         </p>
         <p className="max-w-[300px] text-[12px] leading-[1.8] tracking-[0.4px] text-[#A2A2A2]">
-          Explore our handcrafted collections and find something you love.
+          {c.emptyDesc}
         </p>
-        <Link
-          href="/collections"
-          className="mt-2 inline-block bg-[#1E1E1E] px-10 py-4 text-[11px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:scale-[0.99]"
-        >
-          Shop Now
+        <Link href="/collections" className="mt-2 inline-block bg-[#1E1E1E] px-10 py-4 text-[11px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:scale-[0.99]">
+          {t.shopNow}
         </Link>
       </div>
     )
@@ -52,14 +50,11 @@ export function CartClient() {
     <div className="mx-auto max-w-[1200px] px-6 pb-24 pt-10 md:px-10">
       {/* Page header */}
       <div className="mb-10 flex items-baseline justify-between">
-        <h1
-          className="text-[#1E1E1E]"
-          style={{ fontFamily: "var(--font-serif)", fontSize: 36, fontWeight: 400, letterSpacing: "-0.02em" }}
-        >
-          Your Cart
+        <h1 className="text-[#1E1E1E]" style={{ fontFamily: "var(--font-serif)", fontSize: 36, fontWeight: 400, letterSpacing: "-0.02em" }}>
+          {c.title}
         </h1>
         <span className="text-[11px] tracking-[1px] text-[#A2A2A2]">
-          {items.reduce((s, i) => s + i.qty, 0)} item{items.reduce((s, i) => s + i.qty, 0) !== 1 ? "s" : ""}
+          {itemCount} {itemCount !== 1 ? c.colQty : c.colProduct}
         </span>
       </div>
 
@@ -68,10 +63,8 @@ export function CartClient() {
         <div>
           {/* Column headers */}
           <div className="mb-5 hidden grid-cols-[1fr_120px_80px_32px] gap-4 border-b border-[#E8E8E8] pb-3 md:grid">
-            {["Product", "Qty", "Price", ""].map((h) => (
-              <span key={h} className="text-[9px] font-semibold uppercase tracking-[2.2px] text-[#A2A2A2]">
-                {h}
-              </span>
+            {[c.colProduct, c.colQty, c.colPrice, ""].map((h, i) => (
+              <span key={i} className="text-[9px] font-semibold uppercase tracking-[2.2px] text-[#A2A2A2]">{h}</span>
             ))}
           </div>
 
@@ -81,74 +74,35 @@ export function CartClient() {
               return (
                 <li key={`${item.slug}-${item.color}-${item.size}`} className="py-7">
                   <div className="flex gap-5 md:grid md:grid-cols-[1fr_120px_80px_32px] md:items-center md:gap-4">
-                    {/* Product info */}
                     <div className="flex min-w-0 flex-1 gap-4">
                       <Link href={`/products/${item.slug}`} className="flex-shrink-0">
                         <div className="relative h-[100px] w-[80px] overflow-hidden bg-[#F9F9F9]">
-                          <Image
-                            src={item.img}
-                            alt={item.name}
-                            fill
-                            className="object-contain transition-transform duration-300 hover:scale-[1.04]"
-                            sizes="80px"
-                          />
+                          <Image src={item.img} alt={item.name} fill className="object-contain transition-transform duration-300 hover:scale-[1.04]" sizes="80px" />
                         </div>
                       </Link>
                       <div className="min-w-0 pt-1">
-                        <Link
-                          href={`/products/${item.slug}`}
-                          className="block text-[12px] font-medium uppercase leading-[1.4] tracking-[1.4px] text-[#1E1E1E] transition-colors duration-200 hover:text-[#3CACB0]"
-                        >
+                        <Link href={`/products/${item.slug}`} className="block text-[12px] font-medium uppercase leading-[1.4] tracking-[1.4px] text-[#1E1E1E] transition-colors duration-200 hover:text-[#3CACB0]">
                           {item.name}
                         </Link>
                         <div className="mt-2 flex flex-col gap-0.5">
-                          {item.color && (
-                            <span className="text-[10px] tracking-[0.8px] text-[#A2A2A2]">
-                              Color: {item.color}
-                            </span>
-                          )}
-                          {item.size && (
-                            <span className="text-[10px] tracking-[0.8px] text-[#A2A2A2]">
-                              Size: {item.size}
-                            </span>
-                          )}
+                          {item.color && <span className="text-[10px] tracking-[0.8px] text-[#A2A2A2]">{c.colorLbl} {item.color}</span>}
+                          {item.size  && <span className="text-[10px] tracking-[0.8px] text-[#A2A2A2]">{c.sizeLbl} {item.size}</span>}
                         </div>
-                        {/* Mobile price */}
-                        <p className="mt-2 text-[12px] tracking-[1px] text-[#1E1E1E] md:hidden">
-                          {formatCAD(lineTotal)}
-                        </p>
+                        <p className="mt-2 text-[12px] tracking-[1px] text-[#1E1E1E] md:hidden">{formatCAD(lineTotal)}</p>
                       </div>
                     </div>
 
                     {/* Qty stepper */}
                     <div className="flex items-center md:justify-start">
                       <div className="inline-flex items-center border border-[#1E1E1E]">
-                        <button
-                          aria-label="Decrease"
-                          onClick={() => updateQty(item.slug, item.color, item.size, item.qty - 1)}
-                          className="flex h-8 w-8 items-center justify-center text-[14px] text-[#1E1E1E] transition-[color,transform] duration-150 hover:text-[#3CACB0] active:scale-[0.9]"
-                        >
-                          −
-                        </button>
-                        <span className="min-w-[28px] text-center text-[11px] tracking-[1px] text-[#1E1E1E]">
-                          {item.qty}
-                        </span>
-                        <button
-                          aria-label="Increase"
-                          onClick={() => updateQty(item.slug, item.color, item.size, item.qty + 1)}
-                          className="flex h-8 w-8 items-center justify-center text-[14px] text-[#1E1E1E] transition-[color,transform] duration-150 hover:text-[#3CACB0] active:scale-[0.9]"
-                        >
-                          +
-                        </button>
+                        <button aria-label="Decrease" onClick={() => updateQty(item.slug, item.color, item.size, item.qty - 1)} className="flex h-8 w-8 items-center justify-center text-[14px] text-[#1E1E1E] transition-[color,transform] duration-150 hover:text-[#3CACB0] active:scale-[0.9]">−</button>
+                        <span className="min-w-[28px] text-center text-[11px] tracking-[1px] text-[#1E1E1E]">{item.qty}</span>
+                        <button aria-label="Increase" onClick={() => updateQty(item.slug, item.color, item.size, item.qty + 1)} className="flex h-8 w-8 items-center justify-center text-[14px] text-[#1E1E1E] transition-[color,transform] duration-150 hover:text-[#3CACB0] active:scale-[0.9]">+</button>
                       </div>
                     </div>
 
-                    {/* Line price — desktop */}
-                    <p className="hidden text-[12px] tracking-[1px] text-[#1E1E1E] md:block">
-                      {formatCAD(lineTotal)}
-                    </p>
+                    <p className="hidden text-[12px] tracking-[1px] text-[#1E1E1E] md:block">{formatCAD(lineTotal)}</p>
 
-                    {/* Remove */}
                     <button
                       aria-label="Remove item"
                       onClick={() => removeItem(item.slug, item.color, item.size)}
@@ -166,11 +120,8 @@ export function CartClient() {
 
           {/* Clear cart */}
           <div className="mt-4 border-t border-[#F0F0F0] pt-5">
-            <button
-              onClick={clearCart}
-              className="text-[10px] uppercase tracking-[2px] text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]"
-            >
-              Clear cart
+            <button onClick={clearCart} className="text-[10px] uppercase tracking-[2px] text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]">
+              {c.clearCart}
             </button>
           </div>
         </div>
@@ -178,55 +129,41 @@ export function CartClient() {
         {/* Order summary */}
         <div className="lg:pt-0">
           <div className="bg-[#F9F9F9] p-7">
-            <p className="mb-7 text-[11px] font-semibold uppercase tracking-[3px] text-[#1E1E1E]">
-              Order Summary
-            </p>
+            <p className="mb-7 text-[11px] font-semibold uppercase tracking-[3px] text-[#1E1E1E]">{c.orderSummary}</p>
 
             <dl className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <dt className="text-[11px] tracking-[0.8px] text-[#A2A2A2]">Subtotal</dt>
+                <dt className="text-[11px] tracking-[0.8px] text-[#A2A2A2]">{c.subtotal}</dt>
                 <dd className="text-[12px] tracking-[1px] text-[#1E1E1E]">{formatCAD(subtotal)}</dd>
               </div>
               <div className="flex items-center justify-between">
-                <dt className="text-[11px] tracking-[0.8px] text-[#A2A2A2]">Shipping</dt>
-                <dd className="text-[12px] tracking-[1px] text-[#1E1E1E]">
-                  {shipping === 0 ? "Free" : formatCAD(shipping)}
-                </dd>
+                <dt className="text-[11px] tracking-[0.8px] text-[#A2A2A2]">{c.shipping}</dt>
+                <dd className="text-[12px] tracking-[1px] text-[#1E1E1E]">{shipping === 0 ? t.free : formatCAD(shipping)}</dd>
               </div>
               {shipping > 0 && (
                 <p className="text-[10px] leading-[1.6] tracking-[0.4px] text-[#3CACB0]">
-                  Add {formatCAD(100 - subtotal)} more for free shipping
+                  {fmt(c.addMoreForFreeShipping, formatCAD(100 - subtotal))}
                 </p>
               )}
               <div className="my-1 h-px bg-[#E8E8E8]" />
               <div className="flex items-center justify-between">
-                <dt className="text-[12px] font-medium uppercase tracking-[1.5px] text-[#1E1E1E]">Total</dt>
+                <dt className="text-[12px] font-medium uppercase tracking-[1.5px] text-[#1E1E1E]">{c.total}</dt>
                 <dd className="text-[15px] tracking-[1px] text-[#1E1E1E]">{formatCAD(total)}</dd>
               </div>
             </dl>
 
-            <Link
-              href="/checkout"
-              className="mt-8 block w-full bg-[#1E1E1E] py-4 text-center text-[12px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:translate-y-px active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2"
-            >
-              Proceed to Checkout
+            <Link href="/checkout" className="mt-8 block w-full bg-[#1E1E1E] py-4 text-center text-[12px] font-medium uppercase tracking-[3px] text-white transition-[background-color,transform] duration-[350ms] hover:bg-[#3CACB0] active:translate-y-px active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2">
+              {c.proceedToCheckout}
             </Link>
 
-            <Link
-              href="/collections"
-              className="mt-4 block text-center text-[10px] uppercase tracking-[2px] text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]"
-            >
-              Continue Shopping
+            <Link href="/collections" className="mt-4 block text-center text-[10px] uppercase tracking-[2px] text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]">
+              {c.continueShopping}
             </Link>
           </div>
 
           {/* Trust signals */}
           <ul className="mt-5 flex flex-col gap-2.5 px-1">
-            {[
-              "Free shipping on orders over CA$100",
-              "Made in Canada",
-              "Secure checkout",
-            ].map((f) => (
+            {c.trustSignals.map((f) => (
               <li key={f} className="flex items-center gap-2.5 text-[10px] tracking-[0.8px] text-[#A2A2A2]">
                 <span className="text-[#3CACB0]">—</span>
                 {f}

@@ -3,12 +3,13 @@
 import { useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useLanguage } from "@/context/LanguageContext"
 
 const products = [
-  { name: "Birch Kuksa No.01",    price: "$128", img: "/products/product1.jpg" },
-  { name: "Olivewood Heart Cup",  price: "$145", img: "/products/product2.jpg" },
-  { name: "Spalt Maple Kuksa",    price: "$136", img: "/products/product3.jpg" },
-  { name: "Curly Maple Cup",      price: "$119", img: "/products/product4.jpg" },
+  { name: "Birch Kuksa No.01",   price: "$128", img: "/products/product1.jpg" },
+  { name: "Olivewood Heart Cup", price: "$145", img: "/products/product2.jpg" },
+  { name: "Spalt Maple Kuksa",   price: "$136", img: "/products/product3.jpg" },
+  { name: "Curly Maple Cup",     price: "$119", img: "/products/product4.jpg" },
 ]
 
 const ArrowIcon = ({ dir }: { dir: "left" | "right" }) => (
@@ -21,9 +22,10 @@ const ArrowIcon = ({ dir }: { dir: "left" | "right" }) => (
 )
 
 export function ProductsScroll() {
-  const trackRef = useRef<HTMLDivElement>(null)
+  const { t } = useLanguage()
+  const trackRef   = useRef<HTMLDivElement>(null)
   const isDragging = useRef(false)
-  const startX    = useRef(0)
+  const startX     = useRef(0)
   const scrollLeft = useRef(0)
 
   const CARD_WIDTH = 300 + 4
@@ -61,13 +63,13 @@ export function ProductsScroll() {
         {/* Sidebar */}
         <div className="flex flex-shrink-0 flex-col items-start">
           <span className="mb-4 text-[14px] font-medium uppercase tracking-[3px] text-[#1E1E1E]">
-            Products
+            {t.productsSection.title}
           </span>
           <Link
             href="/collections"
             className="mb-12 flex items-center gap-2 text-[11px] uppercase tracking-[2px] text-[#1E1E1E] transition-[color,gap] duration-200 hover:text-[#3CACB0] hover:gap-3"
           >
-            View All
+            {t.productsSection.viewAll}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
             </svg>
@@ -103,7 +105,6 @@ export function ProductsScroll() {
                 key={p.name}
                 className="w-[300px] flex-shrink-0 cursor-pointer border-none bg-none p-0 text-left"
               >
-                {/* Image — DS: 3/4 aspect, mist bg, object-contain, scale 1.05 on hover */}
                 <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "3/4" }}>
                   <Image
                     src={p.img}
@@ -114,7 +115,6 @@ export function ProductsScroll() {
                     style={{ transitionTimingFunction: "cubic-bezier(0.25,0.46,0.45,0.94)" }}
                   />
                 </div>
-                {/* Meta */}
                 <div className="px-2 pb-2 pt-3.5">
                   <span className="block text-[11px] font-medium leading-[1.4] tracking-[1.4px] text-[#1E1E1E]">
                     {p.name}
