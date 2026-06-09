@@ -1,7 +1,11 @@
 "use client"
 
 import * as React from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import type { User } from "@supabase/supabase-js"
+import { createClient } from "@/lib/supabase/client"
 
 const collections = [
   { title: "Mug",   href: "/collections/mug" },
@@ -20,6 +24,49 @@ const navLinkCls =
   "focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-4 focus-visible:rounded-sm"
 
 export function SiteHeader() {
+  const router = useRouter()
+  const [user, setUser] = useState<User | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const supabase = createClient()
+
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user)
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  async function handleSignOut() {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    setMenuOpen(false)
+    router.push("/account")
+    router.refresh()
+  }
+
+  const displayName = user?.user_metadata?.full_name as string | undefined
+  const initial = displayName
+    ? displayName.charAt(0).toUpperCase()
+    : user?.email?.charAt(0).toUpperCase() ?? "?"
+
   return (
     <header
       className="sticky top-0 z-50 w-full"
@@ -86,15 +133,70 @@ export function SiteHeader() {
               <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
             </svg>
           </button>
-          <Link
-            href="/account"
-            aria-label="Account"
-            className="flex items-center justify-center p-1 text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] hover:scale-[1.08] active:scale-[0.94]"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/>
-            </svg>
-          </Link>
+
+          {/* Account — shows avatar+menu when signed in, icon link when signed out */}
+          {user ? (
+            <div className="relative" ref={menuRef}>
+              <button
+                onClick={() => setMenuOpen((o) => !o)}
+                aria-label="Account menu"
+                aria-expanded={menuOpen}
+                className="flex h-[30px] w-[30px] flex-shrink-0 items-center justify-center text-white text-[11px] font-semibold uppercase tracking-[1px] transition-[transform,opacity] duration-200 hover:scale-[1.08] hover:opacity-90 active:scale-[0.94]"
+                style={{ background: "var(--ink)", borderRadius: "50%", border: "none" }}
+              >
+                {initial}
+              </button>
+
+              {menuOpen && (
+                <div
+                  className="absolute right-0 top-[calc(100%+10px)] z-50 w-[200px] bg-white"
+                  style={{ boxShadow: "0 8px 32px rgba(30,30,30,0.12)", border: "1px solid #E8E8E8" }}
+                >
+                  {/* User info */}
+                  <div className="px-5 py-4" style={{ borderBottom: "1px solid #E8E8E8" }}>
+                    {displayName && (
+                      <p className="font-ui mb-0.5 text-[12px] font-medium tracking-[0.3px]" style={{ color: "var(--ink)" }}>
+                        {displayName}
+                      </p>
+                    )}
+                    <p className="font-ui text-[10px] tracking-[0.3px] truncate" style={{ color: "var(--ash)" }}>
+                      {user.email}
+                    </p>
+                  </div>
+
+                  {/* Menu items */}
+                  <div className="py-2">
+                    <Link
+                      href="/account"
+                      onClick={() => setMenuOpen(false)}
+                      className="font-ui block px-5 py-2.5 text-[10px] font-medium uppercase tracking-[2px] transition-colors duration-200 hover:text-[#3CACB0]"
+                      style={{ color: "var(--ink)" }}
+                    >
+                      My Account
+                    </Link>
+                    <button
+                      onClick={handleSignOut}
+                      className="font-ui w-full cursor-pointer bg-transparent px-5 py-2.5 text-left text-[10px] font-medium uppercase tracking-[2px] transition-colors duration-200 hover:text-[#3CACB0]"
+                      style={{ border: "none", color: "var(--ash)" }}
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              href="/account"
+              aria-label="Account"
+              className="flex items-center justify-center p-1 text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] hover:scale-[1.08] active:scale-[0.94]"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/>
+              </svg>
+            </Link>
+          )}
+
           <Link
             href="/cart"
             aria-label="Cart"

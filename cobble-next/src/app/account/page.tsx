@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
+import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 
-type Mode = "login" | "register" | "verify"
+type Mode = "login" | "register" | "check-email"
 
 export default function AccountPage() {
   const router = useRouter()
@@ -15,19 +15,15 @@ export default function AccountPage() {
   const [remember, setRemember] = useState(true)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [info, setInfo] = useState<string | null>(null)
   const [pendingEmail, setPendingEmail] = useState("")
 
-  const isLogin = mode === "login"
-
-  function clearMessages() {
+  function clearError() {
     setError(null)
-    setInfo(null)
   }
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    clearMessages()
+    clearError()
     setLoading(true)
     const fd = new FormData(e.currentTarget)
     const email = fd.get("email") as string
@@ -48,7 +44,7 @@ export default function AccountPage() {
 
   async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    clearMessages()
+    clearError()
 
     const fd = new FormData(e.currentTarget)
     const fullName = fd.get("name") as string
@@ -68,56 +64,42 @@ export default function AccountPage() {
     setLoading(true)
 
     const supabase = createClient()
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: fullName } },
+      options: {
+        data: { full_name: fullName },
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
     })
 
     if (error) {
       setError(error.message)
       setLoading(false)
+      return
+    }
+
+    // Email confirmation disabled — user is immediately signed in
+    if (data.session) {
+      router.push("/")
+      router.refresh()
       return
     }
 
     setPendingEmail(email)
     setLoading(false)
-    setMode("verify")
+    setMode("check-email")
   }
 
-  async function handleVerify(token: string) {
-    clearMessages()
-    setLoading(true)
-
-    const supabase = createClient()
-    const { error } = await supabase.auth.verifyOtp({
-      email: pendingEmail,
-      token,
-      type: "signup",
-    })
-
-    if (error) {
-      setError(error.message)
-      setLoading(false)
-      return
-    }
-
-    router.push("/")
-    router.refresh()
-  }
-
-  async function handleResend() {
-    clearMessages()
+  async function handleResendEmail() {
+    clearError()
     const supabase = createClient()
     const { error } = await supabase.auth.resend({
       email: pendingEmail,
       type: "signup",
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
     })
-    if (error) {
-      setError(error.message)
-    } else {
-      setInfo("A new code has been sent to your email.")
-    }
+    if (error) setError(error.message)
   }
 
   return (
@@ -158,15 +140,12 @@ export default function AccountPage() {
             Account
           </span>
 
-          {mode === "verify" ? (
-            <VerifyScreen
+          {mode === "check-email" ? (
+            <CheckEmailScreen
               email={pendingEmail}
-              loading={loading}
               error={error}
-              info={info}
-              onVerify={handleVerify}
-              onResend={handleResend}
-              onBack={() => { setMode("register"); clearMessages() }}
+              onResend={handleResendEmail}
+              onBack={() => { setMode("login"); clearError() }}
             />
           ) : (
             <>
@@ -174,23 +153,23 @@ export default function AccountPage() {
                 className="font-editorial mb-2 font-normal leading-[1.1] tracking-tight"
                 style={{ fontSize: 34, color: "var(--ink)" }}
               >
-                {isLogin ? "Welcome back" : "Create an account"}
+                {mode === "login" ? "Welcome back" : "Create an account"}
               </h1>
 
               <p className="mb-8 text-[12px] leading-[1.7] tracking-[0.4px]" style={{ color: "var(--slate)" }}>
-                {isLogin
+                {mode === "login"
                   ? "Sign in to view your orders and saved pieces."
                   : "Join Cobble for order history, saved pieces, and studio notes."}
               </p>
 
               {/* Mode tabs */}
               <div className="mb-[34px] flex gap-7" role="tablist">
-                {(["login", "register"] as Mode[]).map((m) => (
+                {(["login", "register"] as const).map((m) => (
                   <button
                     key={m}
                     role="tab"
                     aria-selected={mode === m}
-                    onClick={() => { setMode(m); clearMessages() }}
+                    onClick={() => { setMode(m); clearError() }}
                     className="font-ui cursor-pointer bg-transparent pb-2.5 text-[11px] font-medium uppercase tracking-[2.5px] transition-colors duration-200"
                     style={{
                       border: "none",
@@ -205,11 +184,11 @@ export default function AccountPage() {
 
               {/* Form */}
               <form
-                onSubmit={isLogin ? handleLogin : handleRegister}
+                onSubmit={mode === "login" ? handleLogin : handleRegister}
                 className="flex flex-col gap-[26px]"
                 noValidate
               >
-                {!isLogin && (
+                {mode === "register" && (
                   <Field label="Full Name" id="name" name="name" type="text" placeholder="Jane Maker" autoComplete="name" />
                 )}
 
@@ -221,15 +200,15 @@ export default function AccountPage() {
                   name="password"
                   type="password"
                   placeholder="••••••••"
-                  autoComplete={isLogin ? "current-password" : "new-password"}
+                  autoComplete={mode === "login" ? "current-password" : "new-password"}
                   required
                 />
 
-                {!isLogin && (
+                {mode === "register" && (
                   <Field label="Confirm Password" id="confirm" name="confirm" type="password" placeholder="••••••••" autoComplete="new-password" />
                 )}
 
-                {isLogin ? (
+                {mode === "login" ? (
                   <div className="mt-0.5 flex items-center justify-between">
                     <Checkbox checked={remember} onChange={() => setRemember(!remember)} label="Remember me" />
                     <Link
@@ -250,7 +229,6 @@ export default function AccountPage() {
                   </p>
                 )}
 
-                {/* Error */}
                 {error && (
                   <p className="text-[11px] leading-[1.6]" style={{ color: "#c0392b" }}>
                     {error}
@@ -264,19 +242,19 @@ export default function AccountPage() {
                   style={{ background: loading ? "var(--teal-700)" : "var(--ink)", border: "none" }}
                 >
                   {loading
-                    ? (isLogin ? "Signing in…" : "Creating account…")
-                    : (isLogin ? "Sign In" : "Create Account")}
+                    ? (mode === "login" ? "Signing in…" : "Creating account…")
+                    : (mode === "login" ? "Sign In" : "Create Account")}
                 </button>
               </form>
 
               <p className="mt-7 text-center text-[11px] tracking-[0.6px]" style={{ color: "var(--slate)" }}>
-                {isLogin ? "New to Cobble? " : "Already have an account? "}
+                {mode === "login" ? "New to Cobble? " : "Already have an account? "}
                 <button
-                  onClick={() => { setMode(isLogin ? "register" : "login"); clearMessages() }}
+                  onClick={() => { setMode(mode === "login" ? "register" : "login"); clearError() }}
                   className="font-ui cursor-pointer bg-transparent text-[11px] font-medium uppercase tracking-[1.5px] transition-colors duration-200 hover:text-[#3CACB0]"
                   style={{ border: "none", color: "var(--ink)", padding: 0 }}
                 >
-                  {isLogin ? "Create an account" : "Sign in"}
+                  {mode === "login" ? "Create an account" : "Sign in"}
                 </button>
               </p>
             </>
@@ -288,56 +266,33 @@ export default function AccountPage() {
   )
 }
 
-/* ── Verify Screen ── */
-function VerifyScreen({
-  email, loading, error, info, onVerify, onResend, onBack,
+/* ── Check Email Screen ── */
+function CheckEmailScreen({
+  email, error, onResend, onBack,
 }: {
   email: string
-  loading: boolean
   error: string | null
-  info: string | null
-  onVerify: (token: string) => void
   onResend: () => void
   onBack: () => void
 }) {
-  const [digits, setDigits] = useState(["", "", "", "", "", ""])
-  const inputs = useRef<(HTMLInputElement | null)[]>([])
+  const [sent, setSent] = useState(false)
 
-  useEffect(() => {
-    inputs.current[0]?.focus()
-  }, [])
-
-  function handleChange(i: number, val: string) {
-    // Handle paste of full code
-    if (val.length > 1) {
-      const cleaned = val.replace(/\D/g, "").slice(0, 6)
-      const next = [...digits]
-      for (let j = 0; j < 6; j++) next[j] = cleaned[j] ?? ""
-      setDigits(next)
-      const focusIdx = Math.min(cleaned.length, 5)
-      inputs.current[focusIdx]?.focus()
-      if (cleaned.length === 6) onVerify(cleaned)
-      return
-    }
-
-    const char = val.replace(/\D/g, "")
-    const next = [...digits]
-    next[i] = char
-    setDigits(next)
-
-    if (char && i < 5) inputs.current[i + 1]?.focus()
-
-    if (next.every(d => d !== "")) onVerify(next.join(""))
-  }
-
-  function handleKeyDown(i: number, e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Backspace" && !digits[i] && i > 0) {
-      inputs.current[i - 1]?.focus()
-    }
+  async function handleResend() {
+    onResend()
+    setSent(true)
+    setTimeout(() => setSent(false), 5000)
   }
 
   return (
     <>
+      {/* Envelope icon */}
+      <div className="mb-7 flex h-14 w-14 items-center justify-center" style={{ border: "1.5px solid #E8E8E8" }}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+      </div>
+
       <h1
         className="font-editorial mb-2 font-normal leading-[1.1] tracking-tight"
         style={{ fontSize: 34, color: "var(--ink)" }}
@@ -346,74 +301,31 @@ function VerifyScreen({
       </h1>
 
       <p className="mb-8 text-[12px] leading-[1.7] tracking-[0.4px]" style={{ color: "var(--slate)" }}>
-        We sent a 6-digit code to{" "}
+        We sent a confirmation link to{" "}
         <span className="font-medium" style={{ color: "var(--ink)" }}>{email}</span>.
-        Enter it below to verify your account.
+        Click the link to activate your account.
       </p>
 
-      {/* 6 digit boxes */}
-      <div className="mb-[34px] flex gap-3">
-        {digits.map((d, i) => (
-          <input
-            key={i}
-            ref={(el) => { inputs.current[i] = el }}
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            maxLength={6}
-            value={d}
-            disabled={loading}
-            onChange={(e) => handleChange(i, e.target.value)}
-            onKeyDown={(e) => handleKeyDown(i, e)}
-            className="font-editorial text-center text-[22px] font-normal outline-none transition-colors duration-200 disabled:opacity-50"
-            style={{
-              width: 48,
-              height: 56,
-              borderTop: "none",
-              borderLeft: "none",
-              borderRight: "none",
-              borderBottom: d ? "2px solid var(--ink)" : "1.5px solid #E8E8E8",
-              borderRadius: 0,
-              background: "transparent",
-              color: "var(--ink)",
-              boxShadow: "none",
-              caretColor: "var(--teal-700)",
-            }}
-            onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#1E1E1E")}
-            onBlur={(e) => (e.currentTarget.style.borderBottomColor = d ? "var(--ink)" : "#E8E8E8")}
-          />
-        ))}
-      </div>
-
-      {/* Messages */}
       {error && (
         <p className="mb-4 text-[11px] leading-[1.6]" style={{ color: "#c0392b" }}>
           {error}
         </p>
       )}
-      {info && (
+
+      {sent && (
         <p className="mb-4 text-[11px] leading-[1.6]" style={{ color: "#3CACB0" }}>
-          {info}
+          A new link has been sent.
         </p>
       )}
 
-      {/* Loading indicator */}
-      {loading && (
-        <p className="mb-4 font-ui text-[10px] uppercase tracking-[2px]" style={{ color: "var(--ash)" }}>
-          Verifying…
-        </p>
-      )}
-
-      {/* Resend + back */}
       <div className="flex items-center justify-between">
         <button
           type="button"
-          onClick={onResend}
-          disabled={loading}
-          className="font-ui cursor-pointer bg-transparent text-[10px] uppercase tracking-[1.5px] transition-colors duration-200 hover:text-[#3CACB0] disabled:opacity-50"
+          onClick={handleResend}
+          className="font-ui cursor-pointer bg-transparent text-[10px] uppercase tracking-[1.5px] transition-colors duration-200 hover:text-[#3CACB0]"
           style={{ border: "none", padding: 0, color: "var(--ash)" }}
         >
-          Resend code
+          Resend email
         </button>
         <button
           type="button"
@@ -421,7 +333,7 @@ function VerifyScreen({
           className="font-ui cursor-pointer bg-transparent text-[10px] uppercase tracking-[1.5px] transition-colors duration-200 hover:text-[#3CACB0]"
           style={{ border: "none", padding: 0, color: "var(--ash)" }}
         >
-          ← Back
+          ← Back to sign in
         </button>
       </div>
     </>
