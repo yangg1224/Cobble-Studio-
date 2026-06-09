@@ -103,10 +103,10 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="grid h-[calc(100vh-122px)] min-h-[580px]" style={{ gridTemplateColumns: "1.05fr 1fr" }}>
+    <div className="grid min-h-[580px] grid-cols-1 md:h-[calc(100vh-122px)] md:grid-cols-[1.05fr_1fr]">
 
-      {/* ── Image panel ── */}
-      <div className="relative overflow-hidden">
+      {/* ── Image panel — hidden on mobile ── */}
+      <div className="relative hidden overflow-hidden md:block">
         <Image
           src="/hero/head2.png"
           alt="Cobble — handcrafted objects"

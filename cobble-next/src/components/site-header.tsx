@@ -27,6 +27,7 @@ export function SiteHeader() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export function SiteHeader() {
     return () => subscription.unsubscribe()
   }, [])
 
-  // Close dropdown when clicking outside
+  // Close account dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -54,10 +55,16 @@ export function SiteHeader() {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
+  // Close mobile nav on route change
+  useEffect(() => {
+    setMobileNavOpen(false)
+  }, [])
+
   async function handleSignOut() {
     const supabase = createClient()
     await supabase.auth.signOut()
     setMenuOpen(false)
+    setMobileNavOpen(false)
     router.push("/account")
     router.refresh()
   }
@@ -80,15 +87,15 @@ export function SiteHeader() {
       </div>
 
       {/* Main nav row */}
-      <div className="flex h-[91px] items-center border-b border-[#E8E8E8] bg-white px-10">
+      <div className="flex h-[91px] items-center border-b border-[#E8E8E8] bg-white px-4 md:px-10">
         {/* Logo */}
-        <Link href="/" className="mr-10 flex-shrink-0" aria-label="Cobble home">
+        <Link href="/" className="mr-6 md:mr-10 flex-shrink-0" aria-label="Cobble home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand_assets/logo.png" alt="COBBLE" className="h-[58px] w-auto block" />
+          <img src="/brand_assets/logo.png" alt="COBBLE" className="h-[48px] md:h-[58px] w-auto block" />
         </Link>
 
-        {/* Nav links */}
-        <nav className="flex items-center gap-9" aria-label="Main navigation">
+        {/* Desktop nav links — hidden on mobile */}
+        <nav className="hidden md:flex items-center gap-9" aria-label="Main navigation">
 
           {/* Shop — with hover dropdown */}
           <div className="group relative flex items-center">
@@ -124,17 +131,18 @@ export function SiteHeader() {
         </nav>
 
         {/* Icons — far right */}
-        <div className="ml-auto flex items-center gap-5">
+        <div className="ml-auto flex items-center gap-4 md:gap-5">
+          {/* Search — hidden on mobile to save space */}
           <button
             aria-label="Search"
-            className="flex items-center justify-center p-1 text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] hover:scale-[1.08] active:scale-[0.94]"
+            className="hidden md:flex items-center justify-center p-1 text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] hover:scale-[1.08] active:scale-[0.94]"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
             </svg>
           </button>
 
-          {/* Account — shows avatar+menu when signed in, icon link when signed out */}
+          {/* Account */}
           {user ? (
             <div className="relative" ref={menuRef}>
               <button
@@ -152,7 +160,6 @@ export function SiteHeader() {
                   className="absolute right-0 top-[calc(100%+10px)] z-50 w-[200px] bg-white"
                   style={{ boxShadow: "0 8px 32px rgba(30,30,30,0.12)", border: "1px solid #E8E8E8" }}
                 >
-                  {/* User info */}
                   <div className="px-5 py-4" style={{ borderBottom: "1px solid #E8E8E8" }}>
                     {displayName && (
                       <p className="font-ui mb-0.5 text-[12px] font-medium tracking-[0.3px]" style={{ color: "var(--ink)" }}>
@@ -164,7 +171,6 @@ export function SiteHeader() {
                     </p>
                   </div>
 
-                  {/* Menu items */}
                   <div className="py-2">
                     <Link
                       href="/dashboard"
@@ -208,8 +214,91 @@ export function SiteHeader() {
               <path d="M16 10a4 4 0 0 1-8 0"/>
             </svg>
           </Link>
+
+          {/* Hamburger — mobile only */}
+          <button
+            aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileNavOpen}
+            onClick={() => setMobileNavOpen((o) => !o)}
+            className="md:hidden flex items-center justify-center p-1 text-[#1E1E1E] transition-[color,transform] duration-200 hover:text-[#3CACB0] active:scale-[0.94]"
+          >
+            {mobileNavOpen ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/>
+              </svg>
+            )}
+          </button>
         </div>
       </div>
+
+      {/* Mobile nav drawer */}
+      {mobileNavOpen && (
+        <div className="md:hidden border-b border-[#E8E8E8] bg-white">
+          <nav aria-label="Mobile navigation">
+            <Link
+              href="/collections"
+              onClick={() => setMobileNavOpen(false)}
+              className="flex items-center justify-between px-6 py-4 text-[11px] font-medium uppercase tracking-[2.5px] text-[#1E1E1E] border-b border-[#F0F0F0] hover:text-[#3CACB0] transition-colors duration-200"
+            >
+              Shop
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </Link>
+            {/* Collections sub-links */}
+            <div className="bg-[#F9F9F9] px-8 pb-2 pt-1">
+              {collections.map((item) => (
+                <Link
+                  key={item.title}
+                  href={item.href}
+                  onClick={() => setMobileNavOpen(false)}
+                  className="block py-2.5 text-[10px] uppercase tracking-[2px] text-[#989898] hover:text-[#3CACB0] transition-colors duration-200"
+                >
+                  {item.title}
+                </Link>
+              ))}
+            </div>
+            <Link
+              href="/journal"
+              onClick={() => setMobileNavOpen(false)}
+              className="flex items-center justify-between px-6 py-4 text-[11px] font-medium uppercase tracking-[2.5px] text-[#1E1E1E] border-t border-[#F0F0F0] hover:text-[#3CACB0] transition-colors duration-200"
+            >
+              Journal
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </Link>
+            <Link
+              href="/about"
+              onClick={() => setMobileNavOpen(false)}
+              className="flex items-center justify-between px-6 py-4 text-[11px] font-medium uppercase tracking-[2.5px] text-[#1E1E1E] border-t border-[#F0F0F0] hover:text-[#3CACB0] transition-colors duration-200"
+            >
+              About
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </Link>
+            {/* Search in mobile drawer */}
+            <div className="border-t border-[#F0F0F0] px-6 py-4">
+              <div className="flex items-center gap-3 border-b border-[#E8E8E8] pb-2">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#A2A2A2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+                </svg>
+                <input
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  className="flex-1 bg-transparent text-[12px] tracking-[0.5px] text-[#1E1E1E] placeholder:text-[#A2A2A2] outline-none"
+                />
+              </div>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   )
 }

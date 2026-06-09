@@ -35,10 +35,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-[#E8E8E8] bg-[#F9F9F9]">
       {/* Main grid */}
-      <div
-        className="grid gap-12 px-10 py-16"
-        style={{ gridTemplateColumns: "220px repeat(4, 1fr)" }}
-      >
+      <div className="grid grid-cols-2 gap-x-6 gap-y-10 px-6 py-12 md:grid-cols-[200px_repeat(4,1fr)] md:gap-12 md:px-10 md:py-16">
         {/* Brand column */}
         <div>
           <Link href="/" aria-label="Cobble Home" className="mb-5 block">
@@ -107,7 +104,7 @@ export function SiteFooter() {
       </div>
 
       {/* Bottom bar */}
-      <div className="flex items-center justify-between border-t border-[#E8E8E8] px-10 py-[18px]">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#E8E8E8] px-6 py-4 md:px-10 md:py-[18px]">
         <span className="text-[10px] tracking-[1.2px] text-[#A2A2A2]">
           © 2026 Cobble Canada Inc.
         </span>
