@@ -24,21 +24,6 @@ export default function AboutPage() {
       {/* ── 1. Hero Banner ── */}
       <section className="relative h-[50vh] w-full overflow-hidden md:h-[723px]">
         <Image src="/hero/head1.jpg" alt="Cobble studio" fill priority className="object-cover object-center" sizes="100vw" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <p
-            className="text-center text-black"
-            style={{
-              fontFamily: "var(--font-crimson-text)",
-              fontStyle: "italic",
-              fontSize: 36,
-              letterSpacing: "1.8px",
-              lineHeight: "58.2px",
-              textShadow: "0 2px 16px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.2)",
-            }}
-          >
-            {a.heroQuote}
-          </p>
-        </div>
       </section>
 
       {/* ── 2. Our Story ── */}

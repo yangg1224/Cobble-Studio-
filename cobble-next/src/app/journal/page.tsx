@@ -73,7 +73,7 @@ export default function JournalPage() {
     : POSTS.filter((p) => (p as { cats?: string[] }).cats?.includes(active))
 
   return (
-    <section className="bg-white px-10 pb-24 pt-[72px]">
+    <section className="bg-white px-4 pb-16 pt-10 md:px-10 md:pb-24 md:pt-[72px]">
       {/* Title block */}
       <div className="mx-auto max-w-[720px] pb-2 text-center">
         <h1
@@ -93,11 +93,11 @@ export default function JournalPage() {
       </div>
 
       {/* Category filter */}
-      <div className="mt-11 flex flex-wrap items-center justify-center">
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-y-2 md:mt-11">
         {CAT_KEYS.map((cat, i) => (
           <Fragment key={cat.key}>
             {i > 0 && (
-              <span aria-hidden="true" className="select-none text-[12px] text-[#E8E8E8]" style={{ margin: "0 22px" }}>|</span>
+              <span aria-hidden="true" className="select-none text-[12px] text-[#E8E8E8]" style={{ margin: "0 10px" }}>|</span>
             )}
             <FilterTab
               label={j[cat.tKey as JournalTKey]}
@@ -110,7 +110,7 @@ export default function JournalPage() {
 
       {/* Article grid */}
       {shown.length > 0 ? (
-        <div className="mt-14 grid grid-cols-2 gap-x-10 gap-y-16">
+        <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 md:mt-14 md:gap-y-16">
           {shown.map((post) => (
             <ArticleCard key={post.id} post={post} catLabel={j[post.catKey as JournalTKey]} />
           ))}

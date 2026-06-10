@@ -3,9 +3,9 @@
 import Link from "next/link"
 import { useLanguage } from "@/context/LanguageContext"
 
-const shopHrefs  = ["/shop/cups", "/shop/trays", "/shop/spoons", "/shop/new", "/shop/gift"]
-const aboutHrefs = ["/about", "/about/craft", "/journal", "/about/sustainability"]
-const suppHrefs  = ["/faq", "/shipping", "/care", "/contact"]
+const shopHrefs  = ["/collections/mug", "/collections/plate", "/collections/spoon", "/collections", "/collections"]
+const aboutHrefs = ["/about", "/journal", "/journal", "/contact"]
+const suppHrefs  = ["/contact", "/contact", "/contact", "/contact"]
 
 function FooterCol({ title, links, hrefs }: { title: string; links: string[]; hrefs: string[] }) {
   return (

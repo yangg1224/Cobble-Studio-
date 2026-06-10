@@ -197,7 +197,7 @@ function StandardLayout({
 }) {
   return (
     <div className="bg-white min-h-screen">
-      <div className="mx-auto max-w-[860px] px-10 pt-16 pb-24">
+      <div className="mx-auto max-w-[860px] px-4 pt-10 pb-16 md:px-10 md:pt-16 md:pb-24">
 
         {/* Breadcrumb */}
         <nav className="mb-12 flex items-center gap-2" aria-label="Breadcrumb">
@@ -209,7 +209,7 @@ function StandardLayout({
         </nav>
 
         {/* Meta */}
-        <div className="mb-6 flex items-center gap-4">
+        <div className="mb-6 flex flex-wrap items-center gap-3">
           <span className="text-[10px] font-medium uppercase tracking-[2px] text-[#a2a2a2]">{content.category}</span>
           <span className="h-px w-4 bg-[#e8e8e8]" />
           <span className="text-[10px] uppercase tracking-[2px] text-[#a2a2a2]">{meta.date}</span>
