@@ -94,10 +94,12 @@ export default function Home() {
         style={{ height: "62vh", minHeight: 420 }}
       >
         <div className="absolute inset-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/video/recording.gif"
-            alt="Cobble — crafted with intention"
+          <video
+            src="/video/recording.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
             className="h-full w-full object-cover object-center"
           />
         </div>
