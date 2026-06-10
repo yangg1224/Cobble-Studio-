@@ -43,6 +43,7 @@ export function CheckoutClient() {
   const [errors, setErrors] = useState<Partial<Record<string, string>>>({})
   const [engravingOn, setEngravingOn] = useState(false)
   const [confirmed, setConfirmed] = useState(false)
+  const [confirmedTotal, setConfirmedTotal] = useState(0)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [orderNumber] = useState(genOrderNumber)
@@ -97,6 +98,7 @@ export function CheckoutClient() {
       return
     }
 
+    setConfirmedTotal(total)
     clearCart()
     setConfirmed(true)
     window.scrollTo({ top: 0, behavior: "smooth" })
@@ -143,7 +145,7 @@ export function CheckoutClient() {
                 <div>
                   <p className="mb-1 text-[11px] font-semibold uppercase tracking-[1px] text-[#1E1E1E]">{heading}</p>
                   <p className="text-[11px] leading-[1.75] tracking-[0.3px] text-[#989898]">
-                    {fmt(copy, data.email || "", formatCAD(total))}
+                    {fmt(copy, data.email || "", formatCAD(confirmedTotal))}
                   </p>
                 </div>
               </li>
