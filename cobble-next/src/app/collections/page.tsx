@@ -18,22 +18,22 @@ export default function CollectionsPage() {
 
   return (
     <div className="bg-white">
-      <p className="py-10 text-center text-[22px] font-medium uppercase tracking-[6px] text-[#1E1E1E]">
+      <p className="py-8 text-center text-[16px] font-medium uppercase tracking-[3px] text-[#1E1E1E] md:py-10 md:text-[22px] md:tracking-[6px]">
         {t.collections.allCollections}
       </p>
 
-      <div className="grid grid-cols-3 gap-4 px-10 pb-14">
+      <div className="grid grid-cols-2 gap-3 px-4 pb-10 md:grid-cols-3 md:gap-4 md:px-10 md:pb-14">
         {collections.map((col) => (
           <Link key={col.slug} href={`/collections/${col.slug}`} className="group relative block overflow-hidden" style={{ aspectRatio: "1/1" }}>
             <Image
               src={col.img}
               alt={col.name}
               fill
-              sizes="(max-width: 768px) 100vw, 34vw"
+              sizes="(max-width: 768px) 50vw, 34vw"
               quality={100}
               className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
             />
-            <span className="absolute bottom-4 left-4 text-[15px] font-medium uppercase tracking-[3px] text-white" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.45)" }}>
+            <span className="absolute bottom-3 left-3 text-[11px] font-medium uppercase tracking-[2px] text-white md:bottom-4 md:left-4 md:text-[15px] md:tracking-[3px]" style={{ textShadow: "0 1px 6px rgba(0,0,0,0.45)" }}>
               {col.name}
             </span>
           </Link>

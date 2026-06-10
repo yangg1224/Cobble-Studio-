@@ -28,7 +28,7 @@ export function HeroCarousel() {
     <section
       aria-label="Featured collections"
       className="relative w-full overflow-hidden"
-      style={{ height: "calc(100vh - 122px)", minHeight: 520 }}
+      style={{ height: "calc(100vh - 122px)", minHeight: 380 }}
     >
       {slides.map((slide, i) => (
         <div
@@ -54,7 +54,8 @@ export function HeroCarousel() {
         style={{ background: "linear-gradient(to bottom, transparent 60%, rgba(30,30,30,0.1) 100%)" }}
       />
 
-      <div className="absolute bottom-0 right-0 top-0 z-10 flex w-[68px] flex-col items-center justify-center gap-8 bg-white">
+      {/* Desktop sidebar — hidden on mobile */}
+      <div className="absolute bottom-0 right-0 top-0 z-10 hidden w-[68px] flex-col items-center justify-center gap-8 bg-white md:flex">
         <span
           className="select-none text-[13px] font-medium uppercase tracking-[3px] text-[#1E1E1E]"
           style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
@@ -75,6 +76,21 @@ export function HeroCarousel() {
             />
           ))}
         </div>
+      </div>
+
+      {/* Mobile dot indicators — shown only on mobile */}
+      <div className="absolute bottom-4 left-0 right-0 z-10 flex items-center justify-center gap-2.5 md:hidden" role="tablist" aria-label="Slide indicators">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            role="tab"
+            aria-selected={i === current}
+            aria-label={`Slide ${i + 1}`}
+            onClick={() => goTo(i)}
+            className="block h-1.5 w-1.5 rounded-full border-[1.5px] border-white p-0 transition-[background,transform] duration-[250ms]"
+            style={{ background: i === current ? "white" : "transparent" }}
+          />
+        ))}
       </div>
     </section>
   )

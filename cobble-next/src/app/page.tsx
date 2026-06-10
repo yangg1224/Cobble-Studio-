@@ -46,7 +46,7 @@ export default function Home() {
       <ProductsScroll />
 
       {/* ── JOURNAL ── */}
-      <section className="bg-white px-10 pb-16 pt-[72px]">
+      <section className="bg-white px-4 pb-10 pt-10 md:px-10 md:pb-16 md:pt-[72px]">
         <div className="mb-7 flex items-baseline justify-between">
           <span className="text-[14px] font-medium uppercase tracking-[3px] text-[#1E1E1E]">
             {h.journalTitle}
@@ -62,7 +62,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {journalPosts.map((post) => (
             <Link key={post.href} href={post.href} className="group block">
               <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "16/9" }}>
@@ -90,8 +90,8 @@ export default function Home() {
 
       {/* ── VIDEO / GIF ── */}
       <section
-        className="relative mt-[72px] w-full overflow-hidden"
-        style={{ height: "62vh", minHeight: 420 }}
+        className="relative mt-10 w-full overflow-hidden md:mt-[72px]"
+        style={{ height: "62vh", minHeight: 280 }}
       >
         <div className="absolute inset-0">
           <video
@@ -104,9 +104,9 @@ export default function Home() {
           />
         </div>
         <div className="absolute inset-0 bg-[rgba(20,18,16,0.42)]" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-9 px-10 text-center">
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-9 px-6 text-center md:px-10">
           <p
-            className="max-w-[520px] text-[32px] font-normal italic leading-[1.55] tracking-[0.3px] text-white"
+            className="max-w-[520px] text-[22px] font-normal italic leading-[1.55] tracking-[0.3px] text-white md:text-[32px]"
             style={{ fontFamily: "var(--font-crimson-text)" }}
           >
             {h.videoQuote}<br />{h.videoQuoteLine2}
