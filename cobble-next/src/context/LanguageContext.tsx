@@ -241,6 +241,17 @@ export interface Translations {
     remove: string
     setAsDefault: string
     addAddress: string
+    editAddress: string
+    addressLabelField: string
+    addressLine1: string
+    addressLine2: string
+    cityLabel: string
+    stateLabel: string
+    postalLabel: string
+    countryLabel: string
+    phoneLabel: string
+    setAsDefaultOnSave: string
+    saving: string
   }
 
   // ── PRODUCT PAGE ──
@@ -583,6 +594,17 @@ const en: Translations = {
     remove: "Remove",
     setAsDefault: "Set as default",
     addAddress: "Add address",
+    editAddress: "Edit address",
+    addressLabelField: "Label",
+    addressLine1: "Address line 1",
+    addressLine2: "Address line 2 (optional)",
+    cityLabel: "City",
+    stateLabel: "Province / State",
+    postalLabel: "Postal code",
+    countryLabel: "Country",
+    phoneLabel: "Phone (optional)",
+    setAsDefaultOnSave: "Set as default address",
+    saving: "Saving…",
   },
 
   productPage: {
@@ -948,6 +970,17 @@ const fr: Translations = {
     remove: "Supprimer",
     setAsDefault: "Définir par défaut",
     addAddress: "Ajouter une adresse",
+    editAddress: "Modifier l'adresse",
+    addressLabelField: "Étiquette",
+    addressLine1: "Ligne d'adresse 1",
+    addressLine2: "Ligne d'adresse 2 (optionnel)",
+    cityLabel: "Ville",
+    stateLabel: "Province / État",
+    postalLabel: "Code postal",
+    countryLabel: "Pays",
+    phoneLabel: "Téléphone (optionnel)",
+    setAsDefaultOnSave: "Définir comme adresse par défaut",
+    saving: "Enregistrement…",
   },
 
   productPage: {
@@ -1313,6 +1346,17 @@ const zh: Translations = {
     remove: "删除",
     setAsDefault: "设为默认",
     addAddress: "添加地址",
+    editAddress: "编辑地址",
+    addressLabelField: "标签",
+    addressLine1: "地址行 1",
+    addressLine2: "地址行 2（可选）",
+    cityLabel: "城市",
+    stateLabel: "省 / 州",
+    postalLabel: "邮政编码",
+    countryLabel: "国家",
+    phoneLabel: "电话（可选）",
+    setAsDefaultOnSave: "设为默认地址",
+    saving: "保存中…",
   },
 
   productPage: {
@@ -1678,6 +1722,17 @@ const ja: Translations = {
     remove: "削除",
     setAsDefault: "デフォルトに設定",
     addAddress: "住所を追加",
+    editAddress: "住所を編集",
+    addressLabelField: "ラベル",
+    addressLine1: "住所 1",
+    addressLine2: "住所 2（任意）",
+    cityLabel: "市区町村",
+    stateLabel: "都道府県 / 州",
+    postalLabel: "郵便番号",
+    countryLabel: "国",
+    phoneLabel: "電話（任意）",
+    setAsDefaultOnSave: "デフォルトの住所に設定",
+    saving: "保存中…",
   },
 
   productPage: {

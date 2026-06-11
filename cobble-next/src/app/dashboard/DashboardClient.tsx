@@ -1,31 +1,56 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useTransition, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/client"
 import { useSaved } from "@/context/SavedContext"
 import { useLanguage } from "@/context/LanguageContext"
 import type { Order, OrderItem } from "@/lib/order-actions"
+import type { Address } from "@/lib/address-actions"
+import { upsertAddress, deleteAddress, setDefaultAddress } from "@/lib/address-actions"
 import { products } from "@/lib/products"
 
 type UserInfo  = { name: string; first: string; email: string; since: string; initials: string }
-type Address   = { id: string; label: string; name: string; lines: string[]; phone: string; primary: boolean }
 type Section   = "overview" | "orders" | "saved" | "profile" | "addresses"
 type D = ReturnType<typeof useLanguage>["t"]["dashboard"]
 
-const ADDRESSES: Address[] = [
-  { id: "shipping", label: "Shipping", name: "Jane Maker", lines: ["414 Dundas Street West","Apt 3","Toronto, ON  M5T 1G8","Canada"], phone: "+1 416 555 0142", primary: true },
-  { id: "billing",  label: "Billing",  name: "Jane Maker", lines: ["414 Dundas Street West","Apt 3","Toronto, ON  M5T 1G8","Canada"], phone: "+1 416 555 0142", primary: false },
-]
-
 /* ── Root ── */
-export function DashboardClient({ user, orders }: { user: UserInfo; orders: Order[] }) {
+export function DashboardClient({ user, orders, addresses: initialAddresses }: { user: UserInfo; orders: Order[]; addresses: Address[] }) {
   const router = useRouter()
   const { t } = useLanguage()
   const d = t.dashboard
   const [section, setSection] = useState<Section>("overview")
   const [openOrder, setOpenOrder] = useState<string | null>(null)
+  const [addresses, setAddresses] = useState<Address[]>(initialAddresses)
+  const [addrModal, setAddrModal] = useState<{ open: boolean; editing: Address | null }>({ open: false, editing: null })
+
+  function openAddModal() { setAddrModal({ open: true, editing: null }) }
+  function openEditModal(a: Address) { setAddrModal({ open: true, editing: a }) }
+  function closeAddrModal() { setAddrModal({ open: false, editing: null }) }
+
+  async function handleSaveAddress(data: Omit<Address, "id"> & { id?: string }) {
+    const saved = await upsertAddress(data)
+    if (!saved) return
+    if (data.is_primary) {
+      setAddresses((prev) => prev.map((a) => ({ ...a, is_primary: a.id === saved.id })).filter((a) => a.id !== saved.id).concat(saved))
+    } else if (data.id) {
+      setAddresses((prev) => prev.map((a) => a.id === saved.id ? saved : a))
+    } else {
+      setAddresses((prev) => [...prev, saved])
+    }
+    closeAddrModal()
+  }
+
+  async function handleDeleteAddress(id: string) {
+    const ok = await deleteAddress(id)
+    if (ok) setAddresses((prev) => prev.filter((a) => a.id !== id))
+  }
+
+  async function handleSetDefault(id: string) {
+    const ok = await setDefaultAddress(id)
+    if (ok) setAddresses((prev) => prev.map((a) => ({ ...a, is_primary: a.id === id })))
+  }
 
   function go(k: Section) { setSection(k); setOpenOrder(null); window.scrollTo({ top: 0, behavior: "smooth" }) }
 
@@ -99,9 +124,18 @@ export function DashboardClient({ user, orders }: { user: UserInfo; orders: Orde
           {section === "orders"    && <Orders    d={d} orders={orders} openOrder={openOrder} setOpenOrder={setOpenOrder} />}
           {section === "saved"     && <SavedView d={d} />}
           {section === "profile"   && <Profile   d={d} user={user} />}
-          {section === "addresses" && <Addresses d={d} />}
+          {section === "addresses" && <Addresses d={d} addresses={addresses} onAdd={openAddModal} onEdit={openEditModal} onDelete={handleDeleteAddress} onSetDefault={handleSetDefault} />}
         </div>
       </div>
+
+      {addrModal.open && (
+        <AddressModal
+          d={d}
+          editing={addrModal.editing}
+          onSave={handleSaveAddress}
+          onClose={closeAddrModal}
+        />
+      )}
     </main>
   )
 }
@@ -377,24 +411,40 @@ function Profile({ d, user }: { d: D; user: UserInfo }) {
 }
 
 /* ── Addresses ── */
-function Addresses({ d }: { d: D }) {
+function Addresses({ d, addresses, onAdd, onEdit, onDelete, onSetDefault }: {
+  d: D
+  addresses: Address[]
+  onAdd: () => void
+  onEdit: (a: Address) => void
+  onDelete: (id: string) => void
+  onSetDefault: (id: string) => void
+}) {
   return (
     <div>
       <PageHead eyebrow={d.eyebrow} title={d.addressesTitle} sub={d.addressesSub} />
       <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 24, maxWidth: 720 }}>
-        {ADDRESSES.map((a) => <AddressCard key={a.id} d={d} address={a} />)}
-        <AddressAdd d={d} />
+        {addresses.map((a) => (
+          <AddressCard key={a.id} d={d} address={a} onEdit={() => onEdit(a)} onDelete={() => onDelete(a.id)} onSetDefault={() => onSetDefault(a.id)} />
+        ))}
+        <AddressAdd d={d} onClick={onAdd} />
       </div>
     </div>
   )
 }
 
-function AddressCard({ d, address: a }: { d: D; address: Address }) {
+function AddressCard({ d, address: a, onEdit, onDelete, onSetDefault }: {
+  d: D
+  address: Address
+  onEdit: () => void
+  onDelete: () => void
+  onSetDefault: () => void
+}) {
+  const lines = [a.line1, a.line2, `${a.city}, ${a.state_province}  ${a.postal_code}`, a.country].filter(Boolean) as string[]
   return (
     <article style={{ border: "1px solid var(--line)", padding: "26px 28px", display: "flex", flexDirection: "column", gap: 16 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <Eyebrow size="sm">{a.label}</Eyebrow>
-        {a.primary && (
+        {a.is_primary && (
           <span style={{ fontSize: 9, fontWeight: 600, letterSpacing: "1.8px", textTransform: "uppercase", background: "var(--ink)", color: "var(--paper)", padding: "3px 8px", fontFamily: "var(--font-sans)" }}>
             {d.defaultLabel}
           </span>
@@ -402,22 +452,22 @@ function AddressCard({ d, address: a }: { d: D; address: Address }) {
       </div>
       <div>
         <p style={{ margin: 0, fontSize: 13, color: "var(--ink)", letterSpacing: "0.3px", fontFamily: "var(--font-sans)" }}>{a.name}</p>
-        {a.lines.map((l) => <p key={l} style={{ margin: "5px 0 0", fontSize: 12, lineHeight: 1.6, color: "var(--slate)", fontFamily: "var(--font-sans)" }}>{l}</p>)}
-        <p style={{ margin: "10px 0 0", fontSize: 12, color: "var(--ash)", fontFamily: "var(--font-sans)" }}>{a.phone}</p>
+        {lines.map((l, i) => <p key={i} style={{ margin: "5px 0 0", fontSize: 12, lineHeight: 1.6, color: "var(--slate)", fontFamily: "var(--font-sans)" }}>{l}</p>)}
+        {a.phone && <p style={{ margin: "10px 0 0", fontSize: 12, color: "var(--ash)", fontFamily: "var(--font-sans)" }}>{a.phone}</p>}
       </div>
       <div style={{ display: "flex", gap: 18, marginTop: "auto", paddingTop: 6 }}>
-        <TextLink>{d.edit}</TextLink>
-        {!a.primary && <TextLink>{d.remove}</TextLink>}
-        {!a.primary && <TextLink>{d.setAsDefault}</TextLink>}
+        <TextLink onClick={onEdit}>{d.edit}</TextLink>
+        {!a.is_primary && <TextLink onClick={onDelete}>{d.remove}</TextLink>}
+        {!a.is_primary && <TextLink onClick={onSetDefault}>{d.setAsDefault}</TextLink>}
       </div>
     </article>
   )
 }
 
-function AddressAdd({ d }: { d: D }) {
+function AddressAdd({ d, onClick }: { d: D; onClick: () => void }) {
   const [hover, setHover] = useState(false)
   return (
-    <button onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+    <button onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       style={{ minHeight: 200, border: `1.5px dashed ${hover ? "var(--ink)" : "var(--line)"}`, background: "none", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, color: hover ? "var(--ink)" : "var(--ash)", transition: "color var(--dur-fast), border-color var(--dur-fast)" }}
     >
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -427,6 +477,117 @@ function AddressAdd({ d }: { d: D }) {
         {d.addAddress}
       </span>
     </button>
+  )
+}
+
+/* ── Address Modal ── */
+function AddressModal({ d, editing, onSave, onClose }: {
+  d: D
+  editing: Address | null
+  onSave: (data: Omit<Address, "id"> & { id?: string }) => Promise<void>
+  onClose: () => void
+}) {
+  const [pending, startTransition] = useTransition()
+  const overlayRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) { if (e.key === "Escape") onClose() }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [onClose])
+
+  function handleOverlayClick(e: React.MouseEvent) {
+    if (e.target === overlayRef.current) onClose()
+  }
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const fd = new FormData(e.currentTarget)
+    const data: Omit<Address, "id"> & { id?: string } = {
+      id: editing?.id,
+      label: (fd.get("label") as string).trim() || "Home",
+      name: (fd.get("name") as string).trim(),
+      line1: (fd.get("line1") as string).trim(),
+      line2: (fd.get("line2") as string).trim(),
+      city: (fd.get("city") as string).trim(),
+      state_province: (fd.get("state_province") as string).trim(),
+      postal_code: (fd.get("postal_code") as string).trim(),
+      country: (fd.get("country") as string).trim() || "Canada",
+      phone: (fd.get("phone") as string).trim(),
+      is_primary: fd.get("is_primary") === "on",
+    }
+    startTransition(() => { onSave(data) })
+  }
+
+  const title = editing ? d.editAddress : d.addAddress
+
+  return (
+    <div
+      ref={overlayRef}
+      onClick={handleOverlayClick}
+      style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(20,20,20,0.55)", backdropFilter: "blur(4px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px 16px" }}
+    >
+      <div style={{ background: "var(--paper)", width: "100%", maxWidth: 520, maxHeight: "90vh", overflowY: "auto", padding: "44px 48px 48px", position: "relative" }}>
+        {/* Close */}
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          style={{ position: "absolute", top: 20, right: 20, background: "none", border: "none", cursor: "pointer", color: "var(--ash)", padding: 4, display: "flex" }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--ink)")}
+          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ash)")}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+
+        <Eyebrow style={{ display: "block", marginBottom: 14 }}>{d.eyebrow}</Eyebrow>
+        <h2 style={{ margin: "0 0 36px", fontFamily: "var(--font-serif)", fontWeight: 400, fontSize: 28, letterSpacing: "-0.02em", color: "var(--ink)" }}>{title}</h2>
+
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+            <ModalInput label={d.addressLabelField} name="label" defaultValue={editing?.label ?? ""} placeholder="Home, Office…" />
+            <ModalInput label={d.fullNameLabel} name="name" defaultValue={editing?.name ?? ""} required />
+          </div>
+          <ModalInput label={d.addressLine1} name="line1" defaultValue={editing?.line1 ?? ""} required />
+          <ModalInput label={d.addressLine2} name="line2" defaultValue={editing?.line2 ?? ""} />
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+            <ModalInput label={d.cityLabel} name="city" defaultValue={editing?.city ?? ""} required />
+            <ModalInput label={d.stateLabel} name="state_province" defaultValue={editing?.state_province ?? ""} required />
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+            <ModalInput label={d.postalLabel} name="postal_code" defaultValue={editing?.postal_code ?? ""} required />
+            <ModalInput label={d.countryLabel} name="country" defaultValue={editing?.country ?? "Canada"} required />
+          </div>
+          <ModalInput label={d.phoneLabel} name="phone" type="tel" defaultValue={editing?.phone ?? ""} />
+
+          <div style={{ borderTop: "1px solid var(--line)", paddingTop: 18, marginTop: 4 }}>
+            <PrefRow label={d.setAsDefaultOnSave} hint="" defaultChecked={editing?.is_primary ?? false} name="is_primary" />
+          </div>
+
+          <div style={{ display: "flex", gap: 12, marginTop: 4 }}>
+            <SolidButton type="submit">{pending ? d.saving : d.saveChanges}</SolidButton>
+            <TextButton type="button" onClick={onClose}>{d.cancel}</TextButton>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+function ModalInput({ label, name, defaultValue, type = "text", required, placeholder }: {
+  label: string; name: string; defaultValue?: string; type?: string; required?: boolean; placeholder?: string
+}) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+      <label style={{ fontSize: 9, letterSpacing: "2px", textTransform: "uppercase", color: "var(--ash)", fontFamily: "var(--font-sans)", fontWeight: 600 }}>{label}</label>
+      <input
+        type={type} name={name} defaultValue={defaultValue} required={required} placeholder={placeholder}
+        style={{ background: "none", border: "none", borderBottom: "1.5px solid var(--line)", padding: "8px 0", fontSize: 13, color: "var(--ink)", fontFamily: "var(--font-sans)", letterSpacing: "0.3px", outline: "none", borderRadius: 0, width: "100%" }}
+        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "var(--ink)")}
+        onBlur={(e) => (e.currentTarget.style.borderBottomColor = "var(--line)")}
+      />
+    </div>
   )
 }
 
@@ -557,16 +718,17 @@ function LineInput({ label, type = "text", defaultValue }: { label: string; type
   )
 }
 
-function PrefRow({ label, hint, defaultChecked }: { label: string; hint: string; defaultChecked?: boolean }) {
+function PrefRow({ label, hint, defaultChecked, name }: { label: string; hint: string; defaultChecked?: boolean; name?: string }) {
   const [on, setOn] = useState(!!defaultChecked)
   return (
     <button type="button" onClick={() => setOn(!on)} style={{ display: "flex", alignItems: "flex-start", gap: 13, background: "none", border: "none", cursor: "pointer", padding: "0 0 18px", textAlign: "left", width: "100%" }}>
+      {name && <input type="checkbox" name={name} checked={on} onChange={() => {}} style={{ display: "none" }} />}
       <span style={{ width: 16, height: 16, marginTop: 1, border: "1.5px solid var(--ink)", flexShrink: 0, background: on ? "var(--ink)" : "transparent", color: "var(--paper)", display: "flex", alignItems: "center", justifyContent: "center", transition: "background var(--dur-fast)" }}>
         {on && <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>}
       </span>
       <span>
         <span style={{ display: "block", fontSize: 12, letterSpacing: "0.3px", color: "var(--ink)", fontFamily: "var(--font-sans)" }}>{label}</span>
-        <span style={{ display: "block", fontSize: 11, color: "var(--ash)", marginTop: 3, fontFamily: "var(--font-sans)" }}>{hint}</span>
+        {hint && <span style={{ display: "block", fontSize: 11, color: "var(--ash)", marginTop: 3, fontFamily: "var(--font-sans)" }}>{hint}</span>}
       </span>
     </button>
   )
@@ -602,9 +764,9 @@ function TextButton({ children, type, onClick }: { children: React.ReactNode; ty
   )
 }
 
-function TextLink({ children }: { children: React.ReactNode }) {
+function TextLink({ children, onClick }: { children: React.ReactNode; onClick?: () => void }) {
   return (
-    <button style={{ background: "none", border: "none", cursor: "pointer", padding: 0, fontSize: 10, fontWeight: 500, letterSpacing: "1.8px", textTransform: "uppercase", color: "var(--ash)", transition: "color var(--dur-fast)", fontFamily: "var(--font-sans)" }}
+    <button onClick={onClick} style={{ background: "none", border: "none", cursor: "pointer", padding: 0, fontSize: 10, fontWeight: 500, letterSpacing: "1.8px", textTransform: "uppercase", color: "var(--ash)", transition: "color var(--dur-fast)", fontFamily: "var(--font-sans)" }}
       onMouseEnter={(e) => (e.currentTarget.style.color = "var(--teal)")}
       onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ash)")}
     >{children}</button>
