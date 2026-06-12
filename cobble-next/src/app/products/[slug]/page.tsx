@@ -236,12 +236,12 @@ export default function ProductPage({
 
       {/* ── RELATED PRODUCTS ── */}
       {related.length > 0 && (
-        <div className="border-t border-[#E8E8E8] py-20 md:py-24">
+        <div className="border-t border-[#E8E8E8] py-14 md:py-24">
           <div className="mx-auto max-w-[1320px] px-5 md:px-10">
-            <p className="mb-12 text-center text-[10px] font-semibold uppercase tracking-[4px] text-[#A2A2A2]">
+            <p className="mb-8 text-center text-[10px] font-semibold uppercase tracking-[4px] text-[#A2A2A2] md:mb-12">
               {pp.relatedProducts}
             </p>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 md:gap-10">
+            <div className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:snap-none sm:grid-cols-3 sm:gap-10 sm:overflow-visible sm:px-0 sm:pb-0">
               {related.map((rp) => (
                 <RelatedProductCard
                   key={rp.slug}
@@ -286,7 +286,7 @@ function RelatedProductCard({ slug, name, price, img, quickAddLabel, addToCartPa
   }
 
   return (
-    <div className="group flex flex-col">
+    <div className="group flex w-[42vw] shrink-0 snap-start flex-col sm:w-auto">
       <Link href={`/products/${slug}`} className="block">
         <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "4/5" }}>
           <Image
@@ -295,7 +295,7 @@ function RelatedProductCard({ slug, name, price, img, quickAddLabel, addToCartPa
             fill
             className="object-contain transition-transform duration-[550ms] group-hover:scale-[1.04]"
             style={{ transitionTimingFunction: "cubic-bezier(0.25,0.46,0.45,0.94)" }}
-            sizes="(max-width:640px) 90vw, 33vw"
+            sizes="(max-width:640px) 42vw, 33vw"
           />
         </div>
         <div className="mt-4">
