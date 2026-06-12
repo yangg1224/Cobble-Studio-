@@ -268,6 +268,10 @@ export interface Translations {
     finish: string
     dimension: string
     features: string[]
+    shippingInfo: string
+    relatedProducts: string
+    quickAdd: string
+    newBadge: string
   }
 
   // ── PRODUCT PURCHASE ──
@@ -620,6 +624,10 @@ const en: Translations = {
     finish: "Finish",
     dimension: "Dimension",
     features: ["Free shipping over $100", "Made in Canada", "One of a kind — ships in 3–5 days"],
+    shippingInfo: "Shipping Information",
+    relatedProducts: "Complete Your Experience",
+    quickAdd: "Quick Add",
+    newBadge: "New",
   },
 
   productPurchase: {
@@ -996,6 +1004,10 @@ const fr: Translations = {
     finish: "Finition",
     dimension: "Dimension",
     features: ["Livraison gratuite dès 100 $", "Fabriqué au Canada", "Unique — expédié en 3 à 5 jours"],
+    shippingInfo: "Informations de livraison",
+    relatedProducts: "Complétez Votre Expérience",
+    quickAdd: "Ajout rapide",
+    newBadge: "Nouveau",
   },
 
   productPurchase: {
@@ -1372,6 +1384,10 @@ const zh: Translations = {
     finish: "表面处理",
     dimension: "尺寸",
     features: ["满 $100 免费配送", "加拿大制造", "孤品——3-5天内发货"],
+    shippingInfo: "关于运输",
+    relatedProducts: "完善您的体验",
+    quickAdd: "快速添加",
+    newBadge: "新品",
   },
 
   productPurchase: {
@@ -1748,6 +1764,10 @@ const ja: Translations = {
     finish: "仕上げ",
     dimension: "寸法",
     features: ["$100以上で送料無料", "カナダ製", "一点もの——3〜5日以内に発送"],
+    shippingInfo: "配送について",
+    relatedProducts: "あなたの体験を完成させる",
+    quickAdd: "クイック追加",
+    newBadge: "新着",
   },
 
   productPurchase: {

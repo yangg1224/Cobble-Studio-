@@ -1,12 +1,35 @@
 "use client"
 
-import { use } from "react"
+import { use, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { products } from "@/lib/products"
 import { ProductPurchase } from "@/components/product-purchase"
 import { useLanguage } from "@/context/LanguageContext"
+import { useCart, type CartItem } from "@/context/CartContext"
+
+function ChevronIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="14" height="14" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+      className="transition-transform duration-300"
+      style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+      aria-hidden="true"
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  )
+}
+
+function ArrowRight() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  )
+}
 
 export default function ProductPage({
   params,
@@ -19,27 +42,37 @@ export default function ProductPage({
 
   const { t } = useLanguage()
   const pp = t.productPage
+  const { addItem } = useCart()
 
-  const careLines = product.careGuide.split("\n")
+  const [specOpen, setSpecOpen] = useState(true)
+  const [careOpen, setCareOpen] = useState(false)
 
   const specRows = [
     { label: pp.capacity,  value: product.spec.capacity  },
     { label: pp.material,  value: product.spec.material  },
     { label: pp.finish,    value: product.spec.finish    },
     { label: pp.dimension, value: product.spec.dimension },
-  ]
+  ].filter(r => r.value)
+
+  const careLines = product.careGuide.split("\n")
+
+  const related = products
+    .filter((p) => p.slug !== product.slug)
+    .slice(0, 3)
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="mx-auto max-w-[1320px] px-10 pb-24 pt-8">
+
+      {/* ── MAIN PRODUCT SECTION ── */}
+      <div className="mx-auto max-w-[1320px] px-5 pt-8 pb-20 md:px-10">
 
         {/* Breadcrumb */}
         <nav className="mb-8 flex items-center gap-2" aria-label="Breadcrumb">
           {[
-            { label: pp.home,             href: "/"                                              },
-            { label: pp.shop,             href: "/collections"                                   },
+            { label: pp.home,             href: "/"                                               },
+            { label: pp.shop,             href: "/collections"                                    },
             { label: product.collection,  href: `/collections/${product.collection.toLowerCase()}` },
-            { label: product.displayName, href: null                                             },
+            { label: product.displayName, href: null                                              },
           ].map((crumb, i, arr) => (
             <span key={crumb.label} className="flex items-center gap-2">
               {crumb.href ? (
@@ -54,10 +87,9 @@ export default function ProductPage({
           ))}
         </nav>
 
-        {/* ── PRODUCT DETAIL ── */}
-        <div className="grid items-start gap-16" style={{ gridTemplateColumns: "1.1fr 1fr" }}>
+        <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-[1.1fr_1fr] md:gap-16">
 
-          {/* Left — image */}
+          {/* Left — main image */}
           <div className="group relative overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "4/5" }}>
             <Image
               src={product.img}
@@ -71,33 +103,18 @@ export default function ProductPage({
           </div>
 
           {/* Right — info panel */}
-          <div className="pt-4">
+          <div className="pt-2">
 
-            {/* Collection badge */}
-            <span
-              className="mb-5 inline-flex items-center border border-[#1E1E1E] px-3.5 py-1 text-[10px] font-medium uppercase tracking-[2px] text-[#1E1E1E]"
-              style={{ borderRadius: 999 }}
-            >
-              {product.collection} {pp.collectionBadge}
-            </span>
-
-            {/* Product name */}
             <h1
-              className="mb-3 text-[#1E1E1E]"
-              style={{ fontFamily: "var(--font-serif)", fontSize: "40px", fontWeight: 400, letterSpacing: "-0.02em", lineHeight: 1.1 }}
+              className="mb-1 text-[#1E1E1E]"
+              style={{ fontFamily: "var(--font-serif)", fontSize: "34px", fontWeight: 400, letterSpacing: "-0.01em", lineHeight: 1.2 }}
             >
               {product.name}
             </h1>
 
-            {/* Price */}
-            <p className="mb-7 text-[18px] tracking-[1px] text-[#1E1E1E]">{product.price}</p>
+            <p className="mb-5 text-[11px] tracking-[0.5px] text-[#A2A2A2]">SKU: {product.sku}</p>
+            <p className="mb-7 text-[22px] tracking-[0.5px] text-[#1E1E1E]">{product.price}</p>
 
-            {/* Description */}
-            <p className="mb-9 max-w-[380px] text-[13px] leading-[1.9] tracking-[0.4px] text-[#989898]">
-              {product.description} {pp.uniqueGrain}
-            </p>
-
-            {/* Purchase controls */}
             <ProductPurchase
               slug={product.slug}
               name={product.name}
@@ -108,74 +125,192 @@ export default function ProductPage({
               sizes={product.sizes}
             />
 
-            {/* Feature list */}
-            <ul className="mt-10 flex flex-col gap-3 border-t border-[#E8E8E8] pt-6">
-              {pp.features.map((f) => (
-                <li key={f} className="text-[11px] tracking-[1.2px] text-[#989898]">— {f}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            <button className="mt-5 flex items-center gap-1.5 text-[11px] tracking-[1px] text-[#1E1E1E] transition-[color] duration-200 hover:text-[#3CACB0]">
+              {pp.shippingInfo}
+              <ArrowRight />
+            </button>
 
-        {/* ── PRODUCT DETAIL editorial ── */}
-        {product.editorial.length > 0 && (
-          <div className="mt-24">
-            <p className="mb-10 text-center text-[12px] font-semibold uppercase tracking-[4px] text-[#1E1E1E]">
-              {pp.productDetail}
-            </p>
-            <div className="grid grid-cols-2 gap-16">
-              {/* Editorial images + captions */}
-              <div className="flex flex-col gap-8">
-                {product.editorial.map((item, i) => (
-                  <div key={i}>
-                    <div className="relative w-full overflow-hidden" style={{ aspectRatio: "4/3" }}>
-                      <Image src={item.img} alt={item.title ?? `Editorial ${i + 1}`} fill className="object-cover" sizes="40vw" />
+            {/* Accordion: Specification */}
+            <div className="mt-6 border-t border-[#E8E8E8]">
+              <button
+                onClick={() => setSpecOpen((v) => !v)}
+                className="flex w-full items-center justify-between py-4 text-[11px] font-medium uppercase tracking-[2px] text-[#1E1E1E] transition-[color] duration-200 hover:text-[#3CACB0] focus-visible:outline-none"
+              >
+                {pp.specification}
+                <ChevronIcon open={specOpen} />
+              </button>
+              <div
+                className="overflow-hidden transition-all duration-300"
+                style={{ maxHeight: specOpen ? "500px" : "0px", opacity: specOpen ? 1 : 0 }}
+              >
+                <dl className="flex flex-col gap-3 pb-5">
+                  {specRows.map(({ label, value }) => (
+                    <div key={label} className="flex gap-4">
+                      <dt className="w-20 flex-shrink-0 text-[10px] tracking-[0.5px] text-[#A2A2A2]">{label}</dt>
+                      <dd className="text-[11px] leading-[1.6] tracking-[0.3px] text-[#1E1E1E]">{value}</dd>
                     </div>
-                    <div className="mt-3">
-                      {item.title && (
-                        <p className="mb-0.5 text-[11px] font-semibold uppercase tracking-[1.5px] text-[#1E1E1E]">{item.title}</p>
-                      )}
-                      <p className="text-[11px] leading-[1.65] tracking-[0.3px] text-[#1E1E1E]">{item.caption}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Spec + Care Guide */}
-              <div className="pt-2">
-                <section className="mb-10">
-                  <p className="mb-5 text-[11px] font-medium uppercase tracking-[3px] text-[#1E1E1E]">{pp.specification}</p>
-                  <dl className="flex flex-col gap-4">
-                    {specRows.map(({ label, value }) => (
-                      <div key={label}>
-                        <dt className="text-[11px] tracking-[0.5px] text-[#A2A2A2]">{label}</dt>
-                        <dd className="mt-0.5 text-[12px] leading-[1.55] tracking-[0.3px] text-[#1E1E1E]">{value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </section>
-
-                <div className="mb-10 h-px bg-[#E8E8E8]" />
-
-                {product.careGuide && (
-                  <section>
-                    <p className="mb-5 text-[11px] font-medium uppercase tracking-[3px] text-[#1E1E1E]">{pp.careGuide}</p>
-                    <div className="text-[11px] leading-[1.7] tracking-[0.3px] text-[#1E1E1E]">
-                      {careLines.map((line, i) => {
-                        const isHeader = line.startsWith("[") && line.endsWith("]")
-                        const isEmpty  = line.trim() === ""
-                        if (isEmpty)  return <div key={i} className="h-3" />
-                        if (isHeader) return <p key={i} className="mt-1 font-semibold">{line}</p>
-                        return <p key={i}>{line}</p>
-                      })}
-                    </div>
-                  </section>
-                )}
+                  ))}
+                </dl>
               </div>
             </div>
+
+            {/* Accordion: Care Guide */}
+            {product.careGuide && (
+              <div className="border-t border-[#E8E8E8]">
+                <button
+                  onClick={() => setCareOpen((v) => !v)}
+                  className="flex w-full items-center justify-between py-4 text-[11px] font-medium uppercase tracking-[2px] text-[#1E1E1E] transition-[color] duration-200 hover:text-[#3CACB0] focus-visible:outline-none"
+                >
+                  {pp.careGuide}
+                  <ChevronIcon open={careOpen} />
+                </button>
+                <div
+                  className="overflow-hidden transition-all duration-300"
+                  style={{ maxHeight: careOpen ? "800px" : "0px", opacity: careOpen ? 1 : 0 }}
+                >
+                  <div className="pb-5 text-[11px] leading-[1.7] tracking-[0.3px] text-[#1E1E1E]">
+                    {careLines.map((line, i) => {
+                      const isHeader = line.startsWith("[") && line.endsWith("]")
+                      const isEmpty  = line.trim() === ""
+                      if (isEmpty)  return <div key={i} className="h-2" />
+                      if (isHeader) return <p key={i} className="mt-2 text-[10px] font-semibold uppercase tracking-[1.5px] text-[#A2A2A2]">{line.slice(1, -1)}</p>
+                      return <p key={i}>{line}</p>
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+            <div className="border-t border-[#E8E8E8]" />
           </div>
-        )}
+        </div>
       </div>
+
+      {/* ── EDITORIAL — magazine single-column ── */}
+      {product.editorial.length > 0 && (
+        <div className="border-t border-[#E8E8E8] py-20 md:py-28">
+
+          {/* Section label */}
+          <p className="mb-16 text-center text-[10px] font-semibold uppercase tracking-[4px] text-[#A2A2A2]">
+            {pp.productDetail}
+          </p>
+
+          {/* Intro description — centered narrow column */}
+          <p className="mx-auto mb-20 max-w-[520px] px-6 text-center text-[13px] leading-[1.9] tracking-[0.3px] text-[#989898] md:px-0">
+            {product.description}
+          </p>
+
+          {/* Editorial spreads */}
+          <div className="flex flex-col items-center gap-24 md:gap-32">
+            {product.editorial.map((item, i) => (
+              <div key={i} className="w-full">
+                {/* Image — centered, large */}
+                <div
+                  className="relative mx-auto overflow-hidden"
+                  style={{ aspectRatio: "4/3", maxWidth: "860px", width: "100%" }}
+                >
+                  <Image
+                    src={item.img}
+                    alt={item.title ?? `Editorial ${i + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width:960px) 100vw, 860px"
+                  />
+                </div>
+
+                {/* Text — centered below image */}
+                <div className="mx-auto mt-7 max-w-[520px] px-6 text-center md:px-0">
+                  {item.title && (
+                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[2.5px] text-[#1E1E1E]">
+                      {item.title}
+                    </p>
+                  )}
+                  <p className="text-[12px] leading-[1.9] tracking-[0.3px] text-[#989898]">
+                    {item.caption}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── RELATED PRODUCTS ── */}
+      {related.length > 0 && (
+        <div className="border-t border-[#E8E8E8] py-20 md:py-24">
+          <div className="mx-auto max-w-[1320px] px-5 md:px-10">
+            <p className="mb-12 text-center text-[10px] font-semibold uppercase tracking-[4px] text-[#A2A2A2]">
+              {pp.relatedProducts}
+            </p>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 md:gap-10">
+              {related.map((rp) => (
+                <RelatedProductCard
+                  key={rp.slug}
+                  slug={rp.slug}
+                  name={rp.name}
+                  price={rp.price}
+                  img={rp.img}
+                  quickAddLabel={pp.quickAdd}
+                  addToCartPayload={{ slug: rp.slug, name: rp.name, price: rp.price, img: rp.img, qty: 1 }}
+                  onQuickAdd={(payload) => addItem(payload)}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+    </div>
+  )
+}
+
+type QuickAddPayload = Omit<CartItem, "qty"> & { qty?: number }
+
+type RelatedCardProps = {
+  slug: string
+  name: string
+  price: string
+  img: string
+  quickAddLabel: string
+  addToCartPayload: QuickAddPayload
+  onQuickAdd: (payload: QuickAddPayload) => void
+}
+
+function RelatedProductCard({ slug, name, price, img, quickAddLabel, addToCartPayload, onQuickAdd }: RelatedCardProps) {
+  const [added, setAdded] = useState(false)
+
+  function handleQuickAdd(e: React.MouseEvent) {
+    e.preventDefault()
+    onQuickAdd(addToCartPayload)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2000)
+  }
+
+  return (
+    <div className="group flex flex-col">
+      <Link href={`/products/${slug}`} className="block">
+        <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "4/5" }}>
+          <Image
+            src={img}
+            alt={name}
+            fill
+            className="object-contain transition-transform duration-[550ms] group-hover:scale-[1.04]"
+            style={{ transitionTimingFunction: "cubic-bezier(0.25,0.46,0.45,0.94)" }}
+            sizes="(max-width:640px) 90vw, 33vw"
+          />
+        </div>
+        <div className="mt-4">
+          <p className="mb-1 text-[12px] leading-[1.5] tracking-[0.3px] text-[#1E1E1E]">{name}</p>
+          <p className="text-[11px] tracking-[0.5px] text-[#A2A2A2]">{price}</p>
+        </div>
+      </Link>
+
+      {/* Minimal text-only quick add */}
+      <button
+        onClick={handleQuickAdd}
+        className="mt-4 w-full border-t border-[#E8E8E8] pt-3 text-left text-[9px] uppercase tracking-[2.5px] text-[#B0B0B0] transition-[color] duration-200 hover:text-[#1E1E1E] focus-visible:outline-none"
+      >
+        {added ? "✓  Added" : `+ ${quickAddLabel}`}
+      </button>
     </div>
   )
 }
