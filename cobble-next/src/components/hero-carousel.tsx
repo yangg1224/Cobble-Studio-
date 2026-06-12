@@ -27,7 +27,7 @@ export function HeroCarousel() {
   return (
     <section
       aria-label="Featured collections"
-      className="relative w-full overflow-hidden aspect-video"
+      className="relative w-full overflow-hidden aspect-[390/453] md:aspect-video"
     >
       {slides.map((slide, i) => (
         <div
