@@ -36,7 +36,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-[#E8E8E8] bg-[#F9F9F9]">
       {/* Main grid */}
-      <div className="grid grid-cols-2 gap-x-6 gap-y-10 px-6 py-12 md:grid-cols-[200px_repeat(4,1fr)] md:gap-12 md:px-10 md:py-16">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-10 px-6 py-12 md:grid-cols-[1.5fr_1fr_1fr_1fr] md:gap-12 md:px-10 md:py-16">
         {/* Brand column */}
         <div>
           <Link href="/" aria-label="Cobble Home" className="mb-5 block">
@@ -75,48 +75,21 @@ export function SiteFooter() {
         <FooterCol title={f.shopTitle}    links={f.shopLinks}    hrefs={shopHrefs} />
         <FooterCol title={f.aboutTitle}   links={f.aboutLinks}   hrefs={aboutHrefs} />
         <FooterCol title={f.supportTitle} links={f.supportLinks} hrefs={suppHrefs} />
-
-        {/* Newsletter column */}
-        <div>
-          <span className="mb-5 block text-[11px] font-semibold uppercase tracking-[2.5px] text-[#1E1E1E]">
-            {f.newsletterTitle}
-          </span>
-          <p className="mb-4 text-[11px] leading-relaxed tracking-[1px] text-[#989898]">
-            {f.newsletterDesc}
-          </p>
-          <form
-            className="flex border-b border-[#1E1E1E]"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <input
-              type="email"
-              placeholder={f.emailPlaceholder}
-              aria-label={f.emailPlaceholder}
-              className="flex-1 bg-transparent py-2 text-[11px] tracking-[1px] text-[#1E1E1E] placeholder:text-[#A2A2A2] outline-none"
-            />
-            <button
-              type="submit"
-              className="py-2 pl-3 text-[10px] font-medium uppercase tracking-[2px] text-[#1E1E1E] transition-colors duration-200 hover:text-[#3CACB0]"
-            >
-              {f.joinBtn}
-            </button>
-          </form>
-        </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[#E8E8E8] px-6 py-4 md:px-10 md:py-[18px]">
+      {/* Bottom bar — single condensed line */}
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-t border-[#EEEEEE] px-6 py-4 md:px-10">
         <span className="text-[10px] tracking-[1.2px] text-[#A2A2A2]">
           {f.copyright}
         </span>
-        <nav className="flex gap-6" aria-label="Legal links">
-          <Link href="/privacy" className="text-[10px] tracking-[1.2px] text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]">
-            {f.privacyPolicy}
-          </Link>
-          <Link href="/terms" className="text-[10px] tracking-[1.2px] text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]">
-            {f.termsOfUse}
-          </Link>
-        </nav>
+        <span aria-hidden className="text-[10px] text-[#D4D4D4]">·</span>
+        <Link href="/privacy" className="text-[10px] tracking-[1.2px] text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]">
+          {f.privacyPolicy}
+        </Link>
+        <span aria-hidden className="text-[10px] text-[#D4D4D4]">·</span>
+        <Link href="/terms" className="text-[10px] tracking-[1.2px] text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]">
+          {f.termsOfUse}
+        </Link>
       </div>
     </footer>
   )
