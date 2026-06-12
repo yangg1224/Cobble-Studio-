@@ -58,8 +58,15 @@ export interface Translations {
     collaborationDesc: string
     locationsTitle: string
     locationsDesc: string
+    retailerLabel: string
+    retailerName: string
+    retailerAddress: string
     visitUsTitle: string
     visitUsDesc: string
+    studioLabel: string
+    studioAddress: string
+    getDirections: string
+    mapTitle: string
     sendMessage: string
     nameLbl: string
     namePlaceholder: string
@@ -411,8 +418,15 @@ const en: Translations = {
     collaborationDesc: "For creative partnerships and collaborations",
     locationsTitle: "LOCATIONS",
     locationsDesc: "Discover COBBLE through a curated selection of cafés, tea houses, and independent retailers.",
+    retailerLabel: "RETAILER",
+    retailerName: "MIKA Gift Shop — Toronto",
+    retailerAddress: "496 College Street, Toronto, Ontario",
     visitUsTitle: "VISIT US",
     visitUsDesc: "Our studio is where ideas take shape and objects come to life. We look forward to welcoming visitors for studio visits, workshops, and shared moments centered around craftsmanship and everyday rituals.",
+    studioLabel: "STUDIO",
+    studioAddress: "380 Alliance Ave, Toronto, Ontario",
+    getDirections: "GET DIRECTIONS",
+    mapTitle: "Map showing Cobble Studio at 380 Alliance Ave, Toronto, Ontario",
     sendMessage: "SEND A MESSAGE",
     nameLbl: "Name",
     namePlaceholder: "Your name",
@@ -791,8 +805,15 @@ const fr: Translations = {
     collaborationDesc: "Pour les partenariats créatifs et collaborations",
     locationsTitle: "EMPLACEMENTS",
     locationsDesc: "Découvrez COBBLE dans une sélection de cafés, maisons de thé et détaillants indépendants.",
+    retailerLabel: "DÉTAILLANT",
+    retailerName: "MIKA Gift Shop — Toronto",
+    retailerAddress: "496 College Street, Toronto, Ontario",
     visitUsTitle: "NOUS RENDRE VISITE",
     visitUsDesc: "Notre studio est l'endroit où les idées prennent forme et les objets prennent vie. Nous accueillons volontiers les visiteurs pour des visites d'atelier, des ateliers pratiques et des moments partagés autour de l'artisanat et des rituels quotidiens.",
+    studioLabel: "STUDIO",
+    studioAddress: "380 Alliance Ave, Toronto, Ontario",
+    getDirections: "ITINÉRAIRE",
+    mapTitle: "Carte indiquant Cobble Studio au 380 Alliance Ave, Toronto, Ontario",
     sendMessage: "ENVOYER UN MESSAGE",
     nameLbl: "Nom",
     namePlaceholder: "Votre nom",
@@ -1171,8 +1192,15 @@ const zh: Translations = {
     collaborationDesc: "创意合作与商业合作",
     locationsTitle: "销售地点",
     locationsDesc: "在精选咖啡馆、茶馆及独立零售商中发现 COBBLE。",
+    retailerLabel: "零售商",
+    retailerName: "MIKA Gift Shop — Toronto",
+    retailerAddress: "496 College Street, Toronto, Ontario",
     visitUsTitle: "参观工作室",
     visitUsDesc: "我们的工作室是创意成形、器物诞生的地方。我们诚挚欢迎访客前来参观、参加工坊，共享以工艺与日常仪式为中心的美好时光。",
+    studioLabel: "工作室",
+    studioAddress: "380 Alliance Ave, Toronto, Ontario",
+    getDirections: "获取路线",
+    mapTitle: "显示 Cobble 工作室位于多伦多 380 Alliance Ave 的地图",
     sendMessage: "发送信息",
     nameLbl: "姓名",
     namePlaceholder: "您的姓名",
@@ -1551,8 +1579,15 @@ const ja: Translations = {
     collaborationDesc: "クリエイティブなパートナーシップとコラボレーションのお問い合わせ",
     locationsTitle: "取扱店舗",
     locationsDesc: "厳選されたカフェ、ティーハウス、独立系小売店でCOBBLEをお見つけください。",
+    retailerLabel: "小売店",
+    retailerName: "MIKA Gift Shop — Toronto",
+    retailerAddress: "496 College Street, Toronto, Ontario",
     visitUsTitle: "スタジオ訪問",
     visitUsDesc: "私たちのスタジオは、アイデアが形になり、器が生まれる場所です。スタジオ見学、ワークショップ、職人技と日常のリチュアルを中心とした時間をともに過ごす方々をお待ちしています。",
+    studioLabel: "スタジオ",
+    studioAddress: "380 Alliance Ave, Toronto, Ontario",
+    getDirections: "道順を見る",
+    mapTitle: "トロント 380 Alliance Ave の Cobble スタジオを示す地図",
     sendMessage: "メッセージを送る",
     nameLbl: "お名前",
     namePlaceholder: "お名前をご入力ください",
