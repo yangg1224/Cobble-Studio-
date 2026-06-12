@@ -10,12 +10,12 @@ import { useCart } from "@/context/CartContext"
 import { useLanguage, LANGUAGES, type Language } from "@/context/LanguageContext"
 
 const collections = [
-  { title: "Mug",   href: "/collections/mug" },
-  { title: "Scoop", href: "/collections/scoop" },
-  { title: "Spoon", href: "/collections/spoon" },
-  { title: "Clip",  href: "/collections/clip" },
-  { title: "Plate", href: "/collections/plate" },
-  { title: "Vessl", href: "/collections/vessl" },
+  { title: "Mug",   href: "/collections/mug",   desc: "Cups & kuksa",     img: "/collections/mug.png" },
+  { title: "Scoop", href: "/collections/scoop", desc: "Kitchen scoops",   img: "/collections/scoop.jpg" },
+  { title: "Spoon", href: "/collections/spoon", desc: "Spoons & stirrers", img: "/collections/spoon.jpg" },
+  { title: "Clip",  href: "/collections/clip",  desc: "Home & desk clips", img: "/collections/clip.jpg" },
+  { title: "Plate", href: "/collections/plate", desc: "Plates & boards",  img: "/collections/plate.jpg" },
+  { title: "Vessl", href: "/collections/vessl", desc: "Bowls & vessels",  img: "/collections/vessel.jpg" },
 ]
 
 const navLinkCls =
@@ -262,32 +262,46 @@ export function SiteHeader() {
         {/* Desktop nav links */}
         <nav className="hidden md:flex items-center gap-9" aria-label="Main navigation">
 
-          {/* Shop — with hover dropdown */}
-          <div className="group relative flex items-center">
+          {/* Shop — with simple hover dropdown */}
+          <div className="group relative flex items-center gap-1.5">
             <Link href="/collections" className={navLinkCls}>
               {t.nav.shop}
             </Link>
+            {/* Caret affordance */}
+            <svg
+              width="9" height="9" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+              aria-hidden="true"
+              className="text-[#A2A2A2] transition-[transform,color] duration-[260ms] ease-out group-hover:rotate-180 group-hover:text-[#3CACB0]"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
 
             {/* Dropdown */}
             <div
-              className="pointer-events-none absolute left-[-28px] top-full z-50 w-[212px] bg-white/95 backdrop-blur-sm opacity-0 -translate-y-1.5 transition-[opacity,transform] duration-[220ms] ease-out group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0"
-              style={{ paddingTop: 16, paddingBottom: 20, paddingLeft: 28, paddingRight: 28 }}
+              className="pointer-events-none absolute left-[-22px] top-full z-50 pt-3.5 opacity-0 translate-y-1 transition-[opacity,transform] duration-[220ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0"
             >
-              <p className="mb-3.5 text-[9px] font-semibold uppercase tracking-[2.2px] text-[#A2A2A2]">
-                {t.nav.shopByCollection}
-              </p>
-              <ul className="flex flex-col">
+              <div
+                className="w-[200px] rounded-xl bg-white py-2"
+                style={{
+                  border: "1px solid #ECE7DF",
+                  boxShadow: "0 12px 32px -12px rgba(30,30,30,0.16)",
+                }}
+              >
+                <p className="px-5 pt-1.5 pb-2 text-[9px] font-semibold uppercase tracking-[2.2px] text-[#A2A2A2]">
+                  {t.nav.shopByCollection}
+                </p>
                 {collections.map((item) => (
-                  <li key={item.title} className="border-b border-[#E8E8E8] last:border-0">
-                    <Link
-                      href={item.href}
-                      className="block py-2 text-[11px] font-medium uppercase tracking-[2px] text-[#1E1E1E] transition-colors duration-200 hover:text-[#3CACB0]"
-                    >
-                      {item.title}
-                    </Link>
-                  </li>
+                  <Link
+                    key={item.title}
+                    href={item.href}
+                    className="group/item flex items-center px-5 py-2 text-[11px] font-medium uppercase tracking-[2px] text-[#1E1E1E] transition-colors duration-200 hover:text-[#3CACB0] focus-visible:outline-none focus-visible:text-[#3CACB0]"
+                  >
+                    <span className="mr-2.5 h-px w-0 bg-[#3CACB0] transition-[width] duration-200 group-hover/item:w-3.5" aria-hidden="true" />
+                    {item.title}
+                  </Link>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
 
