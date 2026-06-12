@@ -27,8 +27,7 @@ export function HeroCarousel() {
   return (
     <section
       aria-label="Featured collections"
-      className="relative w-full overflow-hidden"
-      style={{ height: "calc(100vh - 122px)", minHeight: 380 }}
+      className="relative w-full overflow-hidden aspect-video"
     >
       {slides.map((slide, i) => (
         <div
