@@ -27,7 +27,8 @@ export default async function CollectionPage({
   )
 
   return (
-    <div className="min-h-screen bg-white" style={{ padding: "32px 40px 80px" }}>
+    <div className="min-h-screen bg-white px-5 pb-20 pt-8 md:px-10" style={{}}>
+
 
       {/* ← Back link */}
       <div className="mb-9">
@@ -52,9 +53,9 @@ export default async function CollectionPage({
         </span>
       </div>
 
-      {/* Product grid — 4 columns, DS ProductCard spec */}
+      {/* Product grid — responsive: 2 cols on mobile, 4 on desktop */}
       {collectionProducts.length > 0 ? (
-        <div className="grid grid-cols-4 gap-x-5 gap-y-6">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-3 md:gap-x-5 lg:grid-cols-4">
           {collectionProducts.map((p) => (
             <ProductCard key={p.slug} slug={p.slug} name={p.name} price={p.price} img={p.img} collection={p.collection} />
           ))}

@@ -6,7 +6,7 @@ import Link from "next/link"
 import { useLanguage } from "@/context/LanguageContext"
 
 const products = [
-  { name: "Birch Kuksa No.01",   price: "$128", img: "/products/product1.jpg" },
+  { name: "Birch Kuksa No.01",   price: "$128", img: "/products/kuksa-birch.jpg" },
   { name: "Olivewood Heart Cup", price: "$145", img: "/products/product2.jpg" },
   { name: "Spalt Maple Kuksa",   price: "$136", img: "/products/product3.jpg" },
   { name: "Curly Maple Cup",     price: "$119", img: "/products/product4.jpg" },
@@ -23,7 +23,8 @@ const ArrowIcon = ({ dir }: { dir: "left" | "right" }) => (
 
 export function ProductsScroll() {
   const { t } = useLanguage()
-  const trackRef   = useRef<HTMLDivElement>(null)
+  const desktopTrackRef = useRef<HTMLDivElement>(null)
+  const mobileTrackRef  = useRef<HTMLDivElement>(null)
   const isDragging = useRef(false)
   const startX     = useRef(0)
   const scrollLeft = useRef(0)
@@ -31,29 +32,33 @@ export function ProductsScroll() {
   const CARD_WIDTH = 300 + 4
 
   const scroll = (dir: "prev" | "next") => {
-    if (!trackRef.current) return
-    trackRef.current.scrollBy({ left: dir === "next" ? CARD_WIDTH : -CARD_WIDTH, behavior: "smooth" })
+    const track = desktopTrackRef.current?.offsetParent ? desktopTrackRef.current : mobileTrackRef.current
+    if (!track) return
+    track.scrollBy({ left: dir === "next" ? CARD_WIDTH : -CARD_WIDTH, behavior: "smooth" })
   }
 
   const onMouseDown = (e: React.MouseEvent) => {
-    if (!trackRef.current) return
+    const track = desktopTrackRef.current
+    if (!track) return
     isDragging.current = true
-    startX.current     = e.pageX - trackRef.current.offsetLeft
-    scrollLeft.current = trackRef.current.scrollLeft
-    trackRef.current.style.userSelect = "none"
-    trackRef.current.style.cursor = "grabbing"
+    startX.current     = e.pageX - track.offsetLeft
+    scrollLeft.current = track.scrollLeft
+    track.style.userSelect = "none"
+    track.style.cursor = "grabbing"
   }
   const stopDrag = () => {
     isDragging.current = false
-    if (trackRef.current) {
-      trackRef.current.style.userSelect = ""
-      trackRef.current.style.cursor = "grab"
+    const track = desktopTrackRef.current
+    if (track) {
+      track.style.userSelect = ""
+      track.style.cursor = "grab"
     }
   }
   const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current || !trackRef.current) return
+    const track = desktopTrackRef.current
+    if (!isDragging.current || !track) return
     e.preventDefault()
-    trackRef.current.scrollLeft = scrollLeft.current - (e.pageX - trackRef.current.offsetLeft - startX.current) * 1.2
+    track.scrollLeft = scrollLeft.current - (e.pageX - track.offsetLeft - startX.current) * 1.2
   }
 
   return (
@@ -118,7 +123,7 @@ export function ProductsScroll() {
         </div>
 
         <div
-          ref={trackRef}
+          ref={desktopTrackRef}
           className="overflow-x-auto overflow-y-visible"
           style={{ scrollbarWidth: "none", cursor: "grab" }}
           onMouseDown={onMouseDown}
@@ -128,10 +133,10 @@ export function ProductsScroll() {
         >
           <style>{`.sp-track::-webkit-scrollbar{display:none}`}</style>
           <div className="flex w-max gap-1">
-            {products.map((p) => (
+            {products.map((p, i) => (
               <div key={p.name} className="w-[300px] flex-shrink-0 cursor-pointer border-none bg-none p-0 text-left">
                 <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "3/4" }}>
-                  <Image src={p.img} alt={p.name} fill className="object-contain transition-transform duration-[550ms] hover:scale-[1.05]" sizes="300px" style={{ transitionTimingFunction: "cubic-bezier(0.25,0.46,0.45,0.94)" }} />
+                  <Image src={p.img} alt={p.name} fill priority={i === 0} className="object-contain transition-transform duration-[550ms] hover:scale-[1.05]" sizes="300px" style={{ transitionTimingFunction: "cubic-bezier(0.25,0.46,0.45,0.94)" }} />
                 </div>
                 <div className="px-2 pb-2 pt-3.5">
                   <span className="block text-[11px] font-medium leading-[1.4] tracking-[1.4px] text-[#1E1E1E]">{p.name}</span>
@@ -145,16 +150,16 @@ export function ProductsScroll() {
 
       {/* Mobile card strip */}
       <div
-        ref={trackRef}
+        ref={mobileTrackRef}
         className="overflow-x-auto overflow-y-visible px-4 md:hidden"
         style={{ scrollbarWidth: "none" }}
       >
         <style>{`.sp-track::-webkit-scrollbar{display:none}`}</style>
         <div className="flex w-max gap-3">
-          {products.map((p) => (
+          {products.map((p, i) => (
             <div key={p.name} className="w-[72vw] max-w-[260px] flex-shrink-0">
               <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "3/4" }}>
-                <Image src={p.img} alt={p.name} fill className="object-contain" sizes="72vw" />
+                <Image src={p.img} alt={p.name} fill priority={i === 0} className="object-contain" sizes="72vw" />
               </div>
               <div className="px-0.5 pb-2 pt-3">
                 <span className="block text-[11px] font-medium leading-[1.4] tracking-[1.4px] text-[#1E1E1E]">{p.name}</span>

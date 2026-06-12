@@ -296,6 +296,36 @@ export function SiteHeader() {
           <Link href="/contact"  className={navLinkCls}>{t.nav.contact}</Link>
         </nav>
 
+        {/* Tagline — floats centered in the whitespace between nav links and icon cluster */}
+        <div className="hidden lg:flex flex-1 items-center justify-center select-none">
+          <div className="flex flex-col items-center">
+            <span
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: 11,
+                letterSpacing: "0.6px",
+                color: "#1E1E1E",
+                opacity: 0.38,
+                lineHeight: 1,
+              }}
+            >
+              始于木，终于器，善于用
+            </span>
+            <span
+              style={{
+                fontSize: 7.5,
+                letterSpacing: "1.8px",
+                textTransform: "uppercase",
+                color: "#A2A2A2",
+                marginTop: 5,
+                lineHeight: 1,
+              }}
+            >
+              Born of wood · Into vessel · Refined
+            </span>
+          </div>
+        </div>
+
         {/* Icons — far right */}
         <div className="ml-auto flex items-center gap-3 md:gap-4">
           {/* Search — hidden on mobile */}

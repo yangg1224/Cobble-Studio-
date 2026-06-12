@@ -30,7 +30,7 @@ export function ProductCard({
             fill
             className="object-contain transition-transform duration-[550ms] group-hover:scale-[1.05]"
             style={{ transitionTimingFunction: "cubic-bezier(0.25,0.46,0.45,0.94)" }}
-            sizes="25vw"
+            sizes="(max-width:768px) 50vw, (max-width:1024px) 33vw, 25vw"
           />
           {/* Save button — fades in on hover */}
           <div
