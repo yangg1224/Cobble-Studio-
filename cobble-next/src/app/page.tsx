@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { HeroCarousel } from "@/components/hero-carousel"
@@ -32,6 +33,20 @@ const journalPosts = [
 
 type JournalCatKey = "catCraft" | "catProcess" | "catStory"
 
+function HomeSnapEffect() {
+  useEffect(() => {
+    const header = document.querySelector("header") as HTMLElement | null
+    const hdrH = header ? header.offsetHeight : 91
+    document.documentElement.style.setProperty("--snap-hdr", `${hdrH}px`)
+    document.documentElement.classList.add("snap-home")
+    return () => {
+      document.documentElement.classList.remove("snap-home")
+      document.documentElement.style.removeProperty("--snap-hdr")
+    }
+  }, [])
+  return null
+}
+
 export default function Home() {
   const { t } = useLanguage()
   const h = t.home
@@ -39,14 +54,16 @@ export default function Home() {
 
   return (
     <>
+      <HomeSnapEffect />
+
       {/* ── HERO ── */}
-      <HeroCarousel />
+      <HeroCarousel className="snap-section" />
 
       {/* ── PRODUCTS ── */}
-      <ProductsScroll />
+      <ProductsScroll className="snap-section" />
 
       {/* ── JOURNAL ── */}
-      <section className="bg-white px-4 pb-10 pt-10 md:px-10 md:pb-16 md:pt-[72px]">
+      <section className="snap-section bg-white flex flex-col justify-start px-4 pt-14 pb-8 md:px-10 md:pt-20 md:pb-12">
         <div className="mb-7 flex items-baseline justify-between">
           <span className="text-[14px] font-medium uppercase tracking-[3px] text-[#1E1E1E]">
             {h.journalTitle}
@@ -88,11 +105,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── VIDEO / GIF ── */}
-      <section
-        className="relative mt-10 w-full overflow-hidden md:mt-[72px]"
-        style={{ height: "62vh", minHeight: 280 }}
-      >
+      {/* ── VIDEO / ABOUT ── */}
+      <section className="snap-section relative w-full overflow-hidden">
         <div className="absolute inset-0">
           <video
             src="/video/recording.mp4"

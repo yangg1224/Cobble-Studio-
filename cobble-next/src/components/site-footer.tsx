@@ -43,10 +43,36 @@ export function SiteFooter() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/brand_assets/logo.png" alt="COBBLE" className="h-12 w-auto" />
           </Link>
-          <p className="max-w-[180px] text-[11px] leading-[1.8] tracking-[1px] text-[#989898]">
-            {f.tagline}
-          </p>
-          <div className="mt-6 flex gap-4">
+          <div className="mt-5 flex flex-col gap-2 select-none">
+            <span
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: 13,
+                letterSpacing: "0.6px",
+                color: "#1E1E1E",
+                opacity: 0.45,
+                lineHeight: 1,
+              }}
+            >
+              始于木 · 终于器 · 善于用
+            </span>
+            <div className="flex flex-col gap-0.5 mt-1">
+              {["Born of wood", "Shaped into vessel", "Refined through use"].map((line) => (
+                <span
+                  key={line}
+                  style={{
+                    fontSize: 10,
+                    letterSpacing: "1px",
+                    color: "#A2A2A2",
+                    lineHeight: 1.7,
+                  }}
+                >
+                  {line}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="mt-5 flex gap-4">
             {/* Instagram */}
             <a
               href="https://instagram.com" aria-label="Instagram"

@@ -21,7 +21,7 @@ const ArrowIcon = ({ dir }: { dir: "left" | "right" }) => (
   </svg>
 )
 
-export function ProductsScroll() {
+export function ProductsScroll({ className = "" }: { className?: string }) {
   const { t } = useLanguage()
   const desktopTrackRef = useRef<HTMLDivElement>(null)
   const mobileTrackRef  = useRef<HTMLDivElement>(null)
@@ -62,7 +62,7 @@ export function ProductsScroll() {
   }
 
   return (
-    <section className="overflow-hidden bg-white py-10 md:py-[72px]">
+    <section className={`overflow-hidden bg-white flex flex-col justify-center ${className}`}>
       {/* Mobile header row */}
       <div className="mb-5 flex items-center justify-between px-4 md:hidden">
         <div>

@@ -11,7 +11,7 @@ const slides = [
   { src: "/hero/head4.jpg", alt: "Hero image 4" },
 ]
 
-export function HeroCarousel() {
+export function HeroCarousel({ className = "" }: { className?: string }) {
   const { t } = useLanguage()
   const [current, setCurrent] = useState(0)
 
@@ -27,7 +27,7 @@ export function HeroCarousel() {
   return (
     <section
       aria-label="Featured collections"
-      className="relative w-full overflow-hidden aspect-[390/453] md:aspect-video"
+      className={`relative w-full overflow-hidden ${className}`}
     >
       {slides.map((slide, i) => (
         <div

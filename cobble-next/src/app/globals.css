@@ -162,3 +162,18 @@
 /* Cobble brand utilities */
 .font-ui        { font-family: var(--font-instrument-sans), 'Instrument Sans', sans-serif; }
 .font-editorial { font-family: var(--font-crimson-text), 'Crimson Text', serif; }
+
+/* ── Home page full-page scroll snap ── */
+html.snap-home {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: var(--snap-hdr, 91px);
+}
+html.snap-home .snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: calc(100vh - var(--snap-hdr, 91px));
+}
+html.snap-home footer {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}

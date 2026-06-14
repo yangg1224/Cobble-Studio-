@@ -1,7 +1,6 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server"
-import { createAdminClient } from "@/lib/supabase/admin"
 
 export type OrderItem = {
   name: string
@@ -112,7 +111,7 @@ export async function getOrders(): Promise<Order[]> {
 
 // ── Admin: fetch all orders ───────────────────────────────────────────────────
 export async function getAllOrders(): Promise<Order[]> {
-  const supabase = createAdminClient()
+  const supabase = await createClient()
 
   const { data } = await supabase
     .from("orders")
@@ -127,7 +126,7 @@ export async function updateOrderStatus(
   orderId: string,
   status: Order["status"]
 ): Promise<{ error?: string }> {
-  const supabase = createAdminClient()
+  const supabase = await createClient()
 
   const { error } = await supabase
     .from("orders")
