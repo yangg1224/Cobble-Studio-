@@ -10,6 +10,7 @@ export type CartItem = {
   qty: number
   color?: string
   size?: string
+  woodType?: string
 }
 
 interface CartContextValue {
@@ -30,8 +31,8 @@ const CartContext = createContext<CartContextValue>({
   totalCount: 0,
 })
 
-function itemKey(slug: string, color?: string, size?: string) {
-  return `${slug}__${color ?? ""}__${size ?? ""}`
+function itemKey(slug: string, color?: string, size?: string, woodType?: string) {
+  return `${slug}__${color ?? ""}__${size ?? ""}__${woodType ?? ""}`
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
@@ -52,13 +53,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   function addItem(incoming: Omit<CartItem, "qty"> & { qty?: number }) {
     const qty = incoming.qty ?? 1
     setItems((prev) => {
-      const key = itemKey(incoming.slug, incoming.color, incoming.size)
+      const key = itemKey(incoming.slug, incoming.color, incoming.size, incoming.woodType)
       const existing = prev.find(
-        (i) => itemKey(i.slug, i.color, i.size) === key
+        (i) => itemKey(i.slug, i.color, i.size, i.woodType) === key
       )
       const next = existing
         ? prev.map((i) =>
-            itemKey(i.slug, i.color, i.size) === key
+            itemKey(i.slug, i.color, i.size, i.woodType) === key
               ? { ...i, qty: i.qty + qty }
               : i
           )
@@ -68,15 +69,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     })
   }
 
-  function removeItem(slug: string, color?: string, size?: string) {
-    const key = itemKey(slug, color, size)
-    persist(items.filter((i) => itemKey(i.slug, i.color, i.size) !== key))
+  function removeItem(slug: string, color?: string, size?: string, woodType?: string) {
+    const key = itemKey(slug, color, size, woodType)
+    persist(items.filter((i) => itemKey(i.slug, i.color, i.size, i.woodType) !== key))
   }
 
-  function updateQty(slug: string, color: string | undefined, size: string | undefined, qty: number) {
-    if (qty < 1) { removeItem(slug, color, size); return }
-    const key = itemKey(slug, color, size)
-    persist(items.map((i) => itemKey(i.slug, i.color, i.size) === key ? { ...i, qty } : i))
+  function updateQty(slug: string, color: string | undefined, size: string | undefined, qty: number, woodType?: string) {
+    if (qty < 1) { removeItem(slug, color, size, woodType); return }
+    const key = itemKey(slug, color, size, woodType)
+    persist(items.map((i) => itemKey(i.slug, i.color, i.size, i.woodType) === key ? { ...i, qty } : i))
   }
 
   function clearCart() { persist([]) }

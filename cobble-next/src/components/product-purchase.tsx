@@ -14,9 +14,19 @@ type Props = {
   sku: string
   colors: ProductColor[]
   sizes: string[]
+  sizePrices?: string[]
+  woodTypes?: string[]
+  woodTypePriceAdjustments?: number[]
 }
 
-export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: Props) {
+function applyPriceAdjustment(base: string, delta: number): string {
+  if (delta === 0) return base
+  const match = base.match(/^([A-Z]+)\s+(\d+)$/)
+  if (!match) return base
+  return `${match[1]} ${parseInt(match[2]) + delta}`
+}
+
+export function ProductPurchase({ slug, name, price, img, sku, colors, sizes, sizePrices, woodTypes, woodTypePriceAdjustments }: Props) {
   const { t } = useLanguage()
   const pp = t.productPurchase
   const [qty, setQty] = useState(1)
@@ -24,19 +34,25 @@ export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: 
   const router = useRouter()
   const [selectedColor, setSelectedColor] = useState(0)
   const [selectedSize, setSelectedSize] = useState(0)
+  const [selectedWoodType, setSelectedWoodType] = useState(0)
   const [added, setAdded] = useState(false)
 
   const clampQty = (n: number) => setQty(Math.max(1, Math.min(99, n)))
+
+  const basePrice = sizePrices ? sizePrices[selectedSize] : price
+  const woodDelta = woodTypePriceAdjustments ? woodTypePriceAdjustments[selectedWoodType] : 0
+  const currentPrice = applyPriceAdjustment(basePrice, woodDelta)
 
   function handleAddToCart() {
     addItem({
       slug,
       name,
-      price,
+      price: currentPrice,
       img,
       qty,
       color: colors[selectedColor]?.name,
       size: sizes[selectedSize],
+      woodType: woodTypes ? woodTypes[selectedWoodType] : undefined,
     })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
@@ -44,6 +60,11 @@ export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: 
 
   return (
     <div className="flex flex-col gap-0">
+      {/* Dynamic price (shown when sizes have per-size pricing) */}
+      {sizePrices && (
+        <p className="mb-7 text-[22px] tracking-[0.5px] text-[#1E1E1E]">{currentPrice}</p>
+      )}
+
       {/* Color */}
       {colors.length > 0 && (
         <div className="flex items-center justify-between border-t border-[#E8E8E8] py-4">
@@ -61,6 +82,28 @@ export function ProductPurchase({ slug, name, price, img, sku, colors, sizes }: 
                 {selectedColor === i && (
                   <span className="absolute inset-[-3px] rounded-full border border-[#1E1E1E]" aria-hidden="true" />
                 )}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Wood Type */}
+      {woodTypes && woodTypes.length > 0 && (
+        <div className="flex items-center justify-between border-t border-[#E8E8E8] py-4">
+          <span className="text-[11px] tracking-[1.5px] text-[#1E1E1E]">{pp.woodType}</span>
+          <div className="flex flex-wrap justify-end gap-2">
+            {woodTypes.map((w, i) => (
+              <button
+                key={w}
+                onClick={() => setSelectedWoodType(i)}
+                className={`px-3 py-1 text-[10px] tracking-[1px] transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-2 ${
+                  selectedWoodType === i
+                    ? "border border-[#1E1E1E] text-[#1E1E1E]"
+                    : "border border-[#D8D8D8] text-[#A2A2A2] hover:border-[#1E1E1E] hover:text-[#1E1E1E]"
+                }`}
+              >
+                {pp.woodTypeNames[w] ?? w}
               </button>
             ))}
           </div>

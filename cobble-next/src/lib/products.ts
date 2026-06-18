@@ -13,6 +13,8 @@ export type ProductSpec = {
   dimension: string
 }
 
+export type CareRow = { label: string; value: string }
+
 export type Product = {
   slug: string
   name: string
@@ -27,30 +29,34 @@ export type Product = {
   img: string
   colors: ProductColor[]
   sizes: string[]
+  sizePrices?: string[]
+  woodTypes?: string[]
+  woodTypePriceAdjustments?: number[]
   editorial: ProductEditorial[]
   spec: ProductSpec
   careGuide: string
+  careRows?: CareRow[]
 }
 
 export const products: Product[] = [
   {
     slug: "birch-kuksa-no-01",
-    name: "Birch Kuksa No.01",
-    displayName: "MUG 250 ml",
+    name: "Wooden Cup",
+    displayName: "Wooden Cup",
     collection: "Mug",
     sku: "A0011",
-    price: "CA$158",
+    price: "CAD 118",
     description:
       "Hand-carved from a single piece of Finnish birch, each Birch Kuksa No.01 is shaped over several days — no two are alike.",
     material: "Finnish birch",
     dimensions: "10 cm × 8 cm × 7 cm — holds approx. 150 ml",
     care: "Hand wash only. Condition occasionally with food-safe oil. Avoid prolonged soaking.",
     img: "/products/mug-1.jpg",
-    colors: [
-      { name: "Natural", hex: "#D4BFA0" },
-      { name: "Walnut",  hex: "#7B4A2E" },
-    ],
-    sizes: ["250 ml / 8.5 oz"],
+    colors: [],
+    sizes: ["M — Approx. 200 ml", "L — Approx. 250 ml"],
+    sizePrices: ["CAD 118", "CAD 138"],
+    woodTypes: ["maple", "blackWalnut", "mountainBeech", "hickory"],
+    woodTypePriceAdjustments: [0, 5, -5, -5],
     editorial: [
       {
         img: "/hero/head1.jpg",
@@ -81,30 +87,13 @@ export const products: Product[] = [
       dimension:
         "Each piece is individually handcrafted. Dimensions may vary slightly due to the natural characteristics of wood and the making process.",
     },
-    careGuide: `COBBLE products are handcrafted from solid wood.
-It is not static — it will gradually evolve through time and use.
-
-[USE]
-Suitable for coffee, tea, and everyday beverages.
-Avoid prolonged contact with very hot liquids.
-
-[CLEANING]
-Rinse with warm water after use and dry promptly.
-Do not:
-· Soak for extended periods
-· Use a dishwasher
-· Use harsh cleaners
-
-[MAINTENANCE]
-Over time, the surface may become drier or deepen in tone — this is natural.
-When needed, refresh the surface with a thin coat of food-safe wood oil.
-Notes:
-· Do not use in a microwave, oven, or over direct heat
-· Not intended for long-term liquid storage
-· Avoid sudden temperature changes
-
-[A TRACE OF TIME]
-Marks of use are not damage — they are part of it becoming yours.`,
+    careGuide: "",
+    careRows: [
+      { label: "Wash",    value: "Do not use in a dishwasher. Wash with care. Do not use abrasive cleansers or steel wool." },
+      { label: "Drying",  value: "Wipe off water soon after washing." },
+      { label: "Storage", value: "Do not soak in water for long periods. Do not place near open flames. Avoid direct sunlight — dry well after use and store in a dry place." },
+      { label: "Note",    value: "Slight differences may occur being handmade. Color and grain of natural wood varies in each item." },
+    ],
   },
   {
     slug: "olivewood-heart-cup",

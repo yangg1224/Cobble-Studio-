@@ -45,7 +45,7 @@ export default function ProductPage({
   const { addItem } = useCart()
 
   const [specOpen, setSpecOpen] = useState(true)
-  const [careOpen, setCareOpen] = useState(false)
+  const [careOpen, setCareOpen] = useState(true)
 
   const specRows = [
     { label: pp.capacity,  value: product.spec.capacity  },
@@ -113,7 +113,9 @@ export default function ProductPage({
             </h1>
 
             <p className="mb-5 text-[11px] tracking-[0.5px] text-[#A2A2A2]">SKU: {product.sku}</p>
-            <p className="mb-7 text-[22px] tracking-[0.5px] text-[#1E1E1E]">{product.price}</p>
+            {!product.sizePrices && (
+              <p className="mb-7 text-[22px] tracking-[0.5px] text-[#1E1E1E]">{product.price}</p>
+            )}
 
             <ProductPurchase
               slug={product.slug}
@@ -123,6 +125,9 @@ export default function ProductPage({
               sku={product.sku}
               colors={product.colors}
               sizes={product.sizes}
+              sizePrices={product.sizePrices}
+              woodTypes={product.woodTypes}
+              woodTypePriceAdjustments={product.woodTypePriceAdjustments}
             />
 
             <button className="mt-5 flex items-center gap-1.5 text-[11px] tracking-[1px] text-[#1E1E1E] transition-[color] duration-200 hover:text-[#3CACB0]">
@@ -155,7 +160,7 @@ export default function ProductPage({
             </div>
 
             {/* Accordion: Care Guide */}
-            {product.careGuide && (
+            {(product.careGuide || product.careRows) && (
               <div className="border-t border-[#E8E8E8]">
                 <button
                   onClick={() => setCareOpen((v) => !v)}
@@ -168,15 +173,26 @@ export default function ProductPage({
                   className="overflow-hidden transition-all duration-300"
                   style={{ maxHeight: careOpen ? "800px" : "0px", opacity: careOpen ? 1 : 0 }}
                 >
-                  <div className="pb-5 text-[11px] leading-[1.7] tracking-[0.3px] text-[#1E1E1E]">
-                    {careLines.map((line, i) => {
-                      const isHeader = line.startsWith("[") && line.endsWith("]")
-                      const isEmpty  = line.trim() === ""
-                      if (isEmpty)  return <div key={i} className="h-2" />
-                      if (isHeader) return <p key={i} className="mt-2 text-[10px] font-semibold uppercase tracking-[1.5px] text-[#A2A2A2]">{line.slice(1, -1)}</p>
-                      return <p key={i}>{line}</p>
-                    })}
-                  </div>
+                  {product.careRows ? (
+                    <dl className="flex flex-col gap-3 pb-5">
+                      {product.careRows.map(({ label, value }) => (
+                        <div key={label} className="flex gap-4">
+                          <dt className="w-20 flex-shrink-0 text-[10px] tracking-[0.5px] text-[#A2A2A2]">{label}</dt>
+                          <dd className="text-[11px] leading-[1.6] tracking-[0.3px] text-[#1E1E1E]">{value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  ) : (
+                    <div className="pb-5 text-[11px] leading-[1.7] tracking-[0.3px] text-[#1E1E1E]">
+                      {careLines.map((line, i) => {
+                        const isHeader = line.startsWith("[") && line.endsWith("]")
+                        const isEmpty  = line.trim() === ""
+                        if (isEmpty)  return <div key={i} className="h-5" />
+                        if (isHeader) return <p key={i} className="mb-3 text-[10px] font-semibold uppercase tracking-[1.5px] text-[#A2A2A2]">{line.slice(1, -1)}</p>
+                        return <p key={i} className="mb-2">{line}</p>
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
             )}

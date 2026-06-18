@@ -286,6 +286,8 @@ export interface Translations {
     quantity: string
     color: string
     size: string
+    woodType: string
+    woodTypeNames: Record<string, string>
     addToCart: string
     added: string
     save: string
@@ -648,6 +650,8 @@ const en: Translations = {
     quantity: "Quantity",
     color: "Color",
     size: "Size",
+    woodType: "Wood",
+    woodTypeNames: { maple: "Maple", blackWalnut: "Black Walnut", mountainBeech: "Mountain Beech", hickory: "Hickory" },
     addToCart: "Add to Cart",
     added: "Added ✓",
     save: "Save",
@@ -1035,6 +1039,8 @@ const fr: Translations = {
     quantity: "Quantité",
     color: "Couleur",
     size: "Taille",
+    woodType: "Bois",
+    woodTypeNames: { maple: "Érable", blackWalnut: "Noyer Noir", mountainBeech: "Hêtre de montagne", hickory: "Hickory" },
     addToCart: "Ajouter au Panier",
     added: "Ajouté ✓",
     save: "Sauvegarder",
@@ -1422,6 +1428,8 @@ const zh: Translations = {
     quantity: "数量",
     color: "颜色",
     size: "尺寸",
+    woodType: "木材",
+    woodTypeNames: { maple: "枫木", blackWalnut: "黑胡桃", mountainBeech: "山榉木", hickory: "山核桃" },
     addToCart: "加入购物车",
     added: "已添加 ✓",
     save: "收藏",
@@ -1809,6 +1817,8 @@ const ja: Translations = {
     quantity: "数量",
     color: "カラー",
     size: "サイズ",
+    woodType: "木材",
+    woodTypeNames: { maple: "メープル", blackWalnut: "ブラックウォールナット", mountainBeech: "マウンテンビーチ", hickory: "ヒッコリー" },
     addToCart: "カートに追加",
     added: "追加しました ✓",
     save: "保存",
