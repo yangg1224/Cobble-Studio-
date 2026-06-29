@@ -23,7 +23,7 @@ export function ProductCard({
       onMouseLeave={() => setHover(false)}
     >
       <Link href={`/products/${slug}`} className="block">
-        <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "3/4" }}>
+        <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "1/1" }}>
           <Image
             src={img}
             alt={name}

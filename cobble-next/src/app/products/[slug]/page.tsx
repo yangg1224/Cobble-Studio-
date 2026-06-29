@@ -90,7 +90,7 @@ export default function ProductPage({
         <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-[1.1fr_1fr] md:gap-16">
 
           {/* Left — main image */}
-          <div className="group relative overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "4/5" }}>
+          <div className="group relative overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "1/1" }}>
             <Image
               src={product.img}
               alt={product.name}
@@ -304,7 +304,7 @@ function RelatedProductCard({ slug, name, price, img, quickAddLabel, addToCartPa
   return (
     <div className="group flex w-[42vw] shrink-0 snap-start flex-col sm:w-auto">
       <Link href={`/products/${slug}`} className="block">
-        <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "4/5" }}>
+        <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "1/1" }}>
           <Image
             src={img}
             alt={name}
