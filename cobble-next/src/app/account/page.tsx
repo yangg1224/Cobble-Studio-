@@ -88,7 +88,7 @@ export default function AccountPage() {
 
       {/* Image panel */}
       <div className="relative hidden overflow-hidden md:block">
-        <Image src="/hero/head2.png" alt="Cobble — handcrafted objects" fill className="object-cover object-center" priority />
+        <Image src="/hero/head2.jpg" alt="Cobble — handcrafted objects" fill className="object-cover object-center" priority />
         <div className="absolute inset-0" style={{ background: "rgba(20,18,16,0.48)" }} />
         <div className="absolute left-0 right-0 top-0 h-44 pointer-events-none" style={{ background: "linear-gradient(to bottom, rgba(20,18,16,0.4) 0%, transparent 100%)" }} />
         <div className="absolute bottom-0 left-0 z-10 p-12">

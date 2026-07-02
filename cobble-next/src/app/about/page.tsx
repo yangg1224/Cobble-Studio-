@@ -86,7 +86,7 @@ export default function AboutPage() {
 
       {/* ── 4. Our Products Banner ── */}
       <section className="relative h-[340px] w-full overflow-hidden md:h-[632px]">
-        <Image src="/hero/head2.png" alt="Our products" fill className="object-cover object-center" style={{ mixBlendMode: "darken" }} sizes="100vw" />
+        <Image src="/hero/head2.jpg" alt="Our products" fill className="object-cover object-center" style={{ mixBlendMode: "darken" }} sizes="100vw" />
         <div className="absolute inset-0 flex items-center px-6 md:px-0" style={{ paddingLeft: "min(304.5px, 8vw + 24px)" }}>
           <h2 className="text-black font-normal" style={{ fontFamily: "var(--font-crimson-text)", fontSize: 36, letterSpacing: "1.8px", lineHeight: "58.2px" }}>
             {a.ourProducts}
