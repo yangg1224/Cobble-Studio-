@@ -671,6 +671,17 @@ const en: Translations = {
       caption2: "This process mirrors the making of the work—a continuous cycle of observing, carving, and refining. Time gradually fades from awareness. At times, I come back to myself to find the music has stopped—and an hour has already passed.",
     },
     posts: {
+      "the-scent-that-stays": {
+        category: "Studio Note",
+        title: "The Scent That Stays",
+        body: [
+          "A note like this one is why we make cups from wood instead of glass or steel. It arrived last week, from someone three weeks into using theirs every morning — and it says, better than we could, what we hoped a wooden cup might become over time.",
+          "「使用了一段时间的杯子之后，我越来越被吸引。咖啡的香味渗透进木制杯子里，持久迷香……每天早晨端起它，闻到的不只是咖啡，还有木头本身沉淀下来的温度。」",
+          "\"The longer I use the cup, the more it draws me in. The scent of coffee has settled into the wood — a fragrance that lingers, that never quite leaves. Every morning I lift it, and what I smell isn't only coffee, but the warmth the wood itself has quietly gathered.\"",
+          "This is the part of wood that cannot be designed, only allowed to happen. Walnut and maple are porous in a way ceramics and steel are not — they take in what is poured into them, morning after morning, and hold on to a little of it. A cup used often does not stay neutral. It becomes a small archive of the drink it has served.",
+          "We didn't set out to make a cup that smells like your coffee. We set out to make one that ages the way wood ages — by absorbing, not resisting, the life around it. This note tells us it's working.",
+        ],
+      },
       "the-craft-behind-the-cup": {
         category: "Craft",
         title: "The Craft Behind the Cup",
@@ -1060,6 +1071,17 @@ const fr: Translations = {
       caption2: "Ce processus reflète la réalisation de l'œuvre — un cycle continu d'observation, de taille et d'affinement. Le temps s'efface progressivement de la conscience. Parfois, je reviens à moi pour constater que la musique s'est arrêtée — et qu'une heure s'est déjà écoulée.",
     },
     posts: {
+      "the-scent-that-stays": {
+        category: "Note de Studio",
+        title: "Le Parfum Qui Reste",
+        body: [
+          "Une note comme celle-ci explique pourquoi nous fabriquons des tasses en bois plutôt qu'en verre ou en acier. Elle nous est arrivée la semaine dernière, d'une personne qui utilise la sienne chaque matin depuis trois semaines — et elle dit, mieux que nous ne pourrions le faire, ce que nous espérions qu'une tasse en bois deviendrait avec le temps.",
+          "「使用了一段时间的杯子之后，我越来越被吸引。咖啡的香味渗透进木制杯子里，持久迷香……每天早晨端起它，闻到的不只是咖啡，还有木头本身沉淀下来的温度。」",
+          "« Plus j'utilise cette tasse, plus elle m'attire. Le parfum du café s'est infiltré dans le bois — une fragrance qui persiste, qui ne s'en va jamais tout à fait. Chaque matin, je la porte à mes lèvres, et ce que je sens n'est pas seulement le café, mais la chaleur que le bois lui-même a doucement recueillie. »",
+          "C'est cette part du bois qu'on ne peut concevoir, seulement laisser advenir. Le noyer et l'érable sont poreux d'une manière que la céramique et l'acier ne sont pas — ils absorbent ce qu'on y verse, matin après matin, et en gardent un peu. Une tasse utilisée souvent ne reste pas neutre. Elle devient une petite archive de la boisson qu'elle a servie.",
+          "Nous ne cherchions pas à créer une tasse qui sente le café. Nous cherchions à en créer une qui vieillisse comme le bois vieillit — en absorbant, plutôt qu'en résistant à la vie qui l'entoure. Cette note nous dit que ça fonctionne.",
+        ],
+      },
       "the-craft-behind-the-cup": {
         category: "Artisanat",
         title: "L'Artisanat Derrière la Tasse",
@@ -1449,6 +1471,17 @@ const zh: Translations = {
       caption2: "这个过程如同作品的制作——观察、雕刻、打磨，循环往复。时间渐渐淡出意识。有时，我回过神来，才发现音乐已经停了——而一个小时已悄然流逝。",
     },
     posts: {
+      "the-scent-that-stays": {
+        category: "工作室笔记",
+        title: "留下来的香气",
+        body: [
+          "这样的一段留言，正是我们坚持用木头做杯子，而不是玻璃或不锈钢的原因。上周它寄来给我们，来自一位已经每天使用这只杯子三周的朋友——它比我们自己说的，更好地讲出了我们希望一只木杯随时间会变成什么样子。",
+          "「使用了一段时间的杯子之后，我越来越被吸引。咖啡的香味渗透进木制杯子里，持久迷香……每天早晨端起它，闻到的不只是咖啡，还有木头本身沉淀下来的温度。」",
+          "\"The longer I use the cup, the more it draws me in. The scent of coffee has settled into the wood — a fragrance that lingers, that never quite leaves. Every morning I lift it, and what I smell isn't only coffee, but the warmth the wood itself has quietly gathered.\"",
+          "这是木头身上无法被设计出来的部分，只能被允许发生。胡桃木和枫木有一种陶瓷与钢铁所没有的多孔性——它们承接每天早晨倒进去的东西，并悄悄留住一点。一只常用的杯子不会保持中立，它会慢慢变成盛过的那杯饮品的一份小小档案。",
+          "我们从未打算做一只闻起来像咖啡的杯子。我们想做的，是一只会像木头那样老去的杯子——吸纳周围的生活，而不是抗拒它。这段留言告诉我们，它做到了。",
+        ],
+      },
       "the-craft-behind-the-cup": {
         category: "工艺",
         title: "杯背后的工艺",
@@ -1838,6 +1871,17 @@ const ja: Translations = {
       caption2: "このプロセスは作品の制作を映し出しています——観察し、彫り、磨くという継続的なサイクル。時間は次第に意識から消えていきます。気がつくと音楽が止まっていて、もう1時間が経っていたということもあります。",
     },
     posts: {
+      "the-scent-that-stays": {
+        category: "スタジオノート",
+        title: "残り続ける香り",
+        body: [
+          "こうした一文こそ、私たちがガラスや金属ではなく木でカップを作る理由です。先週届いたこのメッセージは、毎朝三週間使い続けてくれた方から——木のカップが時とともにどうなってほしいと私たちが願っていたかを、私たち自身よりも的確に語ってくれました。",
+          "「使用了一段时间的杯子之后，我越来越被吸引。咖啡的香味渗透进木制杯子里，持久迷香……每天早晨端起它，闻到的不只是咖啡，还有木头本身沉淀下来的温度。」",
+          "「カップを使い続けるほど、惹かれていきます。コーヒーの香りが木の中に染み込み、いつまでも消えない魅惑的な香りとなりました……毎朝それを手に取るとき、香るのはコーヒーだけではなく、木自身が静かに蓄えてきた温かさでもあるのです。」",
+          "これは設計できるものではなく、起こるままに任せるしかない木の性質です。クルミやメープルは、陶器や金属とは違って多孔質であり——毎朝注がれるものを取り込み、その一部をとどめます。よく使われるカップは中立ではいられません。それが注いできた飲み物の、小さな記録となっていくのです。",
+          "私たちはコーヒーの香りがするカップを作ろうとしたわけではありません。木が老いていくように——周りの生活に抗うのではなく、それを吸収しながら——年月を重ねるカップを作ろうとしたのです。このメッセージは、それがうまくいっていることを教えてくれます。",
+        ],
+      },
       "the-craft-behind-the-cup": {
         category: "工芸",
         title: "カップの裏にある工芸",

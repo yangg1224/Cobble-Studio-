@@ -7,6 +7,17 @@ import { useLanguage } from "@/context/LanguageContext"
 
 const POSTS = [
   {
+    id: "the-scent-that-stays",
+    slug: "the-scent-that-stays",
+    catKey: "catStudioNote",
+    cats: ["studio-note"],
+    title: "The Scent That Stays",
+    date: "July 2026",
+    readTime: "3 min read",
+    excerpt: "A note from a customer, three weeks into daily use — on coffee, walnut grain, and a fragrance that doesn't fade.",
+    img: "/journal/studio-note/scent-that-stays.jpg",
+  },
+  {
     id: "brand-story",
     slug: "brand-story",
     catKey: "catStory",

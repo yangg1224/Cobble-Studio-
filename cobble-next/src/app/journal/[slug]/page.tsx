@@ -17,6 +17,13 @@ type PostMeta = {
 }
 
 const POST_META: Record<string, PostMeta> = {
+  "the-scent-that-stays": {
+    slug: "the-scent-that-stays",
+    date: "July 2026",
+    readTime: "3",
+    img: "/journal/studio-note/scent-that-stays.jpg",
+    layout: "standard",
+  },
   "brand-story": {
     slug: "brand-story",
     date: "October 2025",
