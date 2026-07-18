@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useLayoutEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { HeroCarousel } from "@/components/hero-carousel"
@@ -34,7 +34,10 @@ const journalPosts = [
 type JournalCatKey = "catCraft" | "catProcess" | "catStory"
 
 function HomeSnapEffect() {
-  useEffect(() => {
+  // useLayoutEffect: the class must come off <html> before the next page
+  // paints, otherwise mandatory snap grabs the footer and the new page
+  // opens scrolled to the bottom.
+  useLayoutEffect(() => {
     const header = document.querySelector("header") as HTMLElement | null
     const hdrH = header ? header.offsetHeight : 91
     document.documentElement.style.setProperty("--snap-hdr", `${hdrH}px`)
@@ -42,6 +45,7 @@ function HomeSnapEffect() {
     return () => {
       document.documentElement.classList.remove("snap-home")
       document.documentElement.style.removeProperty("--snap-hdr")
+      window.scrollTo(0, 0)
     }
   }, [])
   return null

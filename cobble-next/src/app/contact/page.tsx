@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { useLanguage } from "@/context/LanguageContext"
 
 export default function ContactPage() {
@@ -120,15 +119,10 @@ export default function ContactPage() {
           {c.locationsDesc}
         </p>
 
-        <div className="mt-8 flex flex-col md:flex-row md:items-start md:justify-between gap-6 md:gap-8">
-          <div className="md:pt-2 md:min-w-[220px]" style={{ fontFamily: "var(--font-sans)" }}>
-            <p className="text-[11px] uppercase tracking-[1.5px] text-[#A2A2A2] mb-2">{c.retailerLabel}</p>
-            <p className="text-[14px] tracking-[0.5px] text-[#1E1E1E] font-medium">{c.retailerName}</p>
-            <p className="text-[13px] tracking-[0.7px] text-[#A2A2A2] mt-1">{c.retailerAddress}</p>
-          </div>
-          <div className="relative w-full md:w-[55%] aspect-[735/414] overflow-hidden rounded-[12px]">
-            <Image src="/hero/head3.jpg" alt="MIKA Gift Shop — Toronto" fill className="object-cover" sizes="(max-width: 768px) 100vw, 55vw" />
-          </div>
+        <div className="mt-8" style={{ fontFamily: "var(--font-sans)" }}>
+          <p className="text-[11px] uppercase tracking-[1.5px] text-[#A2A2A2] mb-2">{c.retailerLabel}</p>
+          <p className="text-[14px] tracking-[0.5px] text-[#1E1E1E] font-medium">{c.retailerName}</p>
+          <p className="text-[13px] tracking-[0.7px] text-[#A2A2A2] mt-1">{c.retailerAddress}</p>
         </div>
       </section>
 
