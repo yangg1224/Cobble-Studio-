@@ -749,9 +749,9 @@ export const products: Product[] = [
     slug: "coffee-scoop",
     name: "Coffee Spoon",
     displayName: "Coffee Spoon",
-    collection: "Coffee",
+    collection: "Scoop",
     sku: "CF001",
-    price: "CAD 58",
+    price: "CAD 25",
     description: "A hand-carved coffee scoop sized for a precise 10 g dose — formed from solid wood with a deep, rounded bowl.",
     material: "Solid wood",
     dimensions: "15×5×3 cm",
@@ -766,8 +766,12 @@ export const products: Product[] = [
         caption: "Sized for a 10 g dose of ground coffee, this scoop is shaped to move through a bag or jar with ease.",
       },
       {
-        img: "/products/coffee-scoop/4cf6c770-ef89-479e-a89e-07850db87f1f.jpg",
+        img: "/products/coffee-scoop/main.jpg",
         caption: "The handle is squared for a firm grip; the bowl is deep enough to carry a full dose without spillage.",
+      },
+      {
+        img: "/products/coffee-scoop/4cf6c770-ef89-479e-a89e-07850db87f1f.jpg",
+        caption: "Carved from a single piece of solid wood and finished with a food-safe coating — each scoop carries its own grain and character.",
       },
     ],
     spec: {
