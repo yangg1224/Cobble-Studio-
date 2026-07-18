@@ -6,8 +6,8 @@ import { useLanguage } from "@/context/LanguageContext"
 
 const slides = [
   { src: "/hero/head1.jpg", alt: "Hero image 1" },
-  { src: "/hero/head2.jpg", alt: "Hero image 2" },
-  { src: "/hero/head3.jpg", alt: "Hero image 3" },
+  { src: "/hero/head5.jpg", alt: "Hero image 2" },
+  { src: "/hero/head6.jpg", alt: "Hero image 3" },
   { src: "/hero/head4.jpg", alt: "Hero image 4" },
 ]
 
