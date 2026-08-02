@@ -671,6 +671,16 @@ const en: Translations = {
       caption2: "This process mirrors the making of the work—a continuous cycle of observing, carving, and refining. Time gradually fades from awareness. At times, I come back to myself to find the music has stopped—and an hour has already passed.",
     },
     posts: {
+      "our-first-workshop": {
+        category: "Workshop",
+        title: "Our First Workshop — Carving with Wayne",
+        body: [
+          "This August, Cobble opened its doors for its very first workshop. Five guests came in off the street and into the shop, and for one afternoon the bench that usually holds our own work belonged to them instead.",
+          "Wayne led the session, starting everyone at the same point we all start: how to hold a carving knife, how to read the grain before the first cut, how to let the blade follow the wood instead of forcing it. Basic tools, used slowly and correctly, teach more in an hour than most people expect.",
+          "The project was a handcarved book — a small block worked down, gouge by gouge, until pages appeared where there had only been a solid piece of maple. No two came out the same. Each guest left with a small object that remembered exactly how they had held the knife.",
+          "By late afternoon the studio was covered in shavings and five people were comparing covers, still holding their carving knives. It was the kind of mess we hope to make again — this was only the first of what we intend to be many workshops.",
+        ],
+      },
       "the-scent-that-stays": {
         category: "Studio Note",
         title: "The Scent That Stays",
@@ -1071,6 +1081,16 @@ const fr: Translations = {
       caption2: "Ce processus reflète la réalisation de l'œuvre — un cycle continu d'observation, de taille et d'affinement. Le temps s'efface progressivement de la conscience. Parfois, je reviens à moi pour constater que la musique s'est arrêtée — et qu'une heure s'est déjà écoulée.",
     },
     posts: {
+      "our-first-workshop": {
+        category: "Atelier",
+        title: "Notre Premier Atelier — Tailler avec Wayne",
+        body: [
+          "Ce mois d'août, Cobble a ouvert ses portes pour son tout premier atelier. Cinq invités sont entrés dans notre studio, et pour un après-midi, l'établi qui porte habituellement notre propre travail leur appartenait.",
+          "Wayne a mené la séance, en commençant chacun au même point où nous commençons tous : comment tenir un couteau à tailler, comment lire le fil du bois avant la première coupe, comment laisser la lame suivre le bois plutôt que de la forcer. Des outils simples, utilisés lentement et correctement, enseignent plus en une heure qu'on ne l'imagine.",
+          "Le projet était un petit livre taillé à la main — un bloc travaillé, gouge après gouge, jusqu'à ce que des pages apparaissent là où il n'y avait qu'un morceau d'érable massif. Aucun n'est sorti pareil. Chaque invité est reparti avec un petit objet qui se souvenait exactement de la façon dont il avait tenu le couteau.",
+          "En fin d'après-midi, le studio était couvert de copeaux et cinq personnes comparaient leurs couvertures, tenant encore leurs couteaux. C'est le genre de désordre que nous espérons refaire — ceci n'était que le premier d'une série d'ateliers à venir.",
+        ],
+      },
       "the-scent-that-stays": {
         category: "Note de Studio",
         title: "Le Parfum Qui Reste",
@@ -1471,6 +1491,16 @@ const zh: Translations = {
       caption2: "这个过程如同作品的制作——观察、雕刻、打磨，循环往复。时间渐渐淡出意识。有时，我回过神来，才发现音乐已经停了——而一个小时已悄然流逝。",
     },
     posts: {
+      "our-first-workshop": {
+        category: "工作坊",
+        title: "我们的第一次工作坊——跟Wayne学雕刻",
+        body: [
+          "这个八月，Cobble迎来了第一场工作坊。五位朋友走进工作室，那个平日只属于我们自己的工作台，这一下午成了他们的。",
+          "由Wayne主讲，从每个人都要经历的起点开始：如何握住雕刻刀，如何在下刀前读懂木纹，如何让刀锋顺着木头走，而不是与它对抗。基础的工具，如果慢下来、用对了方法，一个小时能教会的比想象中多得多。",
+          "这次的项目是一本手工雕刻的小书——一块木料，一凿一凿地被削去，直到原本实心的枫木上渐渐显出书页的样子。没有两本是一样的。每位客人带走的，都是一件记录着自己握刀方式的小物件。",
+          "傍晚时分，工作室里满是刨花，五个人还握着雕刻刀，互相比较着自己做的封面。这样的忙乱，我们希望还能再来一次——这只是我们计划中众多工作坊的第一场。",
+        ],
+      },
       "the-scent-that-stays": {
         category: "工作室笔记",
         title: "留下来的香气",
@@ -1871,6 +1901,16 @@ const ja: Translations = {
       caption2: "このプロセスは作品の制作を映し出しています——観察し、彫り、磨くという継続的なサイクル。時間は次第に意識から消えていきます。気がつくと音楽が止まっていて、もう1時間が経っていたということもあります。",
     },
     posts: {
+      "our-first-workshop": {
+        category: "ワークショップ",
+        title: "初めてのワークショップ——Wayneと彫る",
+        body: [
+          "この8月、Cobbleは初めてのワークショップのために扉を開きました。5人のゲストが工房にやってきて、いつもは私たち自身の作業のためにある作業台が、その日の午後だけは彼らのものになりました。",
+          "指導したのはWayne。誰もが最初に立つ場所から始めました——彫刻刀の持ち方、最初の一刀を入れる前に木目を読む方法、刃を無理に押し込むのではなく木に沿わせる方法。基本の道具も、ゆっくり正しく使えば、一時間で思った以上のことを教えてくれます。",
+          "この日の課題は手彫りの本でした——ひと塊のメープル材が、一彫りごとに削られ、やがて無垢の木片だったところにページが現れていきます。同じものは一つとしてできません。それぞれのゲストが持ち帰ったのは、自分が刀をどう握っていたかを正確に記憶した、小さな作品でした。",
+          "夕方には工房中が木くずに覆われ、5人がまだ彫刻刀を手にしたまま、互いの表紙を見比べていました。またこんな散らかり方をしたい——これは私たちが続けていきたいと思っている、数あるワークショップの最初の一回にすぎません。",
+        ],
+      },
       "the-scent-that-stays": {
         category: "スタジオノート",
         title: "残り続ける香り",

@@ -13,10 +13,23 @@ type PostMeta = {
   date: string
   readTime: string
   img?: string
+  images?: string[]
   layout: "standard" | "brand-story"
 }
 
 const POST_META: Record<string, PostMeta> = {
+  "our-first-workshop": {
+    slug: "our-first-workshop",
+    date: "August 2026",
+    readTime: "4",
+    img: "/journal/first-workshop/workshop-carving.jpg",
+    images: [
+      "/journal/first-workshop/workshop-teaching.jpg",
+      "/journal/first-workshop/workshop-book-detail.jpg",
+      "/journal/first-workshop/workshop-group.jpg",
+    ],
+    layout: "standard",
+  },
   "the-scent-that-stays": {
     slug: "the-scent-that-stays",
     date: "July 2026",
@@ -256,6 +269,29 @@ function StandardLayout({
             </p>
           ))}
         </div>
+
+        {/* Gallery */}
+        {meta.images && meta.images.length > 0 && (
+          <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {meta.images.map((src, i) => (
+              <div
+                key={src}
+                className={`relative overflow-hidden bg-[#f9f9f9] ${
+                  meta.images!.length % 2 === 1 && i === meta.images!.length - 1 ? "sm:col-span-2" : ""
+                }`}
+                style={{ aspectRatio: meta.images!.length % 2 === 1 && i === meta.images!.length - 1 ? "16/9" : "4/3" }}
+              >
+                <Image
+                  src={src}
+                  alt={`${content.title} — photo ${i + 1}`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, 430px"
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Back link */}
         <div className="mt-16 border-t border-[#e8e8e8] pt-8">

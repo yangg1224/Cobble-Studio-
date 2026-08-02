@@ -7,6 +7,17 @@ import { useLanguage } from "@/context/LanguageContext"
 
 const POSTS = [
   {
+    id: "our-first-workshop",
+    slug: "our-first-workshop",
+    catKey: "catStory",
+    cats: ["story", "process"],
+    title: "Our First Workshop — Carving with Wayne",
+    date: "August 2026",
+    readTime: "4 min read",
+    excerpt: "Five guests, a bench full of gouges, and an afternoon of learning to carve — our very first workshop, taught by Wayne.",
+    img: "/journal/first-workshop/workshop-carving.jpg",
+  },
+  {
     id: "the-scent-that-stays",
     slug: "the-scent-that-stays",
     catKey: "catStudioNote",
