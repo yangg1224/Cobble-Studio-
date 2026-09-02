@@ -691,6 +691,16 @@ const en: Translations = {
           "By evening the bench was back to gluing and checking — joints pressed, pages squared, spines held up to the light to see if they'd set true. Three books left the studio that night, each one holding the particular hesitations of the hand that carved it. We're already thinking about the third.",
         ],
       },
+      "our-third-workshop": {
+        category: "Workshop",
+        title: "Our Third Workshop — Books, a Full Bench",
+        body: [
+          "This one filled the studio more than the last two combined. Wayne led a third round of the hand-carved book, and this time four guests came through the door together, turning what's usually a quiet corner of the shop into a full bench of elbows and shavings.",
+          "The lesson still starts in the same place — knife grip, reading the grain, letting the blade do the work instead of fighting it — but a group this size finds its own rhythm fast. Someone is always a step ahead of you and a step behind someone else, and that turned out to be its own kind of teaching. Guests leaned over each other's blocks between cuts, comparing how far along a spine or a page edge had come.",
+          "Before anyone touched a knife, there was pencil work — sketching the shape of a page onto the block, deciding where a spine would sit, where a corner would round off. It's the part that looks the least like carving and matters the most; every cut afterward just clears the path the pencil already drew.",
+          "By the end, four new books had come off four different blocks of the same wood, and nobody's looked quite like anybody else's. The photos afterward tell the rest of it — mugs raised, pieces held up to the light, a studio that stayed loud a little longer than usual. Three workshops in, we're starting to believe this is just what Saturdays look like now.",
+        ],
+      },
       "the-scent-that-stays": {
         category: "Studio Note",
         title: "The Scent That Stays",
@@ -1109,6 +1119,16 @@ const fr: Translations = {
           "Le point de départ ne change jamais : comment tenir le couteau, comment lire le fil du bois avant la première coupe, comment laisser la lame suivre le bois plutôt que de la forcer. Ce qui différait cette fois, c'était le rythme — savoir à quoi devait ressembler un livre terminé a permis au travail d'avancer avec plus d'assurance dès le premier coup de gouge.",
           "Une partie du travail le plus minutieux s'est fait près du sol, les invités agenouillés au-dessus de l'établi pour travailler lentement la tranche et le bord des pages — la partie qu'un couteau seul ne peut achever — en comparant leur progression à une photo de référence scotchée entre eux.",
           "En fin de journée, l'établi était de retour au collage et à la vérification — joints pressés, pages équerrées, dos tenus à la lumière pour voir s'ils avaient séché droits. Trois livres ont quitté le studio ce soir-là, chacun portant les hésitations particulières de la main qui l'avait taillé. Nous pensons déjà au troisième atelier.",
+        ],
+      },
+      "our-third-workshop": {
+        category: "Atelier",
+        title: "Notre Troisième Atelier — Livres, Établi Plein",
+        body: [
+          "Celui-ci a rempli le studio plus que les deux derniers réunis. Wayne a mené une troisième session du livre taillé à la main, et cette fois quatre invités sont arrivés ensemble, transformant ce qui est habituellement un coin tranquille de l'atelier en un établi plein de coudes et de copeaux.",
+          "La leçon commence toujours au même endroit — la prise du couteau, la lecture du fil du bois, laisser la lame faire le travail plutôt que de la forcer — mais un groupe de cette taille trouve vite son propre rythme. Quelqu'un est toujours en avance sur vous et en retard sur quelqu'un d'autre, et cela s'est révélé être une forme d'enseignement en soi. Les invités se penchaient sur les blocs des uns et des autres entre les coupes, comparant l'avancement d'un dos ou d'un bord de page.",
+          "Avant que quiconque touche un couteau, il y a eu le travail au crayon — esquisser la forme d'une page sur le bloc, décider où placer un dos, où arrondir un coin. C'est la partie qui ressemble le moins à de la sculpture et qui compte le plus ; chaque coupe qui suit ne fait que dégager le chemin que le crayon avait déjà tracé.",
+          "À la fin, quatre nouveaux livres étaient sortis de quatre blocs différents du même bois, et aucun ne ressemblait tout à fait à un autre. Les photos d'après racontent le reste — des tasses levées, des pièces tenues à la lumière, un studio resté bruyant un peu plus longtemps que d'habitude. Après trois ateliers, on commence à croire que c'est simplement à quoi ressemblent nos samedis maintenant.",
         ],
       },
       "the-scent-that-stays": {
@@ -1531,6 +1551,16 @@ const zh: Translations = {
           "傍晚时分，工作台又回到了粘合与检查的环节——压紧接口，对齐书页，把书脊举到光下看是否粘正了。那天晚上，三本书离开了工作室，每一本都带着雕刻它的那双手特有的犹豫。我们已经在想第三次了。",
         ],
       },
+      "our-third-workshop": {
+        category: "工作坊",
+        title: "我们的第三次工作坊——满满一桌人",
+        body: [
+          "这一次，工作室比前两次加起来还要热闹。Wayne带来了第三场手工雕刻木书的工作坊，这回四位客人一起走进店里，把平日安静的一角变成了挤满手肘和刨花的工作台。",
+          "课程还是从老地方开始——握刀的姿势、读懂木纹、让刀锋自己走而不是硬来——但这么大一群人很快就找到了自己的节奏。总有人比你快一步，又比另一个人慢一步，这种错落本身也成了一种教学。大家在下刀的间隙互相凑过去看对方的木料，比较谁的书脊或书页边缘做到了哪一步。",
+          "在谁碰刀子之前，先有一段铅笔的功夫——在木料上勾出书页的形状，定下书脊该落在哪里，哪个角要削圆。这一步看起来最不像雕刻，却最要紧：之后的每一刀，不过是沿着铅笔早已画好的路径清理出来。",
+          "最后，四本新书从同一批木料的四块不同的料子里诞生，没有哪两本长得一样。之后的照片说明了剩下的故事——举起的马克杯、举向光线的作品、比平时更久没安静下来的工作室。三场工作坊做下来，我们开始相信，这大概就是我们现在的周末该有的样子。",
+        ],
+      },
       "the-scent-that-stays": {
         category: "工作室笔记",
         title: "留下来的香气",
@@ -1949,6 +1979,16 @@ const ja: Translations = {
           "出発点はいつも変わりません——彫刻刀の持ち方、最初の一刀を入れる前に木目を読む方法、刃を無理に押し込むのではなく木に沿わせる方法。今回違ったのはペースでした。完成した本がどんな姿になるかを知っていたことで、最初の一彫りからより迷いなく作業が進みました。",
           "最も細かい作業のいくつかは床近くで行われました。ゲストたちは作業台の上にかがみ込み、刃物だけでは仕上げきれない部分——背表紙とページの縁——をゆっくりと仕上げながら、二人の間に貼られた参考写真と見比べていました。",
           "夕方になると、作業台は再び接着と確認の時間に戻りました——接合部を押さえ、ページを揃え、背表紙をまっすぐ乾いたか光にかざして確認します。その夜、3冊の本が工房を後にしました。それぞれが、それを彫った手ならではのためらいを宿していました。私たちはもう、3回目のことを考え始めています。",
+        ],
+      },
+      "our-third-workshop": {
+        category: "ワークショップ",
+        title: "3回目のワークショップ——満席の作業台",
+        body: [
+          "今回は、これまでの2回を合わせたよりも工房が賑やかになりました。Wayneが手彫りの本の3回目のセッションを担当し、今回は4人のゲストが一緒に扉をくぐり、普段は静かな一角を、肘と木くずでいっぱいの作業台に変えました。",
+          "レッスンはいつもと同じ場所から始まります——彫刻刀の持ち方、木目を読むこと、刃に無理をさせずに仕事をさせること。しかし、これだけの人数になると、すぐに独自のリズムが生まれます。誰もが誰かより一歩先を行き、また誰かより一歩遅れている——それ自体がひとつの学びになりました。ゲストたちは合間に互いのブロックをのぞき込み、背表紙やページの縁がどこまで進んだかを比べ合っていました。",
+          "誰かが刃物を手にする前に、まず鉛筆の作業がありました——ブロックにページの形を描き、背表紙の位置を決め、角をどこで丸めるかを決める作業です。一見彫刻らしくない部分ですが、実は最も重要な部分です。その後のすべての一刀は、鉛筆がすでに描いた道筋をなぞるに過ぎません。",
+          "最終的に、同じ木材の4つの異なるブロックから4冊の新しい本が生まれ、どれ一つとして同じものはありませんでした。その後の写真が残りを物語っています——掲げられたマグカップ、光にかざされた作品、いつもより長く賑やかだった工房。3回のワークショップを経て、これがもう私たちの土曜日の姿なのだと思い始めています。",
         ],
       },
       "the-scent-that-stays": {

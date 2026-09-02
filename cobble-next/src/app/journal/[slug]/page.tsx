@@ -41,6 +41,18 @@ const POST_META: Record<string, PostMeta> = {
     ],
     layout: "standard",
   },
+  "our-third-workshop": {
+    slug: "our-third-workshop",
+    date: "August 2026",
+    readTime: "4",
+    img: "/journal/third-workshop/workshop-group-mugs.jpg",
+    images: [
+      "/journal/third-workshop/workshop-sketching.jpg",
+      "/journal/third-workshop/workshop-bench-group.jpg",
+      "/journal/third-workshop/workshop-selfie.jpg",
+    ],
+    layout: "standard",
+  },
   "the-scent-that-stays": {
     slug: "the-scent-that-stays",
     date: "July 2026",

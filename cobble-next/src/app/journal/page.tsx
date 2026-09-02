@@ -29,6 +29,17 @@ const POSTS = [
     img: "/journal/second-workshop/workshop-teaching-group.jpg",
   },
   {
+    id: "our-third-workshop",
+    slug: "our-third-workshop",
+    catKey: "catStory",
+    cats: ["story", "process"],
+    title: "Our Third Workshop — Books, a Full Bench",
+    date: "August 2026",
+    readTime: "4 min read",
+    excerpt: "A fuller bench this time — four new guests, the same hand-carved book, and a lot of proud hands held up for photos at the end.",
+    img: "/journal/third-workshop/workshop-group-mugs.jpg",
+  },
+  {
     id: "the-scent-that-stays",
     slug: "the-scent-that-stays",
     catKey: "catStudioNote",
