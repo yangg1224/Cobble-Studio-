@@ -18,6 +18,17 @@ const POSTS = [
     img: "/journal/first-workshop/workshop-carving.jpg",
   },
   {
+    id: "our-second-workshop",
+    slug: "our-second-workshop",
+    catKey: "catStory",
+    cats: ["story", "process"],
+    title: "Our Second Workshop — Carving Books Again",
+    date: "August 2026",
+    readTime: "4 min read",
+    excerpt: "Three new carvers, the same hand-carved book project as our first workshop — Wayne back at the bench, this time with steadier hands.",
+    img: "/journal/second-workshop/workshop-teaching-group.jpg",
+  },
+  {
     id: "the-scent-that-stays",
     slug: "the-scent-that-stays",
     catKey: "catStudioNote",

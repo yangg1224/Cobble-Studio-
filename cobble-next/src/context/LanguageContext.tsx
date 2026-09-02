@@ -681,6 +681,16 @@ const en: Translations = {
           "By late afternoon the studio was covered in shavings and five people were comparing covers, still holding their carving knives. It was the kind of mess we hope to make again — this was only the first of what we intend to be many workshops.",
         ],
       },
+      "our-second-workshop": {
+        category: "Workshop",
+        title: "Our Second Workshop — Carving Books Again",
+        body: [
+          "This August, Wayne returned to Cobble to lead a second round of the same project we started with — the hand-carved book. Three new guests took their place at the bench, this time with the finished object already in mind before they'd made a single cut.",
+          "The starting point never changes: how to hold the knife, how to read the grain before the first cut, how to let the blade follow the wood instead of forcing it. What was different this time was the pace — knowing what a finished book was supposed to look like let the work move with more purpose from the first gouge.",
+          "Some of the finest work happened low to the ground, guests kneeling over the bench to work slowly at the spine and page edges — the part a knife alone won't finish — checking their progress against a reference photo taped to the surface between them.",
+          "By evening the bench was back to gluing and checking — joints pressed, pages squared, spines held up to the light to see if they'd set true. Three books left the studio that night, each one holding the particular hesitations of the hand that carved it. We're already thinking about the third.",
+        ],
+      },
       "the-scent-that-stays": {
         category: "Studio Note",
         title: "The Scent That Stays",
@@ -1089,6 +1099,16 @@ const fr: Translations = {
           "Wayne a mené la séance, en commençant chacun au même point où nous commençons tous : comment tenir un couteau à tailler, comment lire le fil du bois avant la première coupe, comment laisser la lame suivre le bois plutôt que de la forcer. Des outils simples, utilisés lentement et correctement, enseignent plus en une heure qu'on ne l'imagine.",
           "Le projet était un petit livre taillé à la main — un bloc travaillé, gouge après gouge, jusqu'à ce que des pages apparaissent là où il n'y avait qu'un morceau d'érable massif. Aucun n'est sorti pareil. Chaque invité est reparti avec un petit objet qui se souvenait exactement de la façon dont il avait tenu le couteau.",
           "En fin d'après-midi, le studio était couvert de copeaux et cinq personnes comparaient leurs couvertures, tenant encore leurs couteaux. C'est le genre de désordre que nous espérons refaire — ceci n'était que le premier d'une série d'ateliers à venir.",
+        ],
+      },
+      "our-second-workshop": {
+        category: "Atelier",
+        title: "Notre Deuxième Atelier — Tailler des Livres, Encore",
+        body: [
+          "Ce mois d'août, Wayne est revenu chez Cobble pour mener une deuxième session du même projet que la première fois — le livre taillé à la main. Trois nouveaux invités ont pris place à l'établi, cette fois avec l'objet fini déjà en tête avant même la première coupe.",
+          "Le point de départ ne change jamais : comment tenir le couteau, comment lire le fil du bois avant la première coupe, comment laisser la lame suivre le bois plutôt que de la forcer. Ce qui différait cette fois, c'était le rythme — savoir à quoi devait ressembler un livre terminé a permis au travail d'avancer avec plus d'assurance dès le premier coup de gouge.",
+          "Une partie du travail le plus minutieux s'est fait près du sol, les invités agenouillés au-dessus de l'établi pour travailler lentement la tranche et le bord des pages — la partie qu'un couteau seul ne peut achever — en comparant leur progression à une photo de référence scotchée entre eux.",
+          "En fin de journée, l'établi était de retour au collage et à la vérification — joints pressés, pages équerrées, dos tenus à la lumière pour voir s'ils avaient séché droits. Trois livres ont quitté le studio ce soir-là, chacun portant les hésitations particulières de la main qui l'avait taillé. Nous pensons déjà au troisième atelier.",
         ],
       },
       "the-scent-that-stays": {
@@ -1501,6 +1521,16 @@ const zh: Translations = {
           "傍晚时分，工作室里满是刨花，五个人还握着雕刻刀，互相比较着自己做的封面。这样的忙乱，我们希望还能再来一次——这只是我们计划中众多工作坊的第一场。",
         ],
       },
+      "our-second-workshop": {
+        category: "工作坊",
+        title: "我们的第二次工作坊——再一次雕刻木书",
+        body: [
+          "这个八月，Wayne再次来到Cobble，带来第二场工作坊——项目和第一次一样，还是那本手工雕刻的木书。三位新客人坐上了工作台，这一次，他们在动第一刀之前，心里已经有了成品的样子。",
+          "起点从未改变：如何握刀，如何在下刀前读懂木纹，如何让刀锋顺着木头走，而不是与它对抗。不同的是这次的节奏——知道一本完成的书该是什么样子，让大家从第一凿开始就更有方向感。",
+          "一些最精细的活儿是蹲在地上完成的：客人们跪在工作台边，慢慢处理书脊和书页边缘——这是光靠刀削不能完全做到的部分——一边对照着夹在两人中间的参考图，一边检查自己的进度。",
+          "傍晚时分，工作台又回到了粘合与检查的环节——压紧接口，对齐书页，把书脊举到光下看是否粘正了。那天晚上，三本书离开了工作室，每一本都带着雕刻它的那双手特有的犹豫。我们已经在想第三次了。",
+        ],
+      },
       "the-scent-that-stays": {
         category: "工作室笔记",
         title: "留下来的香气",
@@ -1909,6 +1939,16 @@ const ja: Translations = {
           "指導したのはWayne。誰もが最初に立つ場所から始めました——彫刻刀の持ち方、最初の一刀を入れる前に木目を読む方法、刃を無理に押し込むのではなく木に沿わせる方法。基本の道具も、ゆっくり正しく使えば、一時間で思った以上のことを教えてくれます。",
           "この日の課題は手彫りの本でした——ひと塊のメープル材が、一彫りごとに削られ、やがて無垢の木片だったところにページが現れていきます。同じものは一つとしてできません。それぞれのゲストが持ち帰ったのは、自分が刀をどう握っていたかを正確に記憶した、小さな作品でした。",
           "夕方には工房中が木くずに覆われ、5人がまだ彫刻刀を手にしたまま、互いの表紙を見比べていました。またこんな散らかり方をしたい——これは私たちが続けていきたいと思っている、数あるワークショップの最初の一回にすぎません。",
+        ],
+      },
+      "our-second-workshop": {
+        category: "ワークショップ",
+        title: "2回目のワークショップ——再び本を彫る",
+        body: [
+          "この8月、Wayneが再びCobbleに戻り、前回と同じ課題——手彫りの本——で2回目のセッションを行いました。3人の新しいゲストが作業台に着きましたが、今回は最初の一刀を入れる前から、完成形をすでに思い描いていました。",
+          "出発点はいつも変わりません——彫刻刀の持ち方、最初の一刀を入れる前に木目を読む方法、刃を無理に押し込むのではなく木に沿わせる方法。今回違ったのはペースでした。完成した本がどんな姿になるかを知っていたことで、最初の一彫りからより迷いなく作業が進みました。",
+          "最も細かい作業のいくつかは床近くで行われました。ゲストたちは作業台の上にかがみ込み、刃物だけでは仕上げきれない部分——背表紙とページの縁——をゆっくりと仕上げながら、二人の間に貼られた参考写真と見比べていました。",
+          "夕方になると、作業台は再び接着と確認の時間に戻りました——接合部を押さえ、ページを揃え、背表紙をまっすぐ乾いたか光にかざして確認します。その夜、3冊の本が工房を後にしました。それぞれが、それを彫った手ならではのためらいを宿していました。私たちはもう、3回目のことを考え始めています。",
         ],
       },
       "the-scent-that-stays": {
