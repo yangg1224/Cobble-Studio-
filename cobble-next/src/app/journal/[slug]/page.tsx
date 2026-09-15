@@ -18,6 +18,17 @@ type PostMeta = {
 }
 
 const POST_META: Record<string, PostMeta> = {
+  "our-first-park-market": {
+    slug: "our-first-park-market",
+    date: "September 2026",
+    readTime: "4",
+    img: "/journal/park-market/park-market-tent.jpg",
+    images: [
+      "/journal/park-market/park-market-customers.jpg",
+      "/journal/park-market/park-market-portrait.jpg",
+    ],
+    layout: "standard",
+  },
   "our-first-workshop": {
     slug: "our-first-workshop",
     date: "August 2026",

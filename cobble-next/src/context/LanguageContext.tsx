@@ -671,6 +671,16 @@ const en: Translations = {
       caption2: "This process mirrors the making of the work—a continuous cycle of observing, carving, and refining. Time gradually fades from awareness. At times, I come back to myself to find the music has stopped—and an hour has already passed.",
     },
     posts: {
+      "our-first-park-market": {
+        category: "Story",
+        title: "Our First Park Market",
+        body: [
+          "This September, Cobble packed up the studio and set up in the park for the first time — a folding tent, a table too small for everything we wanted to bring, and an afternoon of finding out what it's like to sell wood in daylight, outdoors, to people who have never heard of us.",
+          "We built the display as we went. A bare branch became a stand for hanging cups and spoons, small carved figures stood between silk flowers, and the pieces that usually sit under studio lighting were suddenly competing with real sun and real grass. It looked different out there — rougher and better at the same time.",
+          "What surprised us most was how people actually shop outdoors. A woman leaned over the table for a long time, running a finger along the grain of a cup before she said anything at all. A young man stood quietly beside her the whole time, waiting his turn to look. Nobody rushed. In a park, apparently, nobody has anywhere else to be.",
+          "By the end of the day the table was a little emptier, the tent had done its job against the sun, and we had a list of things to bring more of next time — the little bowls went first. It was loud and unplanned and nothing like a normal Saturday at the bench, and we're already looking for the next park.",
+        ],
+      },
       "our-first-workshop": {
         category: "Workshop",
         title: "Our First Workshop — Carving with Wayne",
@@ -1101,6 +1111,16 @@ const fr: Translations = {
       caption2: "Ce processus reflète la réalisation de l'œuvre — un cycle continu d'observation, de taille et d'affinement. Le temps s'efface progressivement de la conscience. Parfois, je reviens à moi pour constater que la musique s'est arrêtée — et qu'une heure s'est déjà écoulée.",
     },
     posts: {
+      "our-first-park-market": {
+        category: "Récit",
+        title: "Notre Premier Marché en Plein Air",
+        body: [
+          "Ce mois de septembre, Cobble a quitté le studio pour s'installer dans un parc pour la première fois — une tente pliante, une table trop petite pour tout ce qu'on voulait apporter, et un après-midi à découvrir ce que c'est que de vendre du bois en plein jour, en extérieur, à des gens qui n'avaient jamais entendu parler de nous.",
+          "Nous avons construit la présentation sur le moment. Une branche nue est devenue un support pour suspendre tasses et cuillères, de petites figurines sculptées se dressaient entre des fleurs de soie, et les pièces qui reposent habituellement sous la lumière du studio se retrouvaient soudain en concurrence avec le vrai soleil et la vraie herbe. Ça avait l'air différent là-bas — plus brut et meilleur à la fois.",
+          "Ce qui nous a le plus surpris, c'est la façon dont les gens font leurs achats en extérieur. Une femme s'est penchée longuement sur la table, faisant glisser un doigt sur le grain d'une tasse avant de dire quoi que ce soit. Un jeune homme se tenait tranquillement à côté d'elle tout ce temps, attendant son tour pour regarder. Personne ne se pressait. Dans un parc, apparemment, personne n'a nulle part où être.",
+          "À la fin de la journée, la table était un peu plus vide, la tente avait fait son travail contre le soleil, et nous avions une liste de choses à apporter davantage la prochaine fois — les petits bols sont partis les premiers. C'était bruyant, improvisé, et rien à voir avec un samedi normal à l'établi, et nous cherchons déjà le prochain parc.",
+        ],
+      },
       "our-first-workshop": {
         category: "Atelier",
         title: "Notre Premier Atelier — Tailler avec Wayne",
@@ -1531,6 +1551,16 @@ const zh: Translations = {
       caption2: "这个过程如同作品的制作——观察、雕刻、打磨，循环往复。时间渐渐淡出意识。有时，我回过神来，才发现音乐已经停了——而一个小时已悄然流逝。",
     },
     posts: {
+      "our-first-park-market": {
+        category: "故事",
+        title: "我们的第一次公园市集",
+        body: [
+          "这个九月，Cobble第一次把工作室搬进了公园——一个折叠帐篷，一张装不下我们想带的所有东西的小桌子，还有一整个下午，去弄明白在阳光下、露天里，向从未听说过我们的路人卖木器是什么感觉。",
+          "展台是我们边搭边想出来的。一根光秃秃的树枝变成了挂杯子和勺子的架子，几个小小的木雕人像立在丝绸花朵之间，那些平时在工作室灯光下摆放的作品，突然要跟真正的阳光和真正的草地争夺目光。摆在外面，感觉不一样了——更粗糙，却也更好看。",
+          "最让我们意外的，是人们在户外购物的样子。一位女士在桌前站了很久，用手指慢慢摸过一只杯子的木纹，好一会儿才开口说话。一个年轻人一直安静地站在她旁边，等着轮到自己看。没有人着急。在公园里，好像谁都不用赶着去哪儿。",
+          "一天下来，桌子空了一些，帐篷也挡住了太阳，我们还列出了下次要多带的东西——那些小碗最先卖光了。这一天又吵又没计划，跟平常在工作台前的周六完全不一样，而我们已经在期待下一个公园了。",
+        ],
+      },
       "our-first-workshop": {
         category: "工作坊",
         title: "我们的第一次工作坊——跟Wayne学雕刻",
@@ -1961,6 +1991,16 @@ const ja: Translations = {
       caption2: "このプロセスは作品の制作を映し出しています——観察し、彫り、磨くという継続的なサイクル。時間は次第に意識から消えていきます。気がつくと音楽が止まっていて、もう1時間が経っていたということもあります。",
     },
     posts: {
+      "our-first-park-market": {
+        category: "ストーリー",
+        title: "初めての公園マーケット",
+        body: [
+          "この9月、Cobbleは初めて工房を離れ、公園に店を構えました。折りたたみのテント、持って行きたいものすべてには小さすぎるテーブル、そして日差しの下、屋外で、私たちのことを聞いたこともない人たちに木の器を売るというのがどんな感じなのかを知る午後でした。",
+          "ディスプレイはその場で作り上げていきました。何も加工していない一本の枝が、カップやスプーンを吊るす台になり、小さな木彫りの人形が造花の間に立ち並び、いつもは工房の照明の下にある作品たちが、突然本物の太陽と本物の草に負けじと存在感を放っていました。外に出すと、見え方が違いました——もっと粗く、それでいてもっと良く見えました。",
+          "何より驚いたのは、人々が屋外でどうやって買い物をするかということでした。ある女性はテーブルの前で長い間かがみ込み、何も言わずにカップの木目に指を這わせていました。若い男性はその間ずっと隣で静かに立ち、自分の順番を待っていました。誰も急いでいません。公園では、どうやら誰も他に行く場所がないようです。",
+          "一日の終わりには、テーブルは少し空になり、テントは日差しをしっかり防いでくれて、次回はもっと持って来るべきもののリストができました——小さな器がいちばん早く売れました。いつもの作業台の前の土曜日とはまったく違う、賑やかで計画通りにはいかない一日でしたが、私たちはすでに次の公園を探しています。",
+        ],
+      },
       "our-first-workshop": {
         category: "ワークショップ",
         title: "初めてのワークショップ——Wayneと彫る",

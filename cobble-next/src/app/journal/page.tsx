@@ -7,6 +7,17 @@ import { useLanguage } from "@/context/LanguageContext"
 
 const POSTS = [
   {
+    id: "our-first-park-market",
+    slug: "our-first-park-market",
+    catKey: "catStory",
+    cats: ["story"],
+    title: "Our First Park Market",
+    date: "September 2026",
+    readTime: "4 min read",
+    excerpt: "A tent, a folding table, and a park full of strangers — our first time selling Cobble outdoors, away from the studio bench.",
+    img: "/journal/park-market/park-market-tent.jpg",
+  },
+  {
     id: "our-first-workshop",
     slug: "our-first-workshop",
     catKey: "catStory",
