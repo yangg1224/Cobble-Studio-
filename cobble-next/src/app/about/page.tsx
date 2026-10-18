@@ -68,9 +68,6 @@ export default function AboutPage() {
             <p className="text-[#1E1E1E] mb-[16px]" style={{ fontFamily: "var(--font-crimson-text)", fontStyle: "italic", fontSize: 16, letterSpacing: "0.8px", lineHeight: "25.9px" }}>
               {a.cobbleNameDesc}
             </p>
-            <p className="text-[#1E1E1E]" style={{ fontFamily: "var(--font-crimson-text)", fontStyle: "italic", fontSize: 16, letterSpacing: "0.8px", lineHeight: "25.9px" }}>
-              {a.cobbleWorkDesc}
-            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-[24px] mt-[40px]">
@@ -84,11 +81,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── 4. Our Products Banner ── */}
+      {/* ── 4. Our Work Banner ── */}
       <section className="relative h-[340px] w-full overflow-hidden md:h-[632px]">
-        <Image src="/hero/head2.jpg" alt="Our products" fill className="object-cover object-center" style={{ mixBlendMode: "darken" }} sizes="100vw" />
+        <Image src="/hero/head2.jpg" alt="Cherries on a handcrafted wooden tray" fill className="object-cover object-center" sizes="100vw" />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent" />
         <div className="absolute inset-0 flex items-center px-6 md:px-0" style={{ paddingLeft: "min(304.5px, 8vw + 24px)" }}>
-          <h2 className="text-black font-normal" style={{ fontFamily: "var(--font-crimson-text)", fontSize: 36, letterSpacing: "1.8px", lineHeight: "58.2px" }}>
+          <h2 className="text-white font-normal" style={{ fontFamily: "var(--font-crimson-text)", fontSize: 36, letterSpacing: "1.8px", lineHeight: "58.2px", textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>
             {a.ourProducts}
           </h2>
         </div>
@@ -124,7 +122,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── 6. Product Story Banner ── */}
+      {/* ── 6. Behind the Scenes Banner ── */}
       <section className="relative h-[340px] w-full overflow-hidden md:h-[522px]">
         <Image src="/hero/head4.jpg" alt="Product story" fill className="object-cover object-center" style={{ mixBlendMode: "darken" }} sizes="100vw" />
         <div className="absolute inset-0 bg-black/30" />
@@ -140,7 +138,7 @@ export default function AboutPage() {
             className="flex items-center gap-[8px] text-[#F9F9F9] transition-opacity duration-200 hover:opacity-70"
             style={{ fontFamily: "var(--font-instrument-sans)", fontSize: 14, letterSpacing: "0.7px", lineHeight: "22.65px" }}
           >
-            {t.viewMore}
+            {a.viewBlogs}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
             </svg>

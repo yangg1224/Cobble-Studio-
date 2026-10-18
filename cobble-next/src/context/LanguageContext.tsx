@@ -41,6 +41,7 @@ export interface Translations {
     productEssence: string
     productStory: string
     productStoryDesc: string
+    viewBlogs: string
     essenceSections: { title: string; body: string }[]
     productCards: { label: string; desc: string }[]
     journalCategories: string[]
@@ -382,25 +383,24 @@ const en: Translations = {
 
   about: {
     heroQuote: "\"Observe. Reflect. Let it become.\"",
-    ourStory: "Our Story",
+    ourStory: "Why we make",
     storyBody: [
-      "C O B B L E is a woodworking brand based in Toronto, Canada. The studio creates handcrafted objects that explore the relationship between everyday use, materiality, and quiet living.",
-      "Each piece is made from solid wood, preserving the natural grain and tactile quality of the material. The design is simple and functional, focused on long-term use.",
-      "Our goal is to make objects that are not only beautiful, but meant to be used and lived with.",
-      "Over time, the wood will evolve, developing a unique character with use — a natural part of what makes each piece yours.",
+      "Cobble Studio is a woodworking studio based in Toronto, Canada. We design and handcraft wooden cups and everyday woodenware.",
+      "With 无常 (anitya) in mind, we hope to make things that offer a small sense of permanence in an ever-changing world. A cup to keep you company as time goes by.",
+      "Our work ends when the making is done, but the story continues in the hands of those who use it.",
     ],
-    cobbleNameDesc: "is the name of my studio. Like stones once edged and irregular, gradually shaped by nature over time, each piece emerges in its own distinct form.",
+    cobbleNameDesc: "Over time, nature shapes rough stones into smooth pebbles. We do much the same with wood, shaping each piece by hand. Like a pebble picked up along a riverbank, each piece finds a home of its own.",
     cobbleWorkDesc: "The current body of work explores everyday objects—developed across five series: mugs, scoops, spoons, clips, and plates.",
-    ourProducts: "Our Products",
-    productEssence: "Product Essence",
-    productStory: "Product Story",
-    productStoryDesc: "Find out about the story and ideas behind our products through interviews.",
+    ourProducts: "Our Work",
+    productEssence: "How we make",
+    productStory: "Behind the scenes",
+    productStoryDesc: "Updates, stories and a closer look at how we make things",
+    viewBlogs: "View blogs",
     essenceSections: [
-      { title: "Nature", body: "Every piece carries the unique marks of the tree it came from. Grain patterns, tones, and textures vary naturally, making each object one of a kind." },
-      { title: "Craft", body: "Designed and finished by hand, each object reflects careful attention to proportion, touch, and detail." },
-      { title: "Touch", body: "Wood invites interaction. Its warmth and weight sit comfortably in the hand, asking to be held and used daily." },
-      { title: "Patina", body: "Objects become more meaningful through use. Over time, wood develops richer tones and subtle traces of everyday life." },
-      { title: "Ritual", body: "We believe everyday moments deserve attention. Whether enjoying a morning coffee or an afternoon tea, the right object makes the ritual complete." },
+      { title: "Locally sourced wood", body: "We source our wood directly from local lumberyards. Every piece is designed and made in Toronto." },
+      { title: "One of a Kind", body: "Just as no two trees are alike, each of our pieces has its own grain, color and character." },
+      { title: "The 3° Rim", body: "The rim is hand-sanded to about 3 degrees for a more comfortable sip and a subtle sense of flow." },
+      { title: "Ergonomic Handle", body: "We refine each handle design through numerous prototypes to ensure a natural grip." },
     ],
     productCards: [
       { label: "MUG",   desc: "A wooden object that celebrates the warmth and character of natural timber" },
@@ -833,10 +833,11 @@ const fr: Translations = {
     ],
     cobbleNameDesc: "est le nom de mon studio. Comme des pierres autrefois irrégulières, façonnées peu à peu par la nature, chaque pièce émerge sous sa propre forme distincte.",
     cobbleWorkDesc: "Le corpus actuel explore des objets du quotidien — développés en cinq séries : mugs, cuillers doseuses, cuillères, agrafes et assiettes.",
-    ourProducts: "Nos Produits",
+    ourProducts: "Nos Créations",
     productEssence: "L'Essence du Produit",
-    productStory: "Histoire du Produit",
-    productStoryDesc: "Découvrez l'histoire et les idées derrière nos produits à travers des entretiens.",
+    productStory: "Dans les coulisses",
+    productStoryDesc: "Actualités, récits et un aperçu de notre façon de créer",
+    viewBlogs: "Voir le blog",
     essenceSections: [
       { title: "Nature", body: "Chaque pièce porte les marques uniques de l'arbre dont elle provient. Les motifs de grain, les tons et les textures varient naturellement, rendant chaque objet unique en son genre." },
       { title: "Artisanat", body: "Conçu et fini à la main, chaque objet reflète une attention méticuleuse à la proportion, au toucher et au détail." },
@@ -1266,25 +1267,24 @@ const zh: Translations = {
 
   about: {
     heroQuote: "「观察。思考。让它成为。」",
-    ourStory: "我们的故事",
+    ourStory: "我们为何制作",
     storyBody: [
-      "C O B B L E 是一个总部位于加拿大多伦多的木工品牌。工作室创作手工艺品，探索日常使用、材料性与安静生活之间的关系。",
-      "每件作品均由实木制成，保留了材料的天然纹理和触感。设计简洁实用，专注于长期使用。",
-      "我们的目标是制作不仅美观，而且适合日常使用和生活的物品。",
-      "随着时间的推移，木材将不断演变，在使用中形成独特的个性——这是使每件作品成为您专属的自然组成部分。",
+      "Cobble Studio 来自加拿大多伦多，专注于木杯及其它日常木器的原创设计与手工制作。",
+      "诸行无常，我们希望制作的器物能成为流动岁月中的锚点，让器物盛放时间，在变迁中陪伴你一程。",
+      "我们负责制作，接下来的故事由你延续。",
     ],
-    cobbleNameDesc: "是我工作室的名字。就像曾经棱角分明的石块，在岁月中被自然慢慢塑造，每件作品以其独特的形态呈现。",
+    cobbleNameDesc: "一块山石历经自然打磨，渐生圆润，成为鹅卵石。正如我们以双手打磨木头，使之成器。人与器物的相遇，就如偶然拾起的一颗鹅卵石。",
     cobbleWorkDesc: "目前的创作系列探索日常器物——分为五个系列：马克杯、量勺、汤匙、夹子和盘子。",
-    ourProducts: "我们的产品",
-    productEssence: "产品精髓",
-    productStory: "产品故事",
-    productStoryDesc: "通过访谈了解我们产品背后的故事与理念。",
+    ourProducts: "我们的作品",
+    productEssence: "我们如何制作",
+    productStory: "幕后故事",
+    productStoryDesc: "动态、故事，带你走近我们的制作过程",
+    viewBlogs: "查看博客",
     essenceSections: [
-      { title: "自然", body: "每件作品都承载着来源树木的独特印记。纹理、色调和质感自然变化，使每个物件独一无二。" },
-      { title: "工艺", body: "手工设计与精细打磨，每件器物都体现了对比例、触感和细节的精心关注。" },
-      { title: "触感", body: "木材邀请人们与之互动。它的温度和重量舒适地握在手中，令人想要每天持握和使用。" },
-      { title: "包浆", body: "物件在使用中变得更有意义。随着时间流逝，木材发展出更丰富的色调和日常生活的细微痕迹。" },
-      { title: "仪式", body: "我们相信日常的时刻值得被珍视。无论是享用清晨咖啡还是午后茶，合适的器物使仪式圆满完整。" },
+      { title: "本地选材", body: "我们的木料直接来自于多伦多本地的伐木场。每件作品均在多伦多完成设计与制作。" },
+      { title: "独一无二", body: "正如世界上没有两棵相同的树，我们的每一件作品都有其独特的纹理、色泽与韵味。" },
+      { title: "3度杯口", body: "杯口经手工打磨形成约3度倾角，带来舒适入口体验与线条流动感。" },
+      { title: "人体工学", body: "大量的原型迭代确保每一种把手都自然贴合。" },
     ],
     productCards: [
       { label: "马克杯", desc: "一件木质器物，彰显天然木材的温度与个性" },
@@ -1717,10 +1717,11 @@ const ja: Translations = {
     ],
     cobbleNameDesc: "はスタジオの名前です。かつては角張った不規則な石が、自然の力でゆっくりと形を変えるように、各ピースはその独自の形として生まれます。",
     cobbleWorkDesc: "現在の制作シリーズは日常の器を探求しており、マグカップ・スクープ・スプーン・クリップ・プレートの5シリーズで展開しています。",
-    ourProducts: "製品紹介",
+    ourProducts: "私たちの作品",
     productEssence: "製品のエッセンス",
-    productStory: "プロダクトストーリー",
-    productStoryDesc: "インタビューを通して、製品の背景にあるストーリーやアイデアをご紹介します。",
+    productStory: "制作の舞台裏",
+    productStoryDesc: "お知らせやストーリーを通して、私たちのものづくりをより身近に",
+    viewBlogs: "ブログを見る",
     essenceSections: [
       { title: "自然", body: "各ピースには、その木が生きた証が刻まれています。木目のパターン、色調、質感は自然に変化し、すべての器を唯一無二のものにします。" },
       { title: "工芸", body: "手で設計し仕上げた各器は、プロポーション・触感・細部への丁寧な配慮を反映しています。" },
