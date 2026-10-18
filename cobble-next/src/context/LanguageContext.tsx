@@ -82,6 +82,7 @@ export interface Translations {
     subtitle: string
     catAll: string
     catCraft: string
+    catUpdates: string
     catProcess: string
     catMaterial: string
     catStory: string
@@ -439,10 +440,11 @@ const en: Translations = {
   },
 
   journal: {
-    title: "Journal",
-    subtitle: "Stories that enrich the senses,\ninspiring daily life with comfort and intention.",
+    title: "Blogs",
+    subtitle: "A closer look at the shop",
     catAll: "All",
     catCraft: "Craft",
+    catUpdates: "Updates",
     catProcess: "Process",
     catMaterial: "Material",
     catStory: "Story",
@@ -672,7 +674,7 @@ const en: Translations = {
     },
     posts: {
       "our-first-park-market": {
-        category: "Story",
+        category: "Updates",
         title: "Our First Market",
         body: [
           "This September, we joined our very first market. Thank you to Toronto Artisan Market for having us! Trinity Bellwoods Park was a lovely place to spend the day, with plenty of sunshine and green space all around.",
@@ -684,7 +686,7 @@ const en: Translations = {
         ],
       },
       "our-first-workshop": {
-        category: "Workshop",
+        category: "Updates",
         title: "Sunday Workshop #1",
         body: [
           "This August, we hosted our first free Sunday workshop! We're hoping to make these free workshops a regular thing, giving anyone interested in woodworking a chance to try it out and explore the craft.",
@@ -694,7 +696,7 @@ const en: Translations = {
         ],
       },
       "our-second-workshop": {
-        category: "Workshop",
+        category: "Updates",
         title: "Sunday Workshop #2",
         body: [
           "We welcomed another two guests this August for our second free Sunday workshop. The theme was the same as before: carving miniature scenes.",
@@ -703,7 +705,7 @@ const en: Translations = {
         ],
       },
       "our-third-workshop": {
-        category: "Workshop",
+        category: "Updates",
         title: "Sunday Workshop #3",
         body: [
           "We held our third free Sunday workshop! By now, we're getting the hang of things and starting to run these workshops more regularly.",
@@ -713,7 +715,7 @@ const en: Translations = {
         ],
       },
       "the-scent-that-stays": {
-        category: "Studio Note",
+        category: "Updates",
         title: "The Scent That Stays",
         body: [
           "A note like this one is why we make cups from wood instead of glass or steel. It arrived last week, from someone three weeks into using theirs every morning — and it says, better than we could, what we hoped a wooden cup might become over time.",
@@ -733,7 +735,7 @@ const en: Translations = {
         ],
       },
       "from-wood-to-hand": {
-        category: "Process",
+        category: "Craft",
         title: "From Wood to Hand — Inside the Workshop",
         body: [
           "The workshop is quiet in the mornings. Light comes in low across the workbench, catching the fine dust left from the day before. This is when the work is clearest — before the noise of decisions, before the phone.",
@@ -742,7 +744,7 @@ const en: Translations = {
         ],
       },
       "light-and-shadow": {
-        category: "Story",
+        category: "Updates",
         title: "Light & Shadow — Objects at Rest",
         body: [
           "An object at rest is not passive. It accumulates light in its grain, holds shadow in its curves, and keeps the mark of its making in places that only close attention finds.",
@@ -881,9 +883,10 @@ const fr: Translations = {
 
   journal: {
     title: "Journal",
-    subtitle: "Des histoires qui enrichissent les sens,\ninspirer la vie quotidienne avec confort et intention.",
+    subtitle: "Un regard sur les coulisses de l’atelier",
     catAll: "Tout",
     catCraft: "Artisanat",
+    catUpdates: "Actualités",
     catProcess: "Processus",
     catMaterial: "Matériaux",
     catStory: "Histoire",
@@ -1113,7 +1116,7 @@ const fr: Translations = {
     },
     posts: {
       "our-first-park-market": {
-        category: "Récit",
+        category: "Actualités",
         title: "Notre Premier Marché",
         body: [
           "Ce mois de septembre, nous avons participé à notre tout premier marché. Merci au Toronto Artisan Market de nous avoir accueillis ! Trinity Bellwoods Park était un endroit charmant pour passer la journée, avec beaucoup de soleil et d'espaces verts tout autour.",
@@ -1125,7 +1128,7 @@ const fr: Translations = {
         ],
       },
       "our-first-workshop": {
-        category: "Atelier",
+        category: "Actualités",
         title: "Atelier du dimanche n° 1",
         body: [
           "Ce mois d'août, nous avons organisé notre tout premier atelier gratuit du dimanche ! Nous espérons en faire un rendez-vous régulier, afin que toute personne curieuse de travailler le bois puisse essayer et découvrir ce métier.",
@@ -1135,7 +1138,7 @@ const fr: Translations = {
         ],
       },
       "our-second-workshop": {
-        category: "Atelier",
+        category: "Actualités",
         title: "Atelier du dimanche n° 2",
         body: [
           "Ce mois d'août, nous avons accueilli deux invités de plus pour notre deuxième atelier gratuit du dimanche. Le thème était le même que la première fois : sculpter des scènes miniatures.",
@@ -1144,7 +1147,7 @@ const fr: Translations = {
         ],
       },
       "our-third-workshop": {
-        category: "Atelier",
+        category: "Actualités",
         title: "Atelier du dimanche n° 3",
         body: [
           "Nous avons tenu notre troisième atelier gratuit du dimanche ! Nous commençons à prendre le pli et à organiser ces ateliers plus régulièrement.",
@@ -1154,7 +1157,7 @@ const fr: Translations = {
         ],
       },
       "the-scent-that-stays": {
-        category: "Note de Studio",
+        category: "Actualités",
         title: "Le Parfum Qui Reste",
         body: [
           "Une note comme celle-ci explique pourquoi nous fabriquons des tasses en bois plutôt qu'en verre ou en acier. Elle nous est arrivée la semaine dernière, d'une personne qui utilise la sienne chaque matin depuis trois semaines — et elle dit, mieux que nous ne pourrions le faire, ce que nous espérions qu'une tasse en bois deviendrait avec le temps.",
@@ -1174,7 +1177,7 @@ const fr: Translations = {
         ],
       },
       "from-wood-to-hand": {
-        category: "Processus",
+        category: "Artisanat",
         title: "Du Bois à la Main — Dans l'Atelier",
         body: [
           "L'atelier est calme le matin. La lumière entre en biais sur l'établi, captant la fine poussière laissée de la veille. C'est quand le travail est le plus clair — avant le bruit des décisions, avant le téléphone.",
@@ -1183,7 +1186,7 @@ const fr: Translations = {
         ],
       },
       "light-and-shadow": {
-        category: "Histoire",
+        category: "Actualités",
         title: "Lumière & Ombre — Objets au Repos",
         body: [
           "Un objet au repos n'est pas passif. Il accumule la lumière dans son grain, retient l'ombre dans ses courbes, et garde la marque de sa fabrication dans des endroits que seule une attention proche peut trouver.",
@@ -1322,9 +1325,10 @@ const zh: Translations = {
 
   journal: {
     title: "日志",
-    subtitle: "丰富感官的故事，\n以舒适与专注启迪日常生活。",
+    subtitle: "走近我们的工作室",
     catAll: "全部",
     catCraft: "工艺",
+    catUpdates: "动态",
     catProcess: "过程",
     catMaterial: "材料",
     catStory: "故事",
@@ -1554,7 +1558,7 @@ const zh: Translations = {
     },
     posts: {
       "our-first-park-market": {
-        category: "故事",
+        category: "动态",
         title: "我们的第一次市集",
         body: [
           "今年九月，我们通过 Toronto Artisan Market 第一次参加市集！Trinity Bellwoods Park 绿草茵茵，是个非常适合摆摊的地方。",
@@ -1566,7 +1570,7 @@ const zh: Translations = {
         ],
       },
       "our-first-workshop": {
-        category: "工作坊",
+        category: "动态",
         title: "周日工作坊 #1",
         body: [
           "这个八月，我们举办了第一场免费的周日工作坊！我们希望把这样的免费工作坊变成常态，让每一位对木工感兴趣的人都有机会亲手试一试，走近这门手艺。",
@@ -1576,7 +1580,7 @@ const zh: Translations = {
         ],
       },
       "our-second-workshop": {
-        category: "工作坊",
+        category: "动态",
         title: "周日工作坊 #2",
         body: [
           "这个八月，我们又迎来了两位客人，举办了第二场免费的周日工作坊。主题和上次一样：雕刻迷你场景。",
@@ -1585,7 +1589,7 @@ const zh: Translations = {
         ],
       },
       "our-third-workshop": {
-        category: "工作坊",
+        category: "动态",
         title: "周日工作坊 #3",
         body: [
           "我们举办了第三场免费的周日工作坊！到现在，我们已经渐渐摸到门道，也开始更规律地举办这些活动。",
@@ -1595,7 +1599,7 @@ const zh: Translations = {
         ],
       },
       "the-scent-that-stays": {
-        category: "工作室笔记",
+        category: "动态",
         title: "留下来的香气",
         body: [
           "这样的一段留言，正是我们坚持用木头做杯子，而不是玻璃或不锈钢的原因。上周它寄来给我们，来自一位已经每天使用这只杯子三周的朋友——它比我们自己说的，更好地讲出了我们希望一只木杯随时间会变成什么样子。",
@@ -1615,7 +1619,7 @@ const zh: Translations = {
         ],
       },
       "from-wood-to-hand": {
-        category: "过程",
+        category: "工艺",
         title: "从木到手——工作室内部",
         body: [
           "工作室在早晨是安静的。光线低低地穿过工作台，捕捉着前一天留下的细小尘埃。这是工作最清晰的时候——在决策的喧嚣之前，在手机响起之前。",
@@ -1624,7 +1628,7 @@ const zh: Translations = {
         ],
       },
       "light-and-shadow": {
-        category: "故事",
+        category: "动态",
         title: "光与影——静止的器物",
         body: [
           "静止的器物并非被动。它在纹理中积累光线，在曲线中保持阴影，在只有细心才能发现的地方保留着制作的痕迹。",
@@ -1763,9 +1767,10 @@ const ja: Translations = {
 
   journal: {
     title: "ジャーナル",
-    subtitle: "感覚を豊かにするストーリー、\n日常を心地よく、意図を持って。",
+    subtitle: "工房の舞台裏をのぞく",
     catAll: "すべて",
     catCraft: "工芸",
+    catUpdates: "お知らせ",
     catProcess: "プロセス",
     catMaterial: "素材",
     catStory: "ストーリー",
@@ -1995,7 +2000,7 @@ const ja: Translations = {
     },
     posts: {
       "our-first-park-market": {
-        category: "ストーリー",
+        category: "お知らせ",
         title: "初めてのマーケット",
         body: [
           "この9月、私たちは初めてのマーケットに出店しました。Toronto Artisan Marketのみなさん、ありがとうございました！Trinity Bellwoods Parkは、たっぷりの日差しと緑に囲まれた、一日を過ごすのにぴったりの場所でした。",
@@ -2007,7 +2012,7 @@ const ja: Translations = {
         ],
       },
       "our-first-workshop": {
-        category: "ワークショップ",
+        category: "お知らせ",
         title: "日曜ワークショップ #1",
         body: [
           "この8月、私たちは初めての無料の日曜ワークショップを開催しました！こうした無料ワークショップを定期的に続けて、木工に興味のある方が誰でも気軽に試し、ものづくりに触れられる場にしたいと思っています。",
@@ -2017,7 +2022,7 @@ const ja: Translations = {
         ],
       },
       "our-second-workshop": {
-        category: "ワークショップ",
+        category: "お知らせ",
         title: "日曜ワークショップ #2",
         body: [
           "この8月、新たに2人のゲストを迎えて、2回目の無料の日曜ワークショップを開きました。テーマは前回と同じで、ミニチュアの情景を彫ることです。",
@@ -2026,7 +2031,7 @@ const ja: Translations = {
         ],
       },
       "our-third-workshop": {
-        category: "ワークショップ",
+        category: "お知らせ",
         title: "日曜ワークショップ #3",
         body: [
           "3回目の無料の日曜ワークショップを開催しました！そろそろコツもつかめてきて、より定期的に開けるようになってきました。",
@@ -2036,7 +2041,7 @@ const ja: Translations = {
         ],
       },
       "the-scent-that-stays": {
-        category: "スタジオノート",
+        category: "お知らせ",
         title: "残り続ける香り",
         body: [
           "こうした一文こそ、私たちがガラスや金属ではなく木でカップを作る理由です。先週届いたこのメッセージは、毎朝三週間使い続けてくれた方から——木のカップが時とともにどうなってほしいと私たちが願っていたかを、私たち自身よりも的確に語ってくれました。",
@@ -2056,7 +2061,7 @@ const ja: Translations = {
         ],
       },
       "from-wood-to-hand": {
-        category: "プロセス",
+        category: "工芸",
         title: "木から手へ——工房の内側",
         body: [
           "工房は朝、静かです。光が作業台を横切って低く差し込み、前日の細かな埃を捉えます。これが最も仕事が明確な時——決断の喧騒の前、電話の前。",
@@ -2065,7 +2070,7 @@ const ja: Translations = {
         ],
       },
       "light-and-shadow": {
-        category: "ストーリー",
+        category: "お知らせ",
         title: "光と影——静止する器",
         body: [
           "静止した器は受動的ではありません。木目に光を蓄積し、曲線に影を保ち、細心の注意を払った者だけが見つける場所に作られた跡を残しています。",

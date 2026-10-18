@@ -19,19 +19,19 @@ const journalPosts = [
     href:     "/journal/from-wood-to-hand",
     img:      "/journal/journal2.jpg",
     alt:      "Artisan shaping a kuksa in the workshop",
-    categoryKey: "catProcess" as const,
+    categoryKey: "catCraft" as const,
     title:    "From Wood to Hand — Inside the Workshop",
   },
   {
     href:     "/journal/light-and-shadow",
     img:      "/journal/journal3.jpg",
     alt:      "Shadow of a kuksa cast on a pale surface",
-    categoryKey: "catStory" as const,
+    categoryKey: "catUpdates" as const,
     title:    "Light & Shadow — Objects at Rest",
   },
 ]
 
-type JournalCatKey = "catCraft" | "catProcess" | "catStory"
+type JournalCatKey = "catCraft" | "catUpdates"
 
 function HomeSnapEffect() {
   // useLayoutEffect: the class must come off <html> before the next page

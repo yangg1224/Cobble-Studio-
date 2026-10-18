@@ -9,8 +9,7 @@ const POSTS = [
   {
     id: "our-first-park-market",
     slug: "our-first-park-market",
-    catKey: "catStory",
-    cats: ["story"],
+    category: "updates",
     title: "Our First Market",
     date: "September 2026",
     readTime: "4 min read",
@@ -20,8 +19,7 @@ const POSTS = [
   {
     id: "our-first-workshop",
     slug: "our-first-workshop",
-    catKey: "catStory",
-    cats: ["story", "process"],
+    category: "updates",
     title: "Sunday Workshop #1",
     date: "August 2026",
     readTime: "4 min read",
@@ -31,8 +29,7 @@ const POSTS = [
   {
     id: "our-second-workshop",
     slug: "our-second-workshop",
-    catKey: "catStory",
-    cats: ["story", "process"],
+    category: "updates",
     title: "Sunday Workshop #2",
     date: "August 2026",
     readTime: "4 min read",
@@ -42,8 +39,7 @@ const POSTS = [
   {
     id: "our-third-workshop",
     slug: "our-third-workshop",
-    catKey: "catStory",
-    cats: ["story", "process"],
+    category: "updates",
     title: "Sunday Workshop #3",
     date: "August 2026",
     readTime: "4 min read",
@@ -53,8 +49,7 @@ const POSTS = [
   {
     id: "the-scent-that-stays",
     slug: "the-scent-that-stays",
-    catKey: "catStudioNote",
-    cats: ["studio-note"],
+    category: "updates",
     title: "The Scent That Stays",
     date: "July 2026",
     readTime: "3 min read",
@@ -64,7 +59,7 @@ const POSTS = [
   {
     id: "brand-story",
     slug: "brand-story",
-    catKey: "catStory",
+    category: "updates",
     title: "Brand Story — Born of Wood",
     date: "October 2025",
     readTime: "8 min read",
@@ -74,8 +69,7 @@ const POSTS = [
   {
     id: "the-craft-behind-the-cup",
     slug: "the-craft-behind-the-cup",
-    catKey: "catCraft",
-    cats: ["craft"],
+    category: "craft",
     title: "The Craft Behind the Cup",
     date: "May 2026",
     readTime: "5 min read",
@@ -85,8 +79,7 @@ const POSTS = [
   {
     id: "from-wood-to-hand",
     slug: "from-wood-to-hand",
-    catKey: "catProcess",
-    cats: ["process", "craft"],
+    category: "craft",
     title: "From Wood to Hand — Inside the Workshop",
     date: "May 2026",
     readTime: "6 min read",
@@ -96,8 +89,7 @@ const POSTS = [
   {
     id: "light-and-shadow",
     slug: "light-and-shadow",
-    catKey: "catStory",
-    cats: ["story"],
+    category: "updates",
     title: "Light & Shadow — Objects at Rest",
     date: "April 2026",
     readTime: "4 min read",
@@ -109,14 +101,11 @@ const POSTS = [
 const CAT_KEYS = [
   { key: "all",         tKey: "catAll"       },
   { key: "craft",       tKey: "catCraft"     },
-  { key: "process",     tKey: "catProcess"   },
-  { key: "material",    tKey: "catMaterial"  },
-  { key: "story",       tKey: "catStory"     },
-  { key: "studio-note", tKey: "catStudioNote"},
+  { key: "updates",     tKey: "catUpdates"   },
 ] as const
 
 type Post = (typeof POSTS)[number]
-type JournalTKey = "catAll" | "catCraft" | "catProcess" | "catMaterial" | "catStory" | "catStudioNote"
+type JournalTKey = "catAll" | "catCraft" | "catUpdates"
 
 export default function JournalPage() {
   const { t } = useLanguage()
@@ -125,7 +114,7 @@ export default function JournalPage() {
 
   const shown = active === "all"
     ? POSTS
-    : POSTS.filter((p) => (p as { cats?: string[] }).cats?.includes(active))
+    : POSTS.filter((p) => p.category === active)
 
   return (
     <section className="bg-white px-4 pb-16 pt-10 md:px-10 md:pb-24 md:pt-[72px]">
@@ -141,9 +130,7 @@ export default function JournalPage() {
           className="mx-auto mt-5 max-w-[520px] text-[19px] leading-[1.7] tracking-[0.2px] text-[#1E1E1E]"
           style={{ fontFamily: "var(--font-crimson-text)", fontStyle: "italic" }}
         >
-          {j.subtitle.split("\n").map((line, i) => (
-            <Fragment key={i}>{line}{i === 0 && <br />}</Fragment>
-          ))}
+          {j.subtitle}
         </p>
       </div>
 
@@ -167,7 +154,7 @@ export default function JournalPage() {
       {shown.length > 0 ? (
         <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 md:mt-14 md:gap-y-16">
           {shown.map((post) => (
-            <ArticleCard key={post.id} post={post} catLabel={j[post.catKey as JournalTKey]} />
+            <ArticleCard key={post.id} post={post} catLabel={post.category === "craft" ? j.catCraft : j.catUpdates} />
           ))}
         </div>
       ) : (
@@ -182,6 +169,7 @@ export default function JournalPage() {
 function FilterTab({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
     <button
+      aria-pressed={active}
       onClick={onClick}
       className={`group relative cursor-pointer border-none bg-transparent pb-1.5 text-[12px] font-medium uppercase tracking-[2.5px] whitespace-nowrap transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-[#3CACB0] focus-visible:outline-offset-4 focus-visible:rounded-sm ${
         active ? "text-[#1E1E1E]" : "text-[#A2A2A2] hover:text-[#1E1E1E]"
