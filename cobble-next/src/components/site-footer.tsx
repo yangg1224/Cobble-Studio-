@@ -4,8 +4,6 @@ import Link from "next/link"
 import { useLanguage } from "@/context/LanguageContext"
 
 const shopHrefs  = ["/collections/mug", "/collections/scoop", "/collections/spoon", "/collections/clip", "/collections/plate", "/collections/vessel"]
-const aboutHrefs = ["/about", "/journal", "/journal", "/contact"]
-const suppHrefs  = ["/contact", "/contact", "/contact", "/contact"]
 
 function FooterCol({ title, links, hrefs }: { title: string; links: string[]; hrefs: string[] }) {
   return (
@@ -36,7 +34,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-[#E8E8E8] bg-[#F9F9F9]">
       {/* Main grid */}
-      <div className="grid grid-cols-2 gap-x-6 gap-y-10 px-6 py-12 md:grid-cols-[1.5fr_1fr_1fr_1fr] md:gap-12 md:px-10 md:py-16">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-6 gap-y-10 px-6 py-12 md:gap-12 md:px-10 md:py-16">
         {/* Brand column */}
         <div>
           <Link href="/" aria-label="Cobble Home" className="mb-5 block">
@@ -111,8 +109,6 @@ export function SiteFooter() {
         </div>
 
         <FooterCol title={f.shopTitle}    links={f.shopLinks}    hrefs={shopHrefs} />
-        <FooterCol title={f.aboutTitle}   links={f.aboutLinks}   hrefs={aboutHrefs} />
-        <FooterCol title={f.supportTitle} links={f.supportLinks} hrefs={suppHrefs} />
       </div>
 
       {/* Bottom bar — single condensed line */}
