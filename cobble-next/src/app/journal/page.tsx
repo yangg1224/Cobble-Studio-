@@ -11,10 +11,10 @@ const POSTS = [
     slug: "our-first-park-market",
     catKey: "catStory",
     cats: ["story"],
-    title: "Our First Park Market",
+    title: "Our First Market",
     date: "September 2026",
     readTime: "4 min read",
-    excerpt: "A tent, a folding table, and a park full of strangers — our first time selling Cobble outdoors, away from the studio bench.",
+    excerpt: "Our very first market at Trinity Bellwoods Park — sunshine, curious visitors, and cups hung from branches.",
     img: "/journal/park-market/park-market-tent.jpg",
   },
   {

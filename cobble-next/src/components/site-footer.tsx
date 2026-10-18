@@ -96,14 +96,15 @@ export function SiteFooter() {
                 <path d="M14 3c.4 2.6 2.1 4.3 5 4.5"/>
               </svg>
             </a>
-            {/* Pinterest */}
+            {/* Etsy */}
             <a
-              href="https://pinterest.com" aria-label="Pinterest"
+              href="https://www.etsy.com/ca/shop/Cobble0?ref=shop-header-name&listing_id=4526502365&from_page=listing" aria-label="Etsy shop"
               target="_blank" rel="noopener noreferrer"
               className="text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]"
             >
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                <path d="M12 2C6.48 2 2 6.48 2 12c0 4.24 2.65 7.86 6.39 9.29-.09-.78-.17-1.98.04-2.83.18-.77 1.22-5.17 1.22-5.17s-.31-.63-.31-1.56c0-1.46.85-2.55 1.9-2.55.9 0 1.33.67 1.33 1.48 0 .9-.58 2.26-.87 3.51-.25 1.05.52 1.9 1.55 1.9 1.86 0 3.11-2.39 3.11-5.22 0-2.15-1.45-3.66-3.52-3.66-2.4 0-3.8 1.8-3.8 3.66 0 .72.28 1.5.62 1.92.07.08.08.15.06.23l-.23.95c-.04.15-.13.18-.29.11-1.05-.49-1.71-2.02-1.71-3.25 0-2.64 1.92-5.07 5.53-5.07 2.9 0 5.16 2.07 5.16 4.83 0 2.88-1.81 5.2-4.33 5.2-.85 0-1.64-.44-1.91-.96l-.52 1.94c-.19.72-.69 1.62-1.03 2.17.78.24 1.6.37 2.46.37 5.52 0 10-4.48 10-10S17.52 2 12 2z"/>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 4H8.5v16H17"/>
+                <path d="M8.5 12H15"/>
               </svg>
             </a>
           </div>

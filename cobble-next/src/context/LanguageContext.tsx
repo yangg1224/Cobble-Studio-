@@ -673,12 +673,14 @@ const en: Translations = {
     posts: {
       "our-first-park-market": {
         category: "Story",
-        title: "Our First Park Market",
+        title: "Our First Market",
         body: [
-          "This September, Cobble packed up the studio and set up in the park for the first time — a folding tent, a table too small for everything we wanted to bring, and an afternoon of finding out what it's like to sell wood in daylight, outdoors, to people who have never heard of us.",
-          "We built the display as we went. A bare branch became a stand for hanging cups and spoons, small carved figures stood between silk flowers, and the pieces that usually sit under studio lighting were suddenly competing with real sun and real grass. It looked different out there — rougher and better at the same time.",
-          "What surprised us most was how people actually shop outdoors. A woman leaned over the table for a long time, running a finger along the grain of a cup before she said anything at all. A young man stood quietly beside her the whole time, waiting his turn to look. Nobody rushed. In a park, apparently, nobody has anywhere else to be.",
-          "By the end of the day the table was a little emptier, the tent had done its job against the sun, and we had a list of things to bring more of next time — the little bowls went first. It was loud and unplanned and nothing like a normal Saturday at the bench, and we're already looking for the next park.",
+          "This September, we joined our very first market. Thank you to Toronto Artisan Market for having us! Trinity Bellwoods Park was a lovely place to spend the day, with plenty of sunshine and green space all around.",
+          "After months of making things in the workshop, we finally had the chance to bring our work out into the world and hear what people thought.",
+          "We weren't quite sure what to expect, so it was a pleasant surprise to see so many people stop by our booth. Visitors were curious about the cups, asked questions, and shared some very kind words. Wei was especially happy to hear the feedback. He had spent months working on his designs, and seeing people respond to them gave him a little more confidence in his work. Thank you to everyone who stopped by!",
+          "We also spent some time thinking about our display. We brought a few branches from the workshop and hung the cups from them, hoping to catch people's attention. We added some flowers, and the sunshine did the rest.",
+          "There were a few things we'd do differently next time. A POS system, for one. We relied on e-transfers this time and quickly realized that not everyone finds them convenient.",
+          "We also found that a simple smile or a friendly hello could make a difference. Sometimes, offering to explain a little about a cup was all it took to start a conversation.",
         ],
       },
       "our-first-workshop": {
@@ -1112,12 +1114,14 @@ const fr: Translations = {
     posts: {
       "our-first-park-market": {
         category: "Récit",
-        title: "Notre Premier Marché en Plein Air",
+        title: "Notre Premier Marché",
         body: [
-          "Ce mois de septembre, Cobble a quitté le studio pour s'installer dans un parc pour la première fois — une tente pliante, une table trop petite pour tout ce qu'on voulait apporter, et un après-midi à découvrir ce que c'est que de vendre du bois en plein jour, en extérieur, à des gens qui n'avaient jamais entendu parler de nous.",
-          "Nous avons construit la présentation sur le moment. Une branche nue est devenue un support pour suspendre tasses et cuillères, de petites figurines sculptées se dressaient entre des fleurs de soie, et les pièces qui reposent habituellement sous la lumière du studio se retrouvaient soudain en concurrence avec le vrai soleil et la vraie herbe. Ça avait l'air différent là-bas — plus brut et meilleur à la fois.",
-          "Ce qui nous a le plus surpris, c'est la façon dont les gens font leurs achats en extérieur. Une femme s'est penchée longuement sur la table, faisant glisser un doigt sur le grain d'une tasse avant de dire quoi que ce soit. Un jeune homme se tenait tranquillement à côté d'elle tout ce temps, attendant son tour pour regarder. Personne ne se pressait. Dans un parc, apparemment, personne n'a nulle part où être.",
-          "À la fin de la journée, la table était un peu plus vide, la tente avait fait son travail contre le soleil, et nous avions une liste de choses à apporter davantage la prochaine fois — les petits bols sont partis les premiers. C'était bruyant, improvisé, et rien à voir avec un samedi normal à l'établi, et nous cherchons déjà le prochain parc.",
+          "Ce mois de septembre, nous avons participé à notre tout premier marché. Merci au Toronto Artisan Market de nous avoir accueillis ! Trinity Bellwoods Park était un endroit charmant pour passer la journée, avec beaucoup de soleil et d'espaces verts tout autour.",
+          "Après des mois passés à fabriquer dans l'atelier, nous avons enfin pu présenter notre travail au monde et entendre ce que les gens en pensaient.",
+          "Nous ne savions pas trop à quoi nous attendre, alors nous avons été agréablement surpris de voir autant de personnes s'arrêter à notre stand. Les visiteurs étaient curieux à propos des tasses, posaient des questions et nous ont adressé de très gentils mots. Wei était particulièrement heureux d'entendre ces retours. Il avait passé des mois à travailler sur ses créations, et voir les gens y réagir lui a donné un peu plus confiance en son travail. Merci à tous ceux qui sont passés nous voir !",
+          "Nous avons aussi réfléchi à notre présentation. Nous avons apporté quelques branches de l'atelier pour y suspendre les tasses, dans l'espoir d'attirer l'attention. Nous avons ajouté quelques fleurs, et le soleil a fait le reste.",
+          "Il y a quelques choses que nous ferions différemment la prochaine fois. Un terminal de paiement, par exemple. Cette fois, nous avons compté sur les virements Interac et nous avons vite compris que ce n'est pas pratique pour tout le monde.",
+          "Nous avons aussi constaté qu'un simple sourire ou un bonjour chaleureux pouvait faire la différence. Parfois, proposer d'expliquer un peu une tasse suffisait pour engager la conversation.",
         ],
       },
       "our-first-workshop": {
@@ -1551,12 +1555,14 @@ const zh: Translations = {
     posts: {
       "our-first-park-market": {
         category: "故事",
-        title: "我们的第一次公园市集",
+        title: "我们的第一次市集",
         body: [
-          "这个九月，Cobble第一次把工作室搬进了公园——一个折叠帐篷，一张装不下我们想带的所有东西的小桌子，还有一整个下午，去弄明白在阳光下、露天里，向从未听说过我们的路人卖木器是什么感觉。",
-          "展台是我们边搭边想出来的。一根光秃秃的树枝变成了挂杯子和勺子的架子，几个小小的木雕人像立在丝绸花朵之间，那些平时在工作室灯光下摆放的作品，突然要跟真正的阳光和真正的草地争夺目光。摆在外面，感觉不一样了——更粗糙，却也更好看。",
-          "最让我们意外的，是人们在户外购物的样子。一位女士在桌前站了很久，用手指慢慢摸过一只杯子的木纹，好一会儿才开口说话。一个年轻人一直安静地站在她旁边，等着轮到自己看。没有人着急。在公园里，好像谁都不用赶着去哪儿。",
-          "一天下来，桌子空了一些，帐篷也挡住了太阳，我们还列出了下次要多带的东西——那些小碗最先卖光了。这一天又吵又没计划，跟平常在工作台前的周六完全不一样，而我们已经在期待下一个公园了。",
+          "今年九月，我们通过 Toronto Artisan Market 第一次参加市集！Trinity Bellwoods Park 绿草茵茵，是个非常适合摆摊的地方。",
+          "在工作室里埋头制作了几个月后，我们终于有机会把作品带到公众面前，接受检验并收集反馈。",
+          "摊位前的人流之多，实属意外之喜！很多人都对杯子感兴趣，问了不少问题，也给了我们许多赞美和鼓励。老郑听到这些尤其高兴，大家的积极回应让他对自己的作品多了几分信心。感谢每一位驻足的朋友！",
+          "我们也花了一些心思布置展台。从工作室带来几根树枝作为展架，把杯子挂在上面，再点缀几朵鲜花，希望能吸引人们的注意。",
+          "有几件事，下次我们会做得不一样。比如，准备一台 POS 机。这次我们只接受 e-transfer，很快发现并不是每个人都觉得它方便。",
+          "我们还发现，一个简单的微笑或一声友好的问候，就能带来不同。有时候，只需主动介绍一下杯子，就足以开启一段交谈。",
         ],
       },
       "our-first-workshop": {
@@ -1990,12 +1996,14 @@ const ja: Translations = {
     posts: {
       "our-first-park-market": {
         category: "ストーリー",
-        title: "初めての公園マーケット",
+        title: "初めてのマーケット",
         body: [
-          "この9月、Cobbleは初めて工房を離れ、公園に店を構えました。折りたたみのテント、持って行きたいものすべてには小さすぎるテーブル、そして日差しの下、屋外で、私たちのことを聞いたこともない人たちに木の器を売るというのがどんな感じなのかを知る午後でした。",
-          "ディスプレイはその場で作り上げていきました。何も加工していない一本の枝が、カップやスプーンを吊るす台になり、小さな木彫りの人形が造花の間に立ち並び、いつもは工房の照明の下にある作品たちが、突然本物の太陽と本物の草に負けじと存在感を放っていました。外に出すと、見え方が違いました——もっと粗く、それでいてもっと良く見えました。",
-          "何より驚いたのは、人々が屋外でどうやって買い物をするかということでした。ある女性はテーブルの前で長い間かがみ込み、何も言わずにカップの木目に指を這わせていました。若い男性はその間ずっと隣で静かに立ち、自分の順番を待っていました。誰も急いでいません。公園では、どうやら誰も他に行く場所がないようです。",
-          "一日の終わりには、テーブルは少し空になり、テントは日差しをしっかり防いでくれて、次回はもっと持って来るべきもののリストができました——小さな器がいちばん早く売れました。いつもの作業台の前の土曜日とはまったく違う、賑やかで計画通りにはいかない一日でしたが、私たちはすでに次の公園を探しています。",
+          "この9月、私たちは初めてのマーケットに出店しました。Toronto Artisan Marketのみなさん、ありがとうございました！Trinity Bellwoods Parkは、たっぷりの日差しと緑に囲まれた、一日を過ごすのにぴったりの場所でした。",
+          "工房で何か月もものづくりを続けてきて、ようやく作品を外の世界に持ち出し、みなさんの反応を聞く機会を得ることができました。",
+          "何が起こるのか見当もつかなかったので、たくさんの方がブースに立ち寄ってくださったのは嬉しい驚きでした。お客様はカップに興味を持ち、質問をし、温かい言葉をかけてくださいました。Weiは特に、その感想を聞いて喜んでいました。何か月もデザインに取り組んできた彼にとって、人々の反応は自分の作品への自信を少し深めてくれるものでした。立ち寄ってくださったすべての方に感謝します！",
+          "ディスプレイについても少し工夫しました。工房から持ってきた枝にカップを吊るし、人目を引くようにしました。そこに花を添えると、あとは太陽が仕上げてくれました。",
+          "次回はいくつか変えたいこともあります。たとえばPOSシステム。今回はe-transferに頼りましたが、誰にとっても便利とは限らないことにすぐ気づきました。",
+          "また、ちょっとした笑顔や気さくな挨拶が違いを生むこともわかりました。カップについて少し説明を申し出るだけで、会話が始まることもありました。",
         ],
       },
       "our-first-workshop": {
