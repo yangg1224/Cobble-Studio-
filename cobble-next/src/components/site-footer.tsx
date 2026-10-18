@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useLanguage } from "@/context/LanguageContext"
 
-const shopHrefs  = ["/collections/mug", "/collections/plate", "/collections/spoon", "/collections", "/collections"]
+const shopHrefs  = ["/collections/mug", "/collections/scoop", "/collections/spoon", "/collections/clip", "/collections/plate", "/collections/vessel"]
 const aboutHrefs = ["/about", "/journal", "/journal", "/contact"]
 const suppHrefs  = ["/contact", "/contact", "/contact", "/contact"]
 

@@ -10,12 +10,12 @@ import { useCart } from "@/context/CartContext"
 import { useLanguage, LANGUAGES, type Language } from "@/context/LanguageContext"
 
 const collections = [
-  { title: "Mug",   href: "/collections/mug",   desc: "Cups & kuksa",     img: "/collections/mug.png" },
-  { title: "Scoop", href: "/collections/scoop", desc: "Kitchen scoops",   img: "/collections/scoop.jpg" },
-  { title: "Spoon", href: "/collections/spoon", desc: "Spoons & stirrers", img: "/collections/spoon.jpg" },
-  { title: "Clip",  href: "/collections/clip",  desc: "Home & desk clips", img: "/collections/clip.jpg" },
-  { title: "Plate", href: "/collections/plate", desc: "Plates & boards",  img: "/collections/plate.jpg" },
-  { title: "Vessl", href: "/collections/vessl", desc: "Bowls & vessels",  img: "/collections/vessel.jpg" },
+  { title: "Cups",    href: "/collections/mug",   desc: "Cups & kuksa",     img: "/collections/mug.png" },
+  { title: "Scoops",  href: "/collections/scoop", desc: "Kitchen scoops",   img: "/collections/scoop.jpg" },
+  { title: "Spoons",  href: "/collections/spoon", desc: "Spoons & stirrers", img: "/collections/spoon.jpg" },
+  { title: "Tongs",   href: "/collections/clip",  desc: "Kitchen tongs", img: "/collections/clip.jpg" },
+  { title: "Trays",   href: "/collections/plate", desc: "Plates & boards",  img: "/collections/plate.jpg" },
+  { title: "Vessels", href: "/collections/vessel", desc: "Bowls & vessels",  img: "/collections/vessel.jpg" },
 ]
 
 const navLinkCls =

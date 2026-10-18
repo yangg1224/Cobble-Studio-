@@ -5,12 +5,12 @@ import Link from "next/link"
 import { useLanguage } from "@/context/LanguageContext"
 
 const collections = [
-  { name: "Mug",    slug: "mug",    img: "/collections/mug.png"    },
-  { name: "Scoop",  slug: "scoop",  img: "/collections/scoop.jpg"  },
-  { name: "Spoon",  slug: "spoon",  img: "/collections/spoon.jpg"  },
-  { name: "Clip",   slug: "clip",   img: "/collections/clip.jpg"   },
-  { name: "Plate",  slug: "plate",  img: "/collections/plate.jpg"  },
-  { name: "Vessel", slug: "vessel", img: "/collections/vessel.jpg" },
+  { name: "Cups", slug: "mug", img: "/collections/mug.png" },
+  { name: "Scoops", slug: "scoop", img: "/collections/scoop.jpg" },
+  { name: "Spoons", slug: "spoon", img: "/collections/spoon.jpg" },
+  { name: "Tongs", slug: "clip", img: "/collections/clip.jpg" },
+  { name: "Trays", slug: "plate", img: "/collections/plate.jpg" },
+  { name: "Vessels", slug: "vessel", img: "/collections/vessel.jpg" },
 ]
 
 export default function CollectionsPage() {

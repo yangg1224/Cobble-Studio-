@@ -5,12 +5,12 @@ import { products } from "@/lib/products"
 import { ProductCard } from "@/components/product-card"
 
 const collectionMeta: Record<string, { label: string; img: string }> = {
-  mug:    { label: "Mug",    img: "/collections/mug.png"    },
-  scoop:  { label: "Scoop",  img: "/collections/scoop.jpg"  },
-  spoon:  { label: "Spoon",  img: "/collections/spoon.jpg"  },
-  clip:   { label: "Clip",   img: "/collections/clip.jpg"   },
-  plate:  { label: "Plate",  img: "/collections/plate.jpg"  },
-  vessel: { label: "Vessel", img: "/collections/vessel.jpg" },
+  mug: { label: "Cups", img: "/collections/mug.png" },
+  scoop: { label: "Scoops", img: "/collections/scoop.jpg" },
+  spoon: { label: "Spoons", img: "/collections/spoon.jpg" },
+  clip: { label: "Tongs", img: "/collections/clip.jpg" },
+  plate: { label: "Trays", img: "/collections/plate.jpg" },
+  vessel: { label: "Vessels", img: "/collections/vessel.jpg" },
 }
 
 export default async function CollectionPage({

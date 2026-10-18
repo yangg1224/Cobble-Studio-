@@ -354,7 +354,7 @@ export interface Translations {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const en: Translations = {
-  nav: { shop: "Shop", journal: "Journal", about: "About", contact: "Contact", shopByCollection: "• Shop by Collection" },
+  nav: { shop: "Shop", journal: "Blogs", about: "About", contact: "Contact", shopByCollection: "• Shop by Collection" },
   banner: "Enjoy free shipping on orders of $100 or more.",
   search: "Search",
   myAccount: "My Account",
@@ -455,7 +455,7 @@ const en: Translations = {
   footer: {
     tagline: "Handcrafted wooden objects made with intention. Every piece is one of a kind.",
     shopTitle: "Shop",
-    shopLinks: ["Cups & Mugs", "Trays & Boards", "Spoons", "New Arrivals", "Gift Ideas"],
+    shopLinks: ["Cups", "Scoops", "Spoons", "Tongs", "Trays", "Vessels"],
     aboutTitle: "About",
     aboutLinks: ["Our Story", "The Craft", "Journal", "Sustainability"],
     supportTitle: "Support",
@@ -896,7 +896,7 @@ const fr: Translations = {
   footer: {
     tagline: "Objets en bois faits à la main avec intention. Chaque pièce est unique.",
     shopTitle: "Boutique",
-    shopLinks: ["Tasses & Mugs", "Plateaux & Planches", "Cuillères", "Nouveautés", "Idées Cadeaux"],
+    shopLinks: ["Tasses", "Pelles", "Cuillères", "Pinces", "Plateaux", "Récipients"],
     aboutTitle: "À Propos",
     aboutLinks: ["Notre Histoire", "L'Artisanat", "Journal", "Durabilité"],
     supportTitle: "Support",
@@ -1337,7 +1337,7 @@ const zh: Translations = {
   footer: {
     tagline: "用心制作的手工木器。每件均为孤品。",
     shopTitle: "商店",
-    shopLinks: ["杯子与马克杯", "托盘与木板", "汤匙", "新品上市", "礼品创意"],
+    shopLinks: ["杯子", "木铲", "汤匙", "食物夹", "托盘", "容器"],
     aboutTitle: "关于",
     aboutLinks: ["我们的故事", "工艺", "日志", "可持续发展"],
     supportTitle: "支持",
@@ -1778,7 +1778,7 @@ const ja: Translations = {
   footer: {
     tagline: "意図を持って手作りされた木製品。すべてのピースは一点もの。",
     shopTitle: "ショップ",
-    shopLinks: ["カップ＆マグ", "トレー＆ボード", "スプーン", "新着商品", "ギフトアイデア"],
+    shopLinks: ["カップ", "スクープ", "スプーン", "トング", "トレー", "器"],
     aboutTitle: "について",
     aboutLinks: ["私たちのストーリー", "工芸", "ジャーナル", "サステナビリティ"],
     supportTitle: "サポート",
