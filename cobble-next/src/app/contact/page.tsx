@@ -7,7 +7,7 @@ export default function ContactPage() {
   const c = t.contact
 
   const contactSections = [
-    { labelKey: "instagram",       value: "@cobble0",              href: "https://www.instagram.com/cobble0/", label: c.instagram },
+    { labelKey: "instagram",       value: "@cobble.studio.to",     href: "https://www.instagram.com/cobble.studio.to/", label: c.instagram },
     { labelKey: "customerService", value: "wayne761216@gmail.com", href: "mailto:wayne761216@gmail.com",      label: c.customerService },
     { labelKey: "collaboration",   value: "wayne761216@gmail.com", href: "mailto:wayne761216@gmail.com",      label: c.collaboration, description: c.collaborationDesc },
   ]

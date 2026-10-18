@@ -75,7 +75,7 @@ export function SiteFooter() {
           <div className="mt-5 flex gap-4">
             {/* Instagram */}
             <a
-              href="https://instagram.com" aria-label="Instagram"
+              href="https://www.instagram.com/cobble.studio.to/" aria-label="Instagram"
               target="_blank" rel="noopener noreferrer"
               className="text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]"
             >
@@ -83,6 +83,17 @@ export function SiteFooter() {
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                 <circle cx="12" cy="12" r="4"/>
                 <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            {/* TikTok */}
+            <a
+              href="https://www.tiktok.com/@cobble.studio.to" aria-label="TikTok"
+              target="_blank" rel="noopener noreferrer"
+              className="text-[#A2A2A2] transition-colors duration-200 hover:text-[#1E1E1E]"
+            >
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/>
+                <path d="M14 3c.4 2.6 2.1 4.3 5 4.5"/>
               </svg>
             </a>
             {/* Pinterest */}
