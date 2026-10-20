@@ -309,7 +309,7 @@ export interface Translations {
       caption1: string
       caption2: string
     }
-    posts: Record<string, { category: string; title: string; body: string[] }>
+    posts: Record<string, { category: string; title: string; body: string[]; imageCaption?: string; imageAlt?: string; italicTerm?: string }>
   }
 
   // ── ACCOUNT ──
@@ -673,6 +673,21 @@ const en: Translations = {
       caption2: "This process mirrors the making of the work—a continuous cycle of observing, carving, and refining. Time gradually fades from awareness. At times, I come back to myself to find the music has stopped—and an hour has already passed.",
     },
     posts: {
+      "meet-our-maker": {
+        "category": "Craft",
+        "title": "Meet our maker",
+        "italicTerm": "antiya",
+        "imageCaption": "Early works by Wei Zheng.",
+        "imageAlt": "A collage of Wei Zheng’s workshop, wooden utensils, incense holder, carved vessels, a design sketch, and a wooden cup beside a cat.",
+        "body": [
+          "Born in Shandong, China, Wei Zheng comes from a family of carpenters who served their village for generations, but his father hoped for a different future for him in the city.",
+          "Wei went on to spend nearly three decades in landscape design, running a successful business in Beijing.",
+          "Throughout the years, he never lost his love for making things, turning almost anything into a work of art, whether it was a branch, a stone, or a hulu.",
+          "The experience of the COVID-19 lockdowns marked a turning point in Wei’s creative practice and design philosophy. He began devoting his time to the making of wooden cups.",
+          "With antiya in mind, Wei believes that people need anchors in an ever-changing world. Through his work, he hopes to offer a sense of balance by creating objects that can accompany people for a while on their journey through life.",
+          "For Wei, to cherish an object is to use it. What remains is left to time."
+        ]
+      },
       "our-first-park-market": {
         category: "Updates",
         title: "Our First Market",
@@ -1116,6 +1131,21 @@ const fr: Translations = {
       caption2: "Ce processus reflète la réalisation de l'œuvre — un cycle continu d'observation, de taille et d'affinement. Le temps s'efface progressivement de la conscience. Parfois, je reviens à moi pour constater que la musique s'est arrêtée — et qu'une heure s'est déjà écoulée.",
     },
     posts: {
+      "meet-our-maker": {
+        "category": "Artisanat",
+        "title": "Rencontrez notre artisan",
+        "italicTerm": "antiya",
+        "imageCaption": "Premières créations de Wei Zheng.",
+        "imageAlt": "Un collage de l’atelier de Wei Zheng, d’ustensiles en bois, d’un porte-encens, de récipients sculptés, d’un croquis et d’une tasse en bois à côté d’un chat.",
+        "body": [
+          "Né dans le Shandong, en Chine, Wei Zheng est issu d’une famille de charpentiers au service de leur village depuis des générations. Son père espérait toutefois pour lui un autre avenir, en ville.",
+          "Wei a consacré près de trente ans à l’aménagement paysager, à la tête d’une entreprise prospère à Pékin.",
+          "Au fil des années, il n’a jamais perdu son amour de la création, transformant presque tout en œuvre d’art, qu’il s’agisse d’une branche, d’une pierre ou d’une calebasse.",
+          "Les confinements liés à la COVID-19 ont marqué un tournant dans sa pratique créative et sa philosophie du design. Il a commencé à consacrer son temps à la fabrication de tasses en bois.",
+          "Gardant à l’esprit antiya, Wei pense que chacun a besoin de points d’ancrage dans un monde en perpétuel changement. À travers son travail, il espère offrir un sentiment d’équilibre en créant des objets qui accompagnent les gens pendant une partie de leur chemin de vie.",
+          "Pour Wei, chérir un objet, c’est l’utiliser. Le reste appartient au temps."
+        ]
+      },
       "our-first-park-market": {
         category: "Actualités",
         title: "Notre Premier Marché",
@@ -1557,6 +1587,20 @@ const zh: Translations = {
       caption2: "这个过程如同作品的制作——观察、雕刻、打磨，循环往复。时间渐渐淡出意识。有时，我回过神来，才发现音乐已经停了——而一个小时已悄然流逝。",
     },
     posts: {
+      "meet-our-maker": {
+        "category": "工艺",
+        "title": "认识我们的手艺人",
+        "imageCaption": "郑伟早期作品。",
+        "imageAlt": "郑伟的工作台、木制餐具、香插、雕刻器皿、设计草图，以及猫身旁的木杯拼图。",
+        "body": [
+          "郑伟，70年代生人，山东威海合子村人，家族世代以木匠为生。",
+          "从山东工艺美院毕业后，郑伟在环境艺术设计领域深耕三十年，并拥有自己的研发公司。",
+          "多年来，郑伟始终保持着对手工艺品的热爱，取材广泛，无论是树枝，石头还是葫芦，都可以化为作品。",
+          "新冠疫情期间，郑伟的设计理念逐渐成熟，专注于木艺创作，尤其是木杯的原创设计与制作。",
+          "世事起落本无常。郑伟希望制作经得起日常使用的器物，陪伴人们走过一段旅程，承载随之度过的时光。",
+          "始于木，终于器，善于用。"
+        ]
+      },
       "our-first-park-market": {
         category: "动态",
         title: "我们的第一次市集",
@@ -2000,6 +2044,21 @@ const ja: Translations = {
       caption2: "このプロセスは作品の制作を映し出しています——観察し、彫り、磨くという継続的なサイクル。時間は次第に意識から消えていきます。気がつくと音楽が止まっていて、もう1時間が経っていたということもあります。",
     },
     posts: {
+      "meet-our-maker": {
+        "category": "クラフト",
+        "title": "私たちの作り手をご紹介します",
+        "italicTerm": "antiya",
+        "imageCaption": "鄭偉の初期の作品。",
+        "imageAlt": "鄭偉の工房、木の道具、香立て、彫刻された器、デザインのスケッチ、猫の隣に置かれた木のカップのコラージュ。",
+        "body": [
+          "中国山東省に生まれた鄭偉は、何世代にもわたって村を支えてきた大工の家系に育ちました。しかし、父は彼に都会での別の将来を望んでいました。",
+          "その後、鄭偉は北京で事業を成功させ、約三十年にわたってランドスケープデザインに携わりました。",
+          "その間も、ものづくりへの愛情は変わりませんでした。枝や石、ひょうたんなど、身近なあらゆるものを作品へと変えてきました。",
+          "新型コロナウイルス感染症によるロックダウンの経験は、彼の創作活動とデザイン哲学の転機となりました。木のカップづくりに時間を注ぐようになったのです。",
+          "antiyaを心に留めながら、鄭偉は、絶えず変化する世界で人には心の拠り所が必要だと考えています。人生の旅路をしばらく共に歩むものをつくることで、暮らしに安らかな均衡をもたらしたいと願っています。",
+          "鄭偉にとって、ものを大切にするとは、それを使うこと。あとは時の流れに委ねます。"
+        ]
+      },
       "our-first-park-market": {
         category: "お知らせ",
         title: "初めてのマーケット",

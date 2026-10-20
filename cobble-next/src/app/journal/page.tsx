@@ -7,6 +7,16 @@ import { useLanguage } from "@/context/LanguageContext"
 
 const POSTS = [
   {
+    id: "meet-our-maker",
+    slug: "meet-our-maker",
+    category: "craft",
+    title: "Meet our maker",
+    date: "October 2026",
+    readTime: "2 min read",
+    excerpt: "Meet Wei Zheng, the maker behind Cobble, and discover a lifelong love of turning everyday materials into objects to cherish and use.",
+    img: "/journal/meet-our-maker/early-works.jpeg",
+  },
+  {
     id: "our-first-park-market",
     slug: "our-first-park-market",
     category: "updates",
@@ -186,12 +196,14 @@ function FilterTab({ label, active, onClick }: { label: string; active: boolean;
 }
 
 function ArticleCard({ post, catLabel }: { post: Post; catLabel: string }) {
+  const { t } = useLanguage()
+  const title = t.journalContent.posts[post.slug]?.title ?? post.title
   return (
     <Link href={`/journal/${post.slug}`} className="group block">
       <div className="relative w-full overflow-hidden bg-[#F9F9F9]" style={{ aspectRatio: "3 / 2" }}>
         <Image
           src={post.img}
-          alt={post.title}
+          alt={title}
           fill
           className="object-cover object-center transition-transform duration-[550ms] group-hover:scale-[1.04]"
           style={{ transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" }}
@@ -205,7 +217,7 @@ function ArticleCard({ post, catLabel }: { post: Post; catLabel: string }) {
           </span>
         </div>
         <p className="m-0 text-[16px] font-medium leading-[1.45] tracking-[0.2px] text-[#1E1E1E] transition-colors duration-200 group-hover:text-[#3CACB0]">
-          {post.title}
+          {title}
         </p>
         <p className="mt-2.5 max-w-[480px] text-[12px] leading-[1.7] tracking-[0.2px] text-[#989898]">
           {post.excerpt}

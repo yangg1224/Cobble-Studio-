@@ -9,11 +9,11 @@ import { useLanguage } from "@/context/LanguageContext"
 
 const journalPosts = [
   {
-    href:     "/journal/the-craft-behind-the-cup",
-    img:      "/journal/journal1.jpg",
-    alt:      "Wooden cups displayed on a wall",
+    href:     "/journal/meet-our-maker",
+    img:      "/journal/meet-our-maker/early-works.jpeg",
+    alt:      "Early woodworking creations by Wei Zheng",
     categoryKey: "catCraft" as const,
-    title:    "The Craft Behind the Cup",
+    title:    "Meet our maker",
   },
   {
     href:     "/journal/from-wood-to-hand",
@@ -101,7 +101,7 @@ export default function Home() {
                   {j[post.categoryKey as JournalCatKey]}
                 </span>
                 <p className="text-[12px] leading-[1.55] tracking-[1px] text-[#1E1E1E] transition-colors duration-200 group-hover:text-[#3CACB0]">
-                  {post.title}
+                  {t.journalContent.posts[post.href.split("/").pop()!]?.title ?? post.title}
                 </p>
               </div>
             </Link>

@@ -14,10 +14,18 @@ type PostMeta = {
   readTime: string
   img?: string
   images?: string[]
+  endImage?: { src: string; width: number; height: number }
   layout: "standard" | "brand-story"
 }
 
 const POST_META: Record<string, PostMeta> = {
+  "meet-our-maker": {
+    slug: "meet-our-maker",
+    date: "October 2026",
+    readTime: "2",
+    endImage: { src: "/journal/meet-our-maker/early-works.jpeg", width: 1875, height: 6930 },
+    layout: "standard",
+  },
   "our-first-park-market": {
     slug: "our-first-park-market",
     date: "September 2026",
@@ -245,7 +253,7 @@ function StandardLayout({
   journalTitle,
 }: {
   meta: PostMeta
-  content: { category: string; title: string; body: string[] }
+  content: { category: string; title: string; body: string[]; imageCaption?: string; imageAlt?: string; italicTerm?: string }
   jc: ReturnType<typeof useLanguage>["t"]["journalContent"]
   journalTitle: string
 }) {
@@ -280,7 +288,7 @@ function StandardLayout({
         </h1>
 
         {/* Cover image */}
-        <div className="relative mb-14 w-full overflow-hidden bg-[#f9f9f9]" style={{ aspectRatio: "16/9" }}>
+        {meta.img && <div className="relative mb-14 w-full overflow-hidden bg-[#f9f9f9]" style={{ aspectRatio: "16/9" }}>
           <Image
             src={meta.img!}
             alt={content.title}
@@ -289,7 +297,7 @@ function StandardLayout({
             className="object-cover"
             sizes="(max-width: 860px) 100vw, 860px"
           />
-        </div>
+        </div>}
 
         {/* Body */}
         <div className="flex flex-col gap-7">
@@ -299,10 +307,32 @@ function StandardLayout({
               className="text-[16px] leading-[1.8] tracking-[0.3px] text-[#1e1e1e]"
               style={{ fontFamily: "var(--font-crimson-text)" }}
             >
-              {paragraph}
+              {content.italicTerm
+                ? paragraph.split(content.italicTerm).map((part, index) => (
+                    <span key={index}>{index > 0 && <em>{content.italicTerm}</em>}{part}</span>
+                  ))
+                : paragraph}
             </p>
           ))}
         </div>
+
+        {meta.endImage && (
+          <figure className="mt-14">
+            <Image
+              src={meta.endImage.src}
+              width={meta.endImage.width}
+              height={meta.endImage.height}
+              alt={content.imageAlt ?? content.title}
+              className="h-auto w-full"
+              sizes="(max-width: 860px) 100vw, 780px"
+            />
+            {content.imageCaption && (
+              <figcaption className="mt-3 text-[13px] leading-relaxed text-[#989898]">
+                {content.imageCaption}
+              </figcaption>
+            )}
+          </figure>
+        )}
 
         {/* Gallery */}
         {meta.images && meta.images.length > 0 && (
