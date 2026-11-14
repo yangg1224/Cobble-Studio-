@@ -752,7 +752,7 @@ export const products: Product[] = [
     displayName: "Coffee Spoon",
     collection: "Scoop",
     sku: "CF001",
-    price: "CAD 68",
+    price: "CAD 82",
     description: "A hand-carved coffee scoop sized for a precise 10 g dose — formed from solid wood with a deep, rounded bowl.",
     material: "Solid wood",
     dimensions: "15×5×3 cm",
